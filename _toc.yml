@@ -4,7 +4,6 @@
 format: jb-book
 root: intro
 parts:
-  - caption: UNDER CONSTRUCTION
   
   - caption: Course Preparation
     chapters:
