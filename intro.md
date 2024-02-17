@@ -25,10 +25,8 @@ This course focuses on bio-image analysis with a focus on fluorescence microscop
 * [seaborn](https://seaborn.pydata.org/)
 * [stackview](https://github.com/haesleinhuepf/stackview)
 
-```{tableofcontents}
-```
+## Trainers
 
-Trainers
 * Anja Neumann, ScaDS.AI, Uni Leipzig
 * Christian Martin, ScaDS.AI, Uni Leipzig
 * Jan Ewald, ScaDS.AI, Uni Leipzig
@@ -38,7 +36,7 @@ Trainers
 * Robert Haase, ScaDS.AI, Uni Leipzig
 * Stéphane Rigaud, Image Analysis Hub, Institut Pasteur, Paris
 
-Preliminary Program
+## Preliminary Program
 
 * Monday, May 13th
 <pre>
@@ -78,7 +76,7 @@ Preliminary Program
 17:00-18:00	Departure		
 </pre>
 
-Acknowledgements
+## Acknowledgements
 
 Would like to acknowledge people who shared trainng materials and example data which we are reusing in this training school:
 * Nasreddin Abolmaali, OncoRay, TU Dresden
