@@ -1,0 +1,42 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+  - caption: UNDER CONSTRUCTION
+  
+  - caption: Course Preparation
+    chapters:
+    - file: day0_preparation/readme.md
+
+  - caption: Monday
+    chapters:
+    - file: day1.1_python_basics/readme.md
+    - file: day1.2_file_handling/readme.md
+      sections: 
+      - file: day1.2_file_handling/list_files_in_a_folder.ipynb
+      - file: day1.2_file_handling/opening_images_using_aicsimageio.ipynb
+      - file: day1.2_file_handling/stackview.ipynb
+      - file: day1.2_file_handling/owncloud.ipynb
+    - file: day1.3_image_processing_basics/readme.md
+
+  - caption: Tuesday
+    chapters:
+    - file: day2.1_image_segmentation/readme.md
+    - file: day2.2_feature_extraction/readme.md
+    - file: day2.3_machine_learning/readme.md
+    - file: day2.4_tabular_data_wrangling/readme.md
+
+  - caption: Wednesday
+    chapters:
+    - file: day3.1_explorative_data_science/readme.md
+    - file: day3.2_data_visualization/readme.md
+    - file: day3.3_plotting/readme.md
+
+  - caption: Information
+    chapters:
+    - file: CONDUCT
+    - file: CONTRIBUTING
+    - file: LICENSE
+    - file: imprint
