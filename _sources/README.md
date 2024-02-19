@@ -2,7 +2,7 @@
 
 You can read its content at
 
-https://scads.github.io/bids-training-2024
+https://scads.github.io/BIDS-training-2024
 
 ## Usage
 
