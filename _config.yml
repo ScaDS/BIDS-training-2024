@@ -17,7 +17,7 @@ execute:
 
 # Information about where the book exists on the web
 repository:
-  url: BIDS-training-2024 # Online location of your book
+  url: https://github.com/scads/BIDS-training-2024 # Online location of your book
   path_to_book: .  # Optional path to your book, relative to the repository root
   branch: main  # Which branch of the repository should be used when creating links (optional)
 
