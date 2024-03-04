@@ -35,7 +35,6 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 * Marie-Sophie von Braun, ScaDS.AI, Uni Leipzig
 * Matthias Täschner, ScaDS.AI, Uni Leipzig
 * Robert Haase, ScaDS.AI, Uni Leipzig
-* Stéphane Rigaud, Image Analysis Hub, Institut Pasteur, Paris
 
 ## Preliminary Program
 
@@ -53,7 +52,7 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 * Tuesday, May 14th
 <pre>
 
-9:00-10:30	Image Segmentation (Stephane, Robert)
+9:00-10:30	Image Segmentation (Robert, tbd)
 10:30-11:00	Coffee		
 11:00-12:30	Feature extraction (Robert, Christian)
 12:30-13:30	Lunch		
@@ -61,10 +60,10 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 15:00-15:30	Coffee		
 15:30-17:00	Tabular data wrangling using Pandas	(Matthias, Christian)
 17:00-18:00	Wrap up & work on your own data		
-19:00-21:00	Scientific Networking Event	(Stephane, Robert)
+19:00-21:00	Scientific Networking Event	(tbd, Robert)
 </pre>
 
-* Wednesday, May 14th
+* Wednesday, May 15th
 
 <pre>
 9:00-10:30	Explorative data science, unsupervised machine learning	(Laura, Matthias)
