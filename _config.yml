@@ -5,8 +5,8 @@
 
 #######################################################################################
 # Book settings
-title                       : My Book  # The title of the book. Will be placed in the left navbar.
-author                      : Robert Haase  # The author of the book
+title                       : Bio-image Data Science Training School @ ScaDS.AI, May 2024 # The title of the book. Will be placed in the left navbar.
+author                      : Robert Haase  # The author(s) of the book
 copyright                   : "2024"  # Copyright year to be placed in the footer
 logo                        : logo.png  # A path to the book logo
 
@@ -17,8 +17,8 @@ execute:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/scads/my_book  # Online location of your book
-  path_to_book: docs  # Optional path to your book, relative to the repository root
+  url: BIDS-training-2024 # Online location of your book
+  path_to_book: .  # Optional path to your book, relative to the repository root
   branch: main  # Which branch of the repository should be used when creating links (optional)
 
 html:
