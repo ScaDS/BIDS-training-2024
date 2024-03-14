@@ -10,7 +10,7 @@ This is the website of the BIDS Training School @ ScaDS.AI 2024. We will provide
 * Date: May 13th-15th 2024
 * Place: ScaDS.AI / Uni Leipzig
 * Target audience: Life scientists with interest in learning Bio-image Analysis and Data Science using Python. No prior programming experience required.
-* Registration: Opening soon
+* [Registration is open](https://app1.edoobox.com/UL-WB/Wbkurse/WWB/Kurs.ed.596f3122222b_988019080.ScaDSAI%20Python%20for%20Data%20Science%20Training/?edref=ulwb)
 
 This course focuses on bio-image analysis and data science with a focus on fluorescence microscopy imaging data and downstream analysis. Our training includes these python libraries:
 * [aicsimageio](https://github.com/AllenCellModeling/aicsimageio)
@@ -75,6 +75,10 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 15:30-17:00	Wrap up & work on your own data		
 17:00-18:00	Departure		
 </pre>
+
+## Registration
+
+[Registration is open](https://app1.edoobox.com/UL-WB/Wbkurse/WWB/Kurs.ed.596f3122222b_988019080.ScaDSAI%20Python%20for%20Data%20Science%20Training/?edref=ulwb)
 
 ## Acknowledgements
 
