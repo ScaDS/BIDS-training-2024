@@ -84,3 +84,5 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 
 Would like to acknowledge people who shared trainng materials and example data which we are reusing in this training school:
 * Nasreddin Abolmaali, OncoRay, TU Dresden
+
+We acknowledge the financial support by the Federal Ministry of Education and Research of Germany and by Sächsische Staatsministerium für Wissenschaft, Kultur und Tourismus in the programme Center of Excellence for AI-research „Center for Scalable Data Analytics and Artificial Intelligence Dresden/Leipzig“, project identification number: ScaDS.AI
