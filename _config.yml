@@ -6,7 +6,7 @@
 #######################################################################################
 # Book settings
 title                       : Bio-image Data Science Training School @ ScaDS.AI, May 2024 # The title of the book. Will be placed in the left navbar.
-author                      : Robert Haase  # The author(s) of the book
+author                      : Anja Neumann, Robert Haase  # The author(s) of the book
 copyright                   : "2024"  # Copyright year to be placed in the footer
 logo                        : logo.png  # A path to the book logo
 
