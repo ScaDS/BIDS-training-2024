@@ -1,6 +1,6 @@
 # Plotting
 
-Note that the plotting training is divided into two distinct sessions.
+Note that the plotting training is divided into two parallel sessions.
 
 This session (Day 3.3a - Plotting Basics):
 
@@ -10,6 +10,6 @@ This session (Day 3.3a - Plotting Basics):
 
 Parallel session (Day 3.3b - Advanced Plotting):
 
-- _Focus_: This session explores the use of Seaborn's grammar of graphics objects. This involves a more detailed manipulation of plot elements and integration with Matplotlib for enhanced customization.
-- _Content_: We will dive into how to structure plots using the grammar of graphics philosophy, which provides a powerful framework for understanding and creating complex visualizations. This includes modifying aesthetic attributes and integrating multiple plots.
-- _Audience_: This session is aimed at participants who feel more comfortable with coding and are ready to explore more advanced data visualization techniques. It is best for those looking to gain deeper insights into the graphical representation of data and how to manipulate these visualizations programmatically.
+- _Focus_: This session explores the use of Seaborn's new API seaborn.objects following the grammar of graphics philosophy. Additionally, we will show on examples how to avoid common problems in data visualization and will focus less on the programming.
+- _Content_: We will dive into how to structure plots using the grammar of graphics philosophy, which provides a powerful framework for understanding and creating complex visualizations. This includes modifying aesthetic attributes and integrating multiple plots. Additonally, we will show tricks for typical plots in machine learning. 
+- _Audience_: This session is aimed at participants who want switch from R (ggplot2) to seaborn, who want to get to know the new seaborn API and who want to explore more advanced data visualization techniques. It is best for those looking to gain deeper insights into the graphical representation of data and how to manipulate these visualizations programmatically.
