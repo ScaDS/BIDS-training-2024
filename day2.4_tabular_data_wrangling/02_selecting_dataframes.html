@@ -1,0 +1,2736 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Selecting data from DataFrames &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day2.4_tabular_data_wrangling/02_selecting_dataframes';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bio-Image Data Science Training Schools 2024
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day0_preparation/readme.html">Setting up your computer</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imprint.html">Imprint</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday2.4_tabular_data_wrangling/02_selecting_dataframes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/day2.4_tabular_data_wrangling/02_selecting_dataframes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Selecting data from DataFrames</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-rows-and-columns">Selecting rows and columns</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label-location-based-selection">Label-location based selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-location-based-selection">Integer-location based selection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-indexing">Boolean indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-scalar-values">Get scalar values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#math-with-dataframes">Math with DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="selecting-data-from-dataframes">
+<h1>Selecting data from DataFrames<a class="headerlink" href="#selecting-data-from-dataframes" title="Permalink to this heading">#</a></h1>
+<p>Like with Python sequences, we may want to get specific parts of the data in a DataFrame. And like with Python sequences, we can use <em>indexing</em>, <em>slicing</em>, and <em>masking</em> on DataFrames, too.</p>
+<p>See also:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/user_guide/indexing.html">Pandas user guide on indexing</a></p></li>
+</ul>
+<p>We start by reading our statistics CSV file into a DataFrame again</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/blobs_statistics.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 61 entries, 0 to 60
+Data columns (total 12 columns):
+ #   Column                    Non-Null Count  Dtype  
+---  ------                    --------------  -----  
+ 0   area                      61 non-null     int64  
+ 1   mean_intensity            61 non-null     float64
+ 2   minor_axis_length         61 non-null     float64
+ 3   major_axis_length         61 non-null     float64
+ 4   eccentricity              61 non-null     float64
+ 5   extent                    61 non-null     float64
+ 6   feret_diameter_max        61 non-null     float64
+ 7   equivalent_diameter_area  61 non-null     float64
+ 8   bbox-0                    61 non-null     int64  
+ 9   bbox-1                    61 non-null     int64  
+ 10  bbox-2                    61 non-null     int64  
+ 11  bbox-3                    61 non-null     int64  
+dtypes: float64(7), int64(5)
+memory usage: 6.2 KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pandas provides methods to display just the first <code class="docutils literal notranslate"><span class="pre">n</span></code> rows or last <code class="docutils literal notranslate"><span class="pre">n</span></code> rows of a DataFrame - <code class="docutils literal notranslate"><span class="pre">head()</span></code> and <code class="docutils literal notranslate"><span class="pre">tail()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+      <th>minor_axis_length</th>
+      <th>major_axis_length</th>
+      <th>eccentricity</th>
+      <th>extent</th>
+      <th>feret_diameter_max</th>
+      <th>equivalent_diameter_area</th>
+      <th>bbox-0</th>
+      <th>bbox-1</th>
+      <th>bbox-2</th>
+      <th>bbox-3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>422</td>
+      <td>192.379147</td>
+      <td>16.488550</td>
+      <td>34.566789</td>
+      <td>0.878900</td>
+      <td>0.586111</td>
+      <td>35.227830</td>
+      <td>23.179885</td>
+      <td>0</td>
+      <td>11</td>
+      <td>30</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>182</td>
+      <td>180.131868</td>
+      <td>11.736074</td>
+      <td>20.802697</td>
+      <td>0.825665</td>
+      <td>0.787879</td>
+      <td>21.377558</td>
+      <td>15.222667</td>
+      <td>0</td>
+      <td>53</td>
+      <td>11</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+      <td>28.409502</td>
+      <td>30.208433</td>
+      <td>0.339934</td>
+      <td>0.874339</td>
+      <td>32.756679</td>
+      <td>29.010538</td>
+      <td>0</td>
+      <td>95</td>
+      <td>28</td>
+      <td>122</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>437</td>
+      <td>216.585812</td>
+      <td>23.143996</td>
+      <td>24.606130</td>
+      <td>0.339576</td>
+      <td>0.826087</td>
+      <td>26.925824</td>
+      <td>23.588253</td>
+      <td>0</td>
+      <td>144</td>
+      <td>23</td>
+      <td>167</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>476</td>
+      <td>212.302521</td>
+      <td>19.852882</td>
+      <td>31.075106</td>
+      <td>0.769317</td>
+      <td>0.863884</td>
+      <td>31.384710</td>
+      <td>24.618327</td>
+      <td>0</td>
+      <td>237</td>
+      <td>29</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>277</td>
+      <td>206.469314</td>
+      <td>17.523565</td>
+      <td>20.151370</td>
+      <td>0.493763</td>
+      <td>0.769444</td>
+      <td>20.880613</td>
+      <td>18.779972</td>
+      <td>6</td>
+      <td>189</td>
+      <td>26</td>
+      <td>207</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>259</td>
+      <td>178.007722</td>
+      <td>15.309080</td>
+      <td>21.761302</td>
+      <td>0.710695</td>
+      <td>0.735795</td>
+      <td>22.803509</td>
+      <td>18.159544</td>
+      <td>17</td>
+      <td>211</td>
+      <td>39</td>
+      <td>227</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>219</td>
+      <td>191.598174</td>
+      <td>15.745458</td>
+      <td>17.729017</td>
+      <td>0.459616</td>
+      <td>0.760417</td>
+      <td>18.681542</td>
+      <td>16.698487</td>
+      <td>18</td>
+      <td>37</td>
+      <td>36</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>67</td>
+      <td>167.522388</td>
+      <td>8.731268</td>
+      <td>9.761752</td>
+      <td>0.447195</td>
+      <td>0.827160</td>
+      <td>10.295630</td>
+      <td>9.236182</td>
+      <td>18</td>
+      <td>133</td>
+      <td>27</td>
+      <td>142</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>19</td>
+      <td>155.368421</td>
+      <td>1.967201</td>
+      <td>11.358057</td>
+      <td>0.984887</td>
+      <td>0.863636</td>
+      <td>11.000000</td>
+      <td>4.918491</td>
+      <td>21</td>
+      <td>0</td>
+      <td>32</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also get the column names via <code class="docutils literal notranslate"><span class="pre">columns</span></code>. This will provide a so-called <code class="docutils literal notranslate"><span class="pre">Index</span></code> object with the column names and some metadata</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;area&#39;, &#39;mean_intensity&#39;, &#39;minor_axis_length&#39;, &#39;major_axis_length&#39;,
+       &#39;eccentricity&#39;, &#39;extent&#39;, &#39;feret_diameter_max&#39;,
+       &#39;equivalent_diameter_area&#39;, &#39;bbox-0&#39;, &#39;bbox-1&#39;, &#39;bbox-2&#39;, &#39;bbox-3&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="selecting-rows-and-columns">
+<h2>Selecting rows and columns<a class="headerlink" href="#selecting-rows-and-columns" title="Permalink to this heading">#</a></h2>
+<p>Let’s get the DataFrames first row</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">File ~/Documents/Miniconda/envs/devbio-napari-env/lib/python3.9/site-packages/pandas/core/indexes/base.py:3805,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3804</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3805</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3806</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="nn">File index.pyx:167,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">File index.pyx:196,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:7081,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:7089,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: 0
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nn">File ~/Documents/Miniconda/envs/devbio-napari-env/lib/python3.9/site-packages/pandas/core/frame.py:4090,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4088</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4089</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">4090</span> <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4091</span> <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">4092</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
+
+<span class="nn">File ~/Documents/Miniconda/envs/devbio-napari-env/lib/python3.9/site-packages/pandas/core/indexes/base.py:3812,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3807</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3808</span>         <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3809</span>         <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3810</span>     <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3811</span>         <span class="k">raise</span> <span class="n">InvalidIndexError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">3812</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+<span class="g g-Whitespace">   </span><span class="mi">3813</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3814</span>     <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3815</span>     <span class="c1">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3816</span>     <span class="c1">#  the TypeError.</span>
+<span class="g g-Whitespace">   </span><span class="mi">3817</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: 0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ooops…this raised a <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>. For DataFrames, the <code class="docutils literal notranslate"><span class="pre">[]</span></code> operator expects labels only, and works on the columns, not the rows. We can use it to get a subset of the DataFrame with the specified column labels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     422
+1     182
+2     661
+3     437
+4     476
+     ... 
+56    211
+57     78
+58     86
+59     51
+60     46
+Name: area, Length: 61, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the resulting data structure has the column data and an index, too. That’s because Pandas DataFrames use <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.Series.html">Pandas Series</a> for the columns, which are one-dimensional arrays with an index for the rows and a label for the column data. It can be seen as a single-column table.</p>
+<p>We can get more columns by passing their names as a list. Furthermore, we can store this “sub-dataframe” in a new variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df_subset</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_intensity&#39;</span><span class="p">]]</span>
+<span class="n">df_subset</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>422</td>
+      <td>192.379147</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>182</td>
+      <td>180.131868</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>437</td>
+      <td>216.585812</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>476</td>
+      <td>212.302521</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>211</td>
+      <td>185.061611</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>78</td>
+      <td>185.230769</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>86</td>
+      <td>183.720930</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>51</td>
+      <td>190.431373</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>46</td>
+      <td>175.304348</td>
+    </tr>
+  </tbody>
+</table>
+<p>61 rows × 2 columns</p>
+</div></div></div>
+</div>
+<section id="label-location-based-selection">
+<h3>Label-location based selection<a class="headerlink" href="#label-location-based-selection" title="Permalink to this heading">#</a></h3>
+<p>If we want to select specific rows, we need to use the method <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html"><code class="docutils literal notranslate"><span class="pre">loc[]</span></code></a>. Note, that <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> also works with labels only. Let’s get the row with label 0 (its index label).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>area                        422.000000
+mean_intensity              192.379147
+minor_axis_length            16.488550
+major_axis_length            34.566789
+eccentricity                  0.878900
+extent                        0.586111
+feret_diameter_max           35.227830
+equivalent_diameter_area     23.179885
+bbox-0                        0.000000
+bbox-1                       11.000000
+bbox-2                       30.000000
+bbox-3                       35.000000
+Name: 0, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also select more than one row by providing the row labels as a list. In addition, we can select specific columns, too:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_intensity&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>422</td>
+      <td>192.379147</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also use slicing via <code class="docutils literal notranslate"><span class="pre">[from:to]</span></code> to get data starting <code class="docutils literal notranslate"><span class="pre">from</span></code> a specific label up <code class="docutils literal notranslate"><span class="pre">to</span></code> a specific label.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;area&#39;</span><span class="p">:</span><span class="s1">&#39;extent&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+      <th>minor_axis_length</th>
+      <th>major_axis_length</th>
+      <th>eccentricity</th>
+      <th>extent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>422</td>
+      <td>192.379147</td>
+      <td>16.488550</td>
+      <td>34.566789</td>
+      <td>0.878900</td>
+      <td>0.586111</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>182</td>
+      <td>180.131868</td>
+      <td>11.736074</td>
+      <td>20.802697</td>
+      <td>0.825665</td>
+      <td>0.787879</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+      <td>28.409502</td>
+      <td>30.208433</td>
+      <td>0.339934</td>
+      <td>0.874339</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Attention</strong>: Slicing on label-location requires that the order of the labels in the row and column index is known and taken into account:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;extent&#39;</span><span class="p">:</span><span class="s1">&#39;area&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+    </tr>
+    <tr>
+      <th>1</th>
+    </tr>
+    <tr>
+      <th>2</th>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="integer-location-based-selection">
+<h3>Integer-location based selection<a class="headerlink" href="#integer-location-based-selection" title="Permalink to this heading">#</a></h3>
+<p>If we want to select data based on the indices’ integer positions, we need to use <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html"><code class="docutils literal notranslate"><span class="pre">iloc[]</span></code></a>. Let’s get the value from the first row and the first column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>422
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use slicing to get specific parts of the data. Let’s get the first 10 rows and the first 5 columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+      <th>minor_axis_length</th>
+      <th>major_axis_length</th>
+      <th>eccentricity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>422</td>
+      <td>192.379147</td>
+      <td>16.488550</td>
+      <td>34.566789</td>
+      <td>0.878900</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>182</td>
+      <td>180.131868</td>
+      <td>11.736074</td>
+      <td>20.802697</td>
+      <td>0.825665</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+      <td>28.409502</td>
+      <td>30.208433</td>
+      <td>0.339934</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>437</td>
+      <td>216.585812</td>
+      <td>23.143996</td>
+      <td>24.606130</td>
+      <td>0.339576</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>476</td>
+      <td>212.302521</td>
+      <td>19.852882</td>
+      <td>31.075106</td>
+      <td>0.769317</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>277</td>
+      <td>206.469314</td>
+      <td>17.523565</td>
+      <td>20.151370</td>
+      <td>0.493763</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>259</td>
+      <td>178.007722</td>
+      <td>15.309080</td>
+      <td>21.761302</td>
+      <td>0.710695</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>219</td>
+      <td>191.598174</td>
+      <td>15.745458</td>
+      <td>17.729017</td>
+      <td>0.459616</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>67</td>
+      <td>167.522388</td>
+      <td>8.731268</td>
+      <td>9.761752</td>
+      <td>0.447195</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>19</td>
+      <td>155.368421</td>
+      <td>1.967201</td>
+      <td>11.358057</td>
+      <td>0.984887</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s get everything starting from the 10th row and starting from the 5th column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">10</span><span class="p">:,</span> <span class="mi">5</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>extent</th>
+      <th>feret_diameter_max</th>
+      <th>equivalent_diameter_area</th>
+      <th>bbox-0</th>
+      <th>bbox-1</th>
+      <th>bbox-2</th>
+      <th>bbox-3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>0.747692</td>
+      <td>26.925824</td>
+      <td>24.875579</td>
+      <td>21</td>
+      <td>162</td>
+      <td>47</td>
+      <td>187</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.725806</td>
+      <td>33.837849</td>
+      <td>28.322092</td>
+      <td>26</td>
+      <td>59</td>
+      <td>57</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.767361</td>
+      <td>18.973666</td>
+      <td>16.774562</td>
+      <td>39</td>
+      <td>225</td>
+      <td>57</td>
+      <td>241</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.787879</td>
+      <td>11.704700</td>
+      <td>9.965575</td>
+      <td>40</td>
+      <td>4</td>
+      <td>51</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.784965</td>
+      <td>26.925824</td>
+      <td>23.909926</td>
+      <td>42</td>
+      <td>128</td>
+      <td>68</td>
+      <td>150</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.767857</td>
+      <td>28.861739</td>
+      <td>25.631847</td>
+      <td>44</td>
+      <td>17</td>
+      <td>72</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.599078</td>
+      <td>34.014703</td>
+      <td>22.283703</td>
+      <td>44</td>
+      <td>184</td>
+      <td>75</td>
+      <td>205</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.775926</td>
+      <td>28.160256</td>
+      <td>23.097346</td>
+      <td>60</td>
+      <td>89</td>
+      <td>87</td>
+      <td>109</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.747899</td>
+      <td>22.472205</td>
+      <td>18.437868</td>
+      <td>60</td>
+      <td>206</td>
+      <td>81</td>
+      <td>223</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.800454</td>
+      <td>24.186773</td>
+      <td>21.200320</td>
+      <td>63</td>
+      <td>235</td>
+      <td>84</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>0.774359</td>
+      <td>16.155494</td>
+      <td>13.865755</td>
+      <td>66</td>
+      <td>162</td>
+      <td>81</td>
+      <td>175</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>0.790514</td>
+      <td>24.698178</td>
+      <td>22.567583</td>
+      <td>73</td>
+      <td>53</td>
+      <td>96</td>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>0.676190</td>
+      <td>31.953091</td>
+      <td>23.289484</td>
+      <td>75</td>
+      <td>117</td>
+      <td>96</td>
+      <td>147</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>0.809211</td>
+      <td>19.924859</td>
+      <td>17.697936</td>
+      <td>77</td>
+      <td>26</td>
+      <td>96</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>0.827303</td>
+      <td>32.756679</td>
+      <td>25.306906</td>
+      <td>82</td>
+      <td>0</td>
+      <td>114</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>0.812865</td>
+      <td>21.023796</td>
+      <td>18.813840</td>
+      <td>86</td>
+      <td>214</td>
+      <td>105</td>
+      <td>232</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>0.770362</td>
+      <td>35.468296</td>
+      <td>29.446156</td>
+      <td>88</td>
+      <td>157</td>
+      <td>114</td>
+      <td>191</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>0.800000</td>
+      <td>20.880613</td>
+      <td>14.969641</td>
+      <td>95</td>
+      <td>245</td>
+      <td>115</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>0.819222</td>
+      <td>24.351591</td>
+      <td>21.349936</td>
+      <td>102</td>
+      <td>92</td>
+      <td>121</td>
+      <td>115</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>0.755556</td>
+      <td>30.594117</td>
+      <td>26.318099</td>
+      <td>108</td>
+      <td>25</td>
+      <td>138</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0.552778</td>
+      <td>44.721360</td>
+      <td>27.570347</td>
+      <td>110</td>
+      <td>113</td>
+      <td>150</td>
+      <td>140</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>0.754167</td>
+      <td>17.088007</td>
+      <td>15.180789</td>
+      <td>115</td>
+      <td>56</td>
+      <td>131</td>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>0.619704</td>
+      <td>38.587563</td>
+      <td>28.299606</td>
+      <td>115</td>
+      <td>151</td>
+      <td>150</td>
+      <td>180</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>0.790451</td>
+      <td>29.832868</td>
+      <td>27.547246</td>
+      <td>115</td>
+      <td>210</td>
+      <td>141</td>
+      <td>239</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>0.833333</td>
+      <td>3.162278</td>
+      <td>2.523133</td>
+      <td>125</td>
+      <td>252</td>
+      <td>127</td>
+      <td>255</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>0.821875</td>
+      <td>21.189620</td>
+      <td>18.299235</td>
+      <td>130</td>
+      <td>0</td>
+      <td>150</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>0.665926</td>
+      <td>52.201533</td>
+      <td>33.832563</td>
+      <td>137</td>
+      <td>75</td>
+      <td>187</td>
+      <td>102</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>0.689855</td>
+      <td>34.985711</td>
+      <td>24.618327</td>
+      <td>137</td>
+      <td>233</td>
+      <td>167</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>0.766447</td>
+      <td>19.924859</td>
+      <td>17.223960</td>
+      <td>138</td>
+      <td>59</td>
+      <td>157</td>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>0.788462</td>
+      <td>17.464249</td>
+      <td>14.450304</td>
+      <td>149</td>
+      <td>182</td>
+      <td>165</td>
+      <td>195</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>0.778656</td>
+      <td>26.627054</td>
+      <td>22.397687</td>
+      <td>153</td>
+      <td>125</td>
+      <td>175</td>
+      <td>148</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>0.778409</td>
+      <td>26.925824</td>
+      <td>22.875783</td>
+      <td>157</td>
+      <td>5</td>
+      <td>181</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>0.815972</td>
+      <td>19.313208</td>
+      <td>17.297725</td>
+      <td>158</td>
+      <td>206</td>
+      <td>176</td>
+      <td>222</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>0.789474</td>
+      <td>25.495098</td>
+      <td>21.850969</td>
+      <td>160</td>
+      <td>35</td>
+      <td>185</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>0.807407</td>
+      <td>32.310989</td>
+      <td>28.856519</td>
+      <td>166</td>
+      <td>167</td>
+      <td>196</td>
+      <td>194</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>0.776860</td>
+      <td>24.596748</td>
+      <td>21.880084</td>
+      <td>174</td>
+      <td>222</td>
+      <td>196</td>
+      <td>244</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>0.795330</td>
+      <td>29.154759</td>
+      <td>27.151532</td>
+      <td>185</td>
+      <td>116</td>
+      <td>211</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>0.800000</td>
+      <td>16.031220</td>
+      <td>9.027033</td>
+      <td>193</td>
+      <td>251</td>
+      <td>209</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>0.774038</td>
+      <td>17.088007</td>
+      <td>14.317527</td>
+      <td>195</td>
+      <td>200</td>
+      <td>211</td>
+      <td>213</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>0.692424</td>
+      <td>34.205263</td>
+      <td>24.121991</td>
+      <td>199</td>
+      <td>17</td>
+      <td>232</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>0.718391</td>
+      <td>32.756679</td>
+      <td>28.209479</td>
+      <td>199</td>
+      <td>89</td>
+      <td>229</td>
+      <td>118</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>0.775362</td>
+      <td>30.594117</td>
+      <td>26.099486</td>
+      <td>203</td>
+      <td>51</td>
+      <td>233</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>0.745455</td>
+      <td>25.179357</td>
+      <td>16.155931</td>
+      <td>214</td>
+      <td>0</td>
+      <td>239</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>0.771978</td>
+      <td>28.861739</td>
+      <td>26.749965</td>
+      <td>214</td>
+      <td>220</td>
+      <td>240</td>
+      <td>248</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>0.782407</td>
+      <td>40.792156</td>
+      <td>32.800723</td>
+      <td>217</td>
+      <td>161</td>
+      <td>244</td>
+      <td>201</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>0.748663</td>
+      <td>22.360680</td>
+      <td>18.881395</td>
+      <td>223</td>
+      <td>130</td>
+      <td>245</td>
+      <td>147</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>0.781481</td>
+      <td>18.973666</td>
+      <td>16.390654</td>
+      <td>232</td>
+      <td>39</td>
+      <td>250</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>0.722222</td>
+      <td>18.027756</td>
+      <td>9.965575</td>
+      <td>248</td>
+      <td>170</td>
+      <td>254</td>
+      <td>188</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>0.781818</td>
+      <td>22.000000</td>
+      <td>10.464158</td>
+      <td>249</td>
+      <td>117</td>
+      <td>254</td>
+      <td>139</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>0.728571</td>
+      <td>14.035669</td>
+      <td>8.058239</td>
+      <td>249</td>
+      <td>228</td>
+      <td>254</td>
+      <td>242</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>0.766667</td>
+      <td>15.033296</td>
+      <td>7.653040</td>
+      <td>250</td>
+      <td>67</td>
+      <td>254</td>
+      <td>82</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To clarify the difference between label-location and integer-location again, let’s try both approaches again on a sorted dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sorted</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_sorted</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+      <th>minor_axis_length</th>
+      <th>major_axis_length</th>
+      <th>eccentricity</th>
+      <th>extent</th>
+      <th>feret_diameter_max</th>
+      <th>equivalent_diameter_area</th>
+      <th>bbox-0</th>
+      <th>bbox-1</th>
+      <th>bbox-2</th>
+      <th>bbox-3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>36</th>
+      <td>899</td>
+      <td>198.291435</td>
+      <td>21.753901</td>
+      <td>54.500296</td>
+      <td>0.916885</td>
+      <td>0.665926</td>
+      <td>52.201533</td>
+      <td>33.832563</td>
+      <td>137</td>
+      <td>75</td>
+      <td>187</td>
+      <td>102</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>845</td>
+      <td>198.295858</td>
+      <td>26.478859</td>
+      <td>40.977288</td>
+      <td>0.763182</td>
+      <td>0.782407</td>
+      <td>40.792156</td>
+      <td>32.800723</td>
+      <td>217</td>
+      <td>161</td>
+      <td>244</td>
+      <td>201</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>681</td>
+      <td>198.308370</td>
+      <td>24.756299</td>
+      <td>36.310074</td>
+      <td>0.731536</td>
+      <td>0.770362</td>
+      <td>35.468296</td>
+      <td>29.446156</td>
+      <td>88</td>
+      <td>157</td>
+      <td>114</td>
+      <td>191</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+      <td>28.409502</td>
+      <td>30.208433</td>
+      <td>0.339934</td>
+      <td>0.874339</td>
+      <td>32.756679</td>
+      <td>29.010538</td>
+      <td>0</td>
+      <td>95</td>
+      <td>28</td>
+      <td>122</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>654</td>
+      <td>199.706422</td>
+      <td>27.176616</td>
+      <td>30.914646</td>
+      <td>0.476664</td>
+      <td>0.807407</td>
+      <td>32.310989</td>
+      <td>28.856519</td>
+      <td>166</td>
+      <td>167</td>
+      <td>196</td>
+      <td>194</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>64</td>
+      <td>190.250000</td>
+      <td>5.354655</td>
+      <td>15.925594</td>
+      <td>0.941780</td>
+      <td>0.800000</td>
+      <td>16.031220</td>
+      <td>9.027033</td>
+      <td>193</td>
+      <td>251</td>
+      <td>209</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>51</td>
+      <td>190.431373</td>
+      <td>5.032414</td>
+      <td>13.742079</td>
+      <td>0.930534</td>
+      <td>0.728571</td>
+      <td>14.035669</td>
+      <td>8.058239</td>
+      <td>249</td>
+      <td>228</td>
+      <td>254</td>
+      <td>242</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>46</td>
+      <td>175.304348</td>
+      <td>3.803982</td>
+      <td>15.948714</td>
+      <td>0.971139</td>
+      <td>0.766667</td>
+      <td>15.033296</td>
+      <td>7.653040</td>
+      <td>250</td>
+      <td>67</td>
+      <td>254</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>19</td>
+      <td>155.368421</td>
+      <td>1.967201</td>
+      <td>11.358057</td>
+      <td>0.984887</td>
+      <td>0.863636</td>
+      <td>11.000000</td>
+      <td>4.918491</td>
+      <td>21</td>
+      <td>0</td>
+      <td>32</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>5</td>
+      <td>161.600000</td>
+      <td>1.788854</td>
+      <td>3.098387</td>
+      <td>0.816497</td>
+      <td>0.833333</td>
+      <td>3.162278</td>
+      <td>2.523133</td>
+      <td>125</td>
+      <td>252</td>
+      <td>127</td>
+      <td>255</td>
+    </tr>
+  </tbody>
+</table>
+<p>61 rows × 12 columns</p>
+</div></div></div>
+</div>
+<p>As we can see above, the index labels are not in order anymore. Let’s apply <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc[]</span></code> again, to get the “first three rows”:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># label-location</span>
+<span class="n">df_sorted</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+      <th>minor_axis_length</th>
+      <th>major_axis_length</th>
+      <th>eccentricity</th>
+      <th>extent</th>
+      <th>feret_diameter_max</th>
+      <th>equivalent_diameter_area</th>
+      <th>bbox-0</th>
+      <th>bbox-1</th>
+      <th>bbox-2</th>
+      <th>bbox-3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>422</td>
+      <td>192.379147</td>
+      <td>16.488550</td>
+      <td>34.566789</td>
+      <td>0.878900</td>
+      <td>0.586111</td>
+      <td>35.227830</td>
+      <td>23.179885</td>
+      <td>0</td>
+      <td>11</td>
+      <td>30</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>182</td>
+      <td>180.131868</td>
+      <td>11.736074</td>
+      <td>20.802697</td>
+      <td>0.825665</td>
+      <td>0.787879</td>
+      <td>21.377558</td>
+      <td>15.222667</td>
+      <td>0</td>
+      <td>53</td>
+      <td>11</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+      <td>28.409502</td>
+      <td>30.208433</td>
+      <td>0.339934</td>
+      <td>0.874339</td>
+      <td>32.756679</td>
+      <td>29.010538</td>
+      <td>0</td>
+      <td>95</td>
+      <td>28</td>
+      <td>122</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># integer-location</span>
+<span class="n">df_sorted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+      <th>minor_axis_length</th>
+      <th>major_axis_length</th>
+      <th>eccentricity</th>
+      <th>extent</th>
+      <th>feret_diameter_max</th>
+      <th>equivalent_diameter_area</th>
+      <th>bbox-0</th>
+      <th>bbox-1</th>
+      <th>bbox-2</th>
+      <th>bbox-3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>36</th>
+      <td>899</td>
+      <td>198.291435</td>
+      <td>21.753901</td>
+      <td>54.500296</td>
+      <td>0.916885</td>
+      <td>0.665926</td>
+      <td>52.201533</td>
+      <td>33.832563</td>
+      <td>137</td>
+      <td>75</td>
+      <td>187</td>
+      <td>102</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>845</td>
+      <td>198.295858</td>
+      <td>26.478859</td>
+      <td>40.977288</td>
+      <td>0.763182</td>
+      <td>0.782407</td>
+      <td>40.792156</td>
+      <td>32.800723</td>
+      <td>217</td>
+      <td>161</td>
+      <td>244</td>
+      <td>201</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>681</td>
+      <td>198.308370</td>
+      <td>24.756299</td>
+      <td>36.310074</td>
+      <td>0.731536</td>
+      <td>0.770362</td>
+      <td>35.468296</td>
+      <td>29.446156</td>
+      <td>88</td>
+      <td>157</td>
+      <td>114</td>
+      <td>191</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="boolean-indexing">
+<h2>Boolean indexing<a class="headerlink" href="#boolean-indexing" title="Permalink to this heading">#</a></h2>
+<p>With boolean indexing (or masking), we can select specific parts of the data based on conditional / logical queries. Suppose we want to get entries for which “area” &gt; 500, we can use this condition in the <code class="docutils literal notranslate"><span class="pre">[]</span></code> operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">500</span>
+<span class="n">mask</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     False
+1     False
+2      True
+3     False
+4     False
+      ...  
+56    False
+57    False
+58    False
+59    False
+60    False
+Name: area, Length: 61, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># apply the mask to the DataFrame: df[mask]</span>
+<span class="c1"># Or as one-liner:</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">500</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+      <th>minor_axis_length</th>
+      <th>major_axis_length</th>
+      <th>eccentricity</th>
+      <th>extent</th>
+      <th>feret_diameter_max</th>
+      <th>equivalent_diameter_area</th>
+      <th>bbox-0</th>
+      <th>bbox-1</th>
+      <th>bbox-2</th>
+      <th>bbox-3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+      <td>28.409502</td>
+      <td>30.208433</td>
+      <td>0.339934</td>
+      <td>0.874339</td>
+      <td>32.756679</td>
+      <td>29.010538</td>
+      <td>0</td>
+      <td>95</td>
+      <td>28</td>
+      <td>122</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>630</td>
+      <td>173.600000</td>
+      <td>24.460212</td>
+      <td>33.020881</td>
+      <td>0.671781</td>
+      <td>0.725806</td>
+      <td>33.837849</td>
+      <td>28.322092</td>
+      <td>26</td>
+      <td>59</td>
+      <td>57</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>516</td>
+      <td>194.403101</td>
+      <td>23.585468</td>
+      <td>27.907939</td>
+      <td>0.534582</td>
+      <td>0.767857</td>
+      <td>28.861739</td>
+      <td>25.631847</td>
+      <td>44</td>
+      <td>17</td>
+      <td>72</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>503</td>
+      <td>198.648111</td>
+      <td>19.812612</td>
+      <td>33.323794</td>
+      <td>0.804060</td>
+      <td>0.827303</td>
+      <td>32.756679</td>
+      <td>25.306906</td>
+      <td>82</td>
+      <td>0</td>
+      <td>114</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>681</td>
+      <td>198.308370</td>
+      <td>24.756299</td>
+      <td>36.310074</td>
+      <td>0.731536</td>
+      <td>0.770362</td>
+      <td>35.468296</td>
+      <td>29.446156</td>
+      <td>88</td>
+      <td>157</td>
+      <td>114</td>
+      <td>191</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>544</td>
+      <td>198.455882</td>
+      <td>23.888675</td>
+      <td>29.100741</td>
+      <td>0.571078</td>
+      <td>0.755556</td>
+      <td>30.594117</td>
+      <td>26.318099</td>
+      <td>108</td>
+      <td>25</td>
+      <td>138</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>597</td>
+      <td>190.954774</td>
+      <td>17.078429</td>
+      <td>47.451008</td>
+      <td>0.932984</td>
+      <td>0.552778</td>
+      <td>44.721360</td>
+      <td>27.570347</td>
+      <td>110</td>
+      <td>113</td>
+      <td>150</td>
+      <td>140</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>629</td>
+      <td>193.666137</td>
+      <td>20.719000</td>
+      <td>40.268495</td>
+      <td>0.857478</td>
+      <td>0.619704</td>
+      <td>38.587563</td>
+      <td>28.299606</td>
+      <td>115</td>
+      <td>151</td>
+      <td>150</td>
+      <td>180</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>596</td>
+      <td>210.067114</td>
+      <td>26.320789</td>
+      <td>28.931798</td>
+      <td>0.415150</td>
+      <td>0.790451</td>
+      <td>29.832868</td>
+      <td>27.547246</td>
+      <td>115</td>
+      <td>210</td>
+      <td>141</td>
+      <td>239</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>899</td>
+      <td>198.291435</td>
+      <td>21.753901</td>
+      <td>54.500296</td>
+      <td>0.916885</td>
+      <td>0.665926</td>
+      <td>52.201533</td>
+      <td>33.832563</td>
+      <td>137</td>
+      <td>75</td>
+      <td>187</td>
+      <td>102</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>654</td>
+      <td>199.706422</td>
+      <td>27.176616</td>
+      <td>30.914646</td>
+      <td>0.476664</td>
+      <td>0.807407</td>
+      <td>32.310989</td>
+      <td>28.856519</td>
+      <td>166</td>
+      <td>167</td>
+      <td>196</td>
+      <td>194</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>579</td>
+      <td>200.649396</td>
+      <td>26.484866</td>
+      <td>27.884001</td>
+      <td>0.312788</td>
+      <td>0.795330</td>
+      <td>29.154759</td>
+      <td>27.151532</td>
+      <td>185</td>
+      <td>116</td>
+      <td>211</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>625</td>
+      <td>217.894400</td>
+      <td>24.624993</td>
+      <td>32.379307</td>
+      <td>0.649319</td>
+      <td>0.718391</td>
+      <td>32.756679</td>
+      <td>28.209479</td>
+      <td>199</td>
+      <td>89</td>
+      <td>229</td>
+      <td>118</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>535</td>
+      <td>189.936449</td>
+      <td>22.795105</td>
+      <td>29.898229</td>
+      <td>0.647079</td>
+      <td>0.775362</td>
+      <td>30.594117</td>
+      <td>26.099486</td>
+      <td>203</td>
+      <td>51</td>
+      <td>233</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>562</td>
+      <td>215.928826</td>
+      <td>26.012538</td>
+      <td>27.607523</td>
+      <td>0.334977</td>
+      <td>0.771978</td>
+      <td>28.861739</td>
+      <td>26.749965</td>
+      <td>214</td>
+      <td>220</td>
+      <td>240</td>
+      <td>248</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>845</td>
+      <td>198.295858</td>
+      <td>26.478859</td>
+      <td>40.977288</td>
+      <td>0.763182</td>
+      <td>0.782407</td>
+      <td>40.792156</td>
+      <td>32.800723</td>
+      <td>217</td>
+      <td>161</td>
+      <td>244</td>
+      <td>201</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also use this syntax with <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> to return specific columns only, e.g., “area” and “mean_intensity”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">500</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_intensity&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area</th>
+      <th>mean_intensity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>661</td>
+      <td>205.216339</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>630</td>
+      <td>173.600000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>516</td>
+      <td>194.403101</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>503</td>
+      <td>198.648111</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>681</td>
+      <td>198.308370</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>544</td>
+      <td>198.455882</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>597</td>
+      <td>190.954774</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>629</td>
+      <td>193.666137</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>596</td>
+      <td>210.067114</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>899</td>
+      <td>198.291435</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>654</td>
+      <td>199.706422</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>579</td>
+      <td>200.649396</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>625</td>
+      <td>217.894400</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>535</td>
+      <td>189.936449</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>562</td>
+      <td>215.928826</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>845</td>
+      <td>198.295858</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="get-scalar-values">
+<h2>Get scalar values<a class="headerlink" href="#get-scalar-values" title="Permalink to this heading">#</a></h2>
+<p>If we only want to access a single scalar value, the fastest way is to use the <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.at.html"><code class="docutils literal notranslate"><span class="pre">at</span></code></a> and <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iat.html"><code class="docutils literal notranslate"><span class="pre">iat</span></code></a> methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;area&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>661
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>422
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="math-with-dataframes">
+<h2>Math with DataFrames<a class="headerlink" href="#math-with-dataframes" title="Permalink to this heading">#</a></h2>
+<p>Now that we know how to select specific parts of a DataFrame, we want to do some math with it. Mathematical operations can be executed directly on a DataFrame or selected parts of it. We can also easily add new columns to the DataFrame to store computed results.</p>
+<p>Let’s assume we want to compute the ratio of the two axes by dividing the major axis by the minor axis and store this result in a new colum named axis_ratio. We can just define that new column and use the basic mathematical operator on the existing columns to fill it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;axis_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;major_axis_length&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;minor_axis_length&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;axis_ratio&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     2.096412
+1     1.772543
+2     1.063321
+3     1.063176
+4     1.565269
+        ...   
+56    1.273114
+57    2.916048
+58    3.917806
+59    2.730713
+60    4.192637
+Name: axis_ratio, Length: 61, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>A DataFrame and the underlying Series objects holding the column data also provide lots of built-in methods for mathematical operations and basic statistics via the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator.</p>
+<p>See also:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/reference/frame.html#computations-descriptive-stats">Built-in methods on DataFrames</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/reference/series.html#computations-descriptive-stats">Built-in methods on Series</a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the mean for all columns in the DataFrame</span>
+<span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>area                        358.426230
+mean_intensity              191.966564
+minor_axis_length            17.127032
+major_axis_length            24.796851
+eccentricity                  0.657902
+extent                        0.764751
+feret_diameter_max           25.323368
+equivalent_diameter_area     20.201434
+bbox-0                      112.786885
+bbox-1                      122.245902
+bbox-2                      134.901639
+bbox-3                      142.131148
+axis_ratio                    1.650854
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the max value from a column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>899
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>From the loaded CSV file, create a table that only contains these columns:</p>
+<ul class="simple">
+<li><p>minor_axis_length</p></li>
+<li><p>major_axis_length</p></li>
+<li><p>mean_intensity</p></li>
+</ul>
+<p>Also, select all rows where value <code class="docutils literal notranslate"><span class="pre">mean_intensity</span></code> is smaller than the mean of the column <code class="docutils literal notranslate"><span class="pre">mean_intensity</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df_loaded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/blobs_statistics.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./day2.4_tabular_data_wrangling"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-rows-and-columns">Selecting rows and columns</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label-location-based-selection">Label-location based selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-location-based-selection">Integer-location based selection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-indexing">Boolean indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-scalar-values">Get scalar values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#math-with-dataframes">Math with DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-04-30.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p>
+Copyright: Licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a> unless mentioned otherwise. 
+Contributions and feedback are welcome.
+</p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
