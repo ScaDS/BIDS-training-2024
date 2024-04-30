@@ -1,0 +1,188 @@
+name	station
+Peshawar	41530
+Tirana	13615
+Dar-El-Beida	60390
+Pago Pago / Int. Airport	91765
+Perpignan	07747
+Luanda	66160
+C. Amalie / St. Thomas Airport	78543
+Aeroparque Bs. As. Aerodrome	87582
+Agri	17099
+Riohacha / Almirante Padilla	80035
+Canberra	94926
+Wien / Hohe Warte	11035
+Tabriz	40706
+Nassau Airport	78073
+Bahrain International Airport	41150
+Agartala	42724
+Piarco International Airport, Trinidad	78970
+Minsk	26850
+Lille	07015
+Belize / Phillip Goldston Intl. Airport	78583
+Cotonou	65344
+Bermuda	78016
+Cooch Behar	42403
+La Paz / Alto	85201
+Bjelasnica	14652
+Mafikeng Intl. Ad	68242
+Montes Claros	83437
+Brunei Airport	96315
+Sofia Observ.	15614
+Ouagadougou	65503
+Kigali	64387
+Sal	08594
+Phu Quoc	48917
+Bata Rio Municipal	64820
+Kemptville CS	71300
+Owen Roberts Airportgrand Cayman	78384
+Bangui	64650
+Diffa	61085
+La Hague	07020
+Pudahuel	85574
+Beijing	54511
+Taipa	45011
+Fuzhou	58847
+Bogota / Eldorado	80222
+Dzaoudzi / Pamanzi Mayotte	67005
+Rarotonga	91843
+Juan Santamaria	78762
+Abidjan	65578
+Nagykanizsa	12925
+Key West Airport	72201
+Larnaca Airport	17609
+Praha / Ruzyne	11518
+Taejon	47133
+Arkona	10091
+Addis Ababa	63450
+Barahona	78482
+Izobamba-Santa Catalina	84088
+El Arish	62337
+San Salvador / Ilopango	78663
+Port Harcourt	65250
+Gizan	41140
+Tallin / Harku	26038
+Lerwick	03005
+Mount Pleasant Airport	88889
+Nausori	91683
+Helsinki-Vantaa	02974
+Paris-Orly	07149
+Cayenne / Rochambeau	81405
+Tahiti-Faaa	91938
+Banjul / Yundum	61701
+Batumi	37484
+Berlin / Tempelhof	10384
+Accra	65472
+Gibraltar	08495
+Athinai Airport	16716
+Godthaab / Nuuk	04250
+Agana, Guam International Airport	91212
+Acajutla	78650
+Conakry / Gbessia	61832
+Ziguinchor	61695
+Georgetown	81001
+Roma / Ciampino	16239
+Tegucigalpa	78720
+Budapest / Lorinc	12843
+Reykjavik	04030
+New Delhi / Palam	42181
+Jakarta / Observatory	96745
+Tehran-Mehrabad	40754
+Kermanshah	40766
+Valley	03302
+Ben-Gurion International Airport	40180
+Kingston / Norman Manley	78397
+Vladivostok	31960
+Karaganda	35394
+Eldoret	63686
+Tarawa	91610
+Abadan	40831
+Almaty	36870
+Vientiane	48940
+Liepaja	26406
+Damascus Int. Airport	40080
+Bloemfontein, Bloemfontein Airport	68442
+Grand Bassa, Roberts Field	65660
+Gabes	60765
+Saentis	06680
+Vilnius	26730
+Luxembourg / Luxembourg	06590
+Antananarivo / Ivato	67083
+Lichinga	67217
+Sepang/KL International Airport	48647
+Thiruvananthapuram	43372
+Bamako / Senou	61291
+Luqa	16597
+Kwajalein, Bucholz AAF, Kwajalein KMR ATOL Airport	91366
+Podor	61612
+Plaisance Mauritius	61990
+Toluca, Mex.	76675
+Nukuoro Atoll	91425
+Nice	07690
+Irkutsk	30710
+Rabat-Sale	60135
+Maputo / Mavalane	67341
+Chiang Mai	48327
+J. G. Strijdom	68112
+Siliguri	42398
+De Kooy	06235
+Burtonfield Tanna	91565
+Wellington Aerodrome Aws	93439
+Managua A. C. Sandino	78741
+Niamey-Aero	61052
+Ilorin	65101
+Saipan Island, Saipan International Airport	91232
+Oslo-Blindern	01492
+Seeb, International Airport	41256
+Manokwari / Rendani	97530
+Apartado / Los Cedros	80084
+Nadzab	92047
+Asuncion / Aeropuerto	86218
+Lima-Callao / Aerop. Internacional Jorgechavez	84628
+Ninoy Aquino Inter-National Airport	98429
+Warszawa-Okecie	12375
+Coimbra / Cernache	08548
+Doha International Airport	41170
+Iasi	15090
+Saint-Denis / Gillot	61980
+Bucuresti / Imh	15420
+Moskva	27612
+Saint-Pierre	71805
+Rimini	16149
+King Khaled International Airport	40437
+Dakar / Yoff	61641
+Beograd	13274
+Seychelles International Airport	63980
+Batan, Sumatra	96087
+Klagenfurt	11231
+Honiara / Henderson	91520
+Malindi	63799
+Cape Town Airport	68816
+Lodwar	63612
+Madrid / Cuatro Vientos	08223
+Asswan	62414
+Ristna	26115
+Payerne	06610
+Dushanbe	38836
+Nis	13388
+Don Muang	48456
+Alor / Mali	97320
+Ono-I-Lau	91699
+Tunis-Carthage	60715
+Bolu	17070
+Ashgabat Keshi	38880
+Funafuti	91643
+Kitale	63661
+Kyiv	33345
+Abu Dhabi International Airport	41217
+London Heathrow Airport	03772
+Dodoma	63862
+Washington National Airport	72405
+Carrasco	86580
+Tashkent	38457
+Bauerfield Efate	91557
+Puerto Carreno / A. Guauquea	80139
+Haiphong / Cat Bi / Catbi / Dong Ya	48825
+Hihifo Ile Wallis	91753
+Fuerteventura / Aeropuerto	60035
+Kasane	68029
+Masvingo	67975
