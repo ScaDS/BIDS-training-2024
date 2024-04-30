@@ -1,0 +1,1148 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Part 1: Time series and other simple plots &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day3.3b_advanced_plotting/01_seabornobj_solution';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bio-Image Data Science Training Schools 2024
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day0_preparation/readme.html">Setting up your computer</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imprint.html">Imprint</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday3.3b_advanced_plotting/01_seabornobj_solution.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/day3.3b_advanced_plotting/01_seabornobj_solution.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Part 1: Time series and other simple plots</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#my-first-seaborn-objects-plot">My first seaborn.objects plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-distributions">Plotting distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-is-the-temperature-range-over-all-cities">How is the temperature range over all cities?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-so-band-and-so-agg-doing-in-the-backgorund">What are so.Band and so.Agg doing in the backgorund?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#another-visualization-date-is-categorical-show-data-range-not-as-min-max-but-as-errorbar">Another visualization (date is categorical, show data range not as min-max but as errorbar)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-of-spaghetti-plots">The problem of Spaghetti Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternatives-1-highlighting">Alternatives: (1) Highlighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternatives-2-facet">Alternatives: (2) Facet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-relationship-of-temperature-date-and-latitude-south-north">Example: relationship of temperature, date and latitude (south - north)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-not-do-it-spaghetti-line-plot">How to not do it: spaghetti line plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-dot-array-and-flip-latitude-and-temperature-axis">Alternative: Dot array and flip latitude and temperature axis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-heatmap-like-via-dash">Alternative: Heatmap-like (via Dash)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#on-all-continents-no-problem-facet">On all continents? no problem: facet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-what-to-do-if-you-want-to-plot-3-4-variables">Example: what to do if you want to plot 3-4 variables?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-3d-plot-with-plotly">interactive 3D plot with plotly</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span> <span class="c1">## suppress annoying deprecation warnings</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn.objects</span> <span class="k">as</span> <span class="nn">so</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="part-1-time-series-and-other-simple-plots">
+<h1>Part 1: Time series and other simple plots<a class="headerlink" href="#part-1-time-series-and-other-simple-plots" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Renaming columns for better axis labels in plots</span>
+<span class="n">col_rename</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="s1">&#39;tavg&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp_Avg_°C&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;tmax&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp_Max_°C&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;tmin&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp_Min_°C&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;rhum&#39;</span><span class="p">:</span> <span class="s1">&#39;Rel_Humidity_%&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;coco&#39;</span><span class="p">:</span> <span class="s1">&#39;Condition&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;wspd&#39;</span><span class="p">:</span> <span class="s1">&#39;Wind_Speed_kmh&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;prcp&#39;</span><span class="p">:</span> <span class="s1">&#39;Precipation_mm&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;wdir&#39;</span><span class="p">:</span> <span class="s1">&#39;Wind_Direction_°&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;pres&#39;</span><span class="p">:</span> <span class="s1">&#39;Air_pressure_hPa&#39;</span><span class="p">,</span>
+	<span class="s1">&#39;dwpt&#39;</span><span class="p">:</span> <span class="s1">&#39;Dew_point_°C&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weather_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;global_weather.csv&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;wmo&#39;</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;station&#39;</span><span class="p">:</span><span class="nb">str</span><span class="p">})</span> 
+<span class="n">weather_df</span> <span class="o">=</span> <span class="n">weather_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">weather_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">col_rename</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">weather_df</span> <span class="o">=</span> <span class="n">weather_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Continent</span> <span class="o">=</span> <span class="n">weather_df</span><span class="p">[</span><span class="s2">&quot;timezone&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">## Get continent from timezone column</span>
+
+<span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">weather_df</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Berlin / Tempelhof&quot;</span><span class="p">,:]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>  <span class="c1">## Let&#39;s have a look at a single city (capital)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>country</th>
+      <th>region</th>
+      <th>wmo</th>
+      <th>icao</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>elevation</th>
+      <th>timezone</th>
+      <th>hourly_start</th>
+      <th>...</th>
+      <th>Rel_Humidity_%</th>
+      <th>Condition</th>
+      <th>Temp_Avg_°C</th>
+      <th>Temp_Min_°C</th>
+      <th>Temp_Max_°C</th>
+      <th>Precipation_mm</th>
+      <th>Wind_Direction_°</th>
+      <th>Wind_Speed_kmh</th>
+      <th>Air_pressure_hPa</th>
+      <th>Continent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1412</th>
+      <td>Berlin / Tempelhof</td>
+      <td>DE</td>
+      <td>BE</td>
+      <td>10384</td>
+      <td>EDDI</td>
+      <td>52.4667</td>
+      <td>13.4</td>
+      <td>50.0</td>
+      <td>Europe/Berlin</td>
+      <td>1929-08-01</td>
+      <td>...</td>
+      <td>80.0</td>
+      <td>Overcast</td>
+      <td>7.8</td>
+      <td>5.5</td>
+      <td>10.0</td>
+      <td>0.3</td>
+      <td>144.0</td>
+      <td>9.0</td>
+      <td>1007.8</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>1413</th>
+      <td>Berlin / Tempelhof</td>
+      <td>DE</td>
+      <td>BE</td>
+      <td>10384</td>
+      <td>EDDI</td>
+      <td>52.4667</td>
+      <td>13.4</td>
+      <td>50.0</td>
+      <td>Europe/Berlin</td>
+      <td>1929-08-01</td>
+      <td>...</td>
+      <td>68.0</td>
+      <td>Overcast</td>
+      <td>9.4</td>
+      <td>6.3</td>
+      <td>13.3</td>
+      <td>0.0</td>
+      <td>132.0</td>
+      <td>7.6</td>
+      <td>1007.3</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>1414</th>
+      <td>Berlin / Tempelhof</td>
+      <td>DE</td>
+      <td>BE</td>
+      <td>10384</td>
+      <td>EDDI</td>
+      <td>52.4667</td>
+      <td>13.4</td>
+      <td>50.0</td>
+      <td>Europe/Berlin</td>
+      <td>1929-08-01</td>
+      <td>...</td>
+      <td>64.0</td>
+      <td>Overcast</td>
+      <td>10.4</td>
+      <td>7.0</td>
+      <td>14.8</td>
+      <td>0.0</td>
+      <td>93.0</td>
+      <td>13.3</td>
+      <td>1005.8</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>1415</th>
+      <td>Berlin / Tempelhof</td>
+      <td>DE</td>
+      <td>BE</td>
+      <td>10384</td>
+      <td>EDDI</td>
+      <td>52.4667</td>
+      <td>13.4</td>
+      <td>50.0</td>
+      <td>Europe/Berlin</td>
+      <td>1929-08-01</td>
+      <td>...</td>
+      <td>74.0</td>
+      <td>Clear</td>
+      <td>9.4</td>
+      <td>6.1</td>
+      <td>12.8</td>
+      <td>0.0</td>
+      <td>71.0</td>
+      <td>12.6</td>
+      <td>1010.0</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>1416</th>
+      <td>Berlin / Tempelhof</td>
+      <td>DE</td>
+      <td>BE</td>
+      <td>10384</td>
+      <td>EDDI</td>
+      <td>52.4667</td>
+      <td>13.4</td>
+      <td>50.0</td>
+      <td>Europe/Berlin</td>
+      <td>1929-08-01</td>
+      <td>...</td>
+      <td>63.0</td>
+      <td>Clear</td>
+      <td>4.6</td>
+      <td>-0.8</td>
+      <td>8.0</td>
+      <td>0.0</td>
+      <td>66.0</td>
+      <td>14.4</td>
+      <td>1017.0</td>
+      <td>Europe</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 28 columns</p>
+</div></div></div>
+</div>
+<section id="my-first-seaborn-objects-plot">
+<h2>My first seaborn.objects plot<a class="headerlink" href="#my-first-seaborn-objects-plot" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">display</span><span class="p">[</span><span class="s2">&quot;scaling&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1">## Adjust standard output size to your liking </span>
+
+<span class="p">(</span>
+    <span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span>
+		<span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">weather_df</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Berlin / Tempelhof&quot;</span><span class="p">,:],</span>   <span class="c1">## Data layer (required)</span>
+		<span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">)</span>                          			<span class="c1">## Axis mapping layer (required)</span>
+    <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dot</span><span class="p">())</span>                                                  	<span class="c1">## Geometry layer (at least one required)</span>
+	<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Line</span><span class="p">())</span>                                                 	<span class="c1"># Connect with lines (optional geometry layer)</span>
+	<span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>                                               	<span class="c1"># Coordinate layer (optional: problem avoid free y-axis)</span>
+    <span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Temperature curve for Berlin / Tempelhof&quot;</span><span class="p">)</span>            <span class="c1"># Theme and label layers (optional)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c3b710e03fd1c1e0ed8b164732a7a234f696f734f0f174e715290eebf7371176.png" src="../_images/c3b710e03fd1c1e0ed8b164732a7a234f696f734f0f174e715290eebf7371176.png" />
+</div>
+</div>
+</section>
+<section id="plotting-distributions">
+<h2>Plotting distributions<a class="headerlink" href="#plotting-distributions" title="Permalink to this heading">#</a></h2>
+<section id="how-is-the-temperature-range-over-all-cities">
+<h3>How is the temperature range over all cities?<a class="headerlink" href="#how-is-the-temperature-range-over-all-cities" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">miss_timepoint</span><span class="o">=</span> <span class="n">weather_df</span><span class="o">.</span><span class="n">time</span> <span class="o">==</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="c1">## Simulate a missing timepoint and see what happens in plots</span>
+<span class="p">(</span>
+	<span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="p">[</span><span class="o">~</span><span class="n">miss_timepoint</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">)</span>  <span class="c1">## Can you spot the missing time point?</span>
+    <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Band</span><span class="p">())</span> 										<span class="c1"># Geometry: Min-Max Band</span>
+	<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Line</span><span class="p">(),</span> 										<span class="c1"># Geometry: Line</span>
+  	<span class="c1">#!#    so.Agg(func=??)    								# Statistic: Mean</span>
+	   <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>    								<span class="c1"># Statistic: Mean</span>
+	<span class="p">)</span>
+    <span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average temperature for all cities&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/49d917318fcdb247ad73d4e9040229c6fe80f12dfcf0e3b8c44f99a17d021ebc.png" src="../_images/49d917318fcdb247ad73d4e9040229c6fe80f12dfcf0e3b8c44f99a17d021ebc.png" />
+</div>
+</div>
+</section>
+<section id="what-are-so-band-and-so-agg-doing-in-the-backgorund">
+<h3>What are so.Band and so.Agg doing in the backgorund?<a class="headerlink" href="#what-are-so-band-and-so-agg-doing-in-the-backgorund" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weather_agg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+	<span class="p">[</span><span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;time&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> 	<span class="c1">## so.Band - min-part</span>
+	<span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;time&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> 	<span class="c1">## so.Line, so.Agg</span>
+	<span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;time&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>	<span class="c1">## so.Band - max-part</span>
+	<span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;time&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>	<span class="c1">## Let&#39;s check how many cities are aggregated</span>
+	<span class="p">],</span> 
+	<span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">weather_agg</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;temp_min&quot;</span><span class="p">,</span><span class="s2">&quot;temp_avg&quot;</span><span class="p">,</span> <span class="s2">&quot;temp_max&quot;</span><span class="p">,</span><span class="s2">&quot;nb_cities&quot;</span><span class="p">]</span>
+
+<span class="n">weather_agg</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>temp_min</th>
+      <th>temp_avg</th>
+      <th>temp_max</th>
+      <th>nb_cities</th>
+    </tr>
+    <tr>
+      <th>time</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2024-03-01</th>
+      <td>-9.6</td>
+      <td>18.207801</td>
+      <td>33.1</td>
+      <td>141</td>
+    </tr>
+    <tr>
+      <th>2024-03-02</th>
+      <td>-11.0</td>
+      <td>18.255944</td>
+      <td>34.8</td>
+      <td>143</td>
+    </tr>
+    <tr>
+      <th>2024-03-03</th>
+      <td>-15.1</td>
+      <td>18.426950</td>
+      <td>33.9</td>
+      <td>141</td>
+    </tr>
+    <tr>
+      <th>2024-03-04</th>
+      <td>-13.4</td>
+      <td>18.536170</td>
+      <td>34.7</td>
+      <td>141</td>
+    </tr>
+    <tr>
+      <th>2024-03-05</th>
+      <td>-9.3</td>
+      <td>18.916783</td>
+      <td>34.4</td>
+      <td>143</td>
+    </tr>
+    <tr>
+      <th>2024-03-06</th>
+      <td>-9.4</td>
+      <td>18.864336</td>
+      <td>35.5</td>
+      <td>143</td>
+    </tr>
+    <tr>
+      <th>2024-03-07</th>
+      <td>-9.0</td>
+      <td>18.797183</td>
+      <td>36.3</td>
+      <td>142</td>
+    </tr>
+    <tr>
+      <th>2024-03-08</th>
+      <td>-11.1</td>
+      <td>18.853901</td>
+      <td>36.7</td>
+      <td>141</td>
+    </tr>
+    <tr>
+      <th>2024-03-09</th>
+      <td>-11.0</td>
+      <td>18.795683</td>
+      <td>35.4</td>
+      <td>139</td>
+    </tr>
+    <tr>
+      <th>2024-03-10</th>
+      <td>-10.0</td>
+      <td>19.744526</td>
+      <td>37.3</td>
+      <td>137</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="another-visualization-date-is-categorical-show-data-range-not-as-min-max-but-as-errorbar">
+<h3>Another visualization (date is categorical, show data range not as min-max but as errorbar)<a class="headerlink" href="#another-visualization-date-is-categorical-show-data-range-not-as-min-max-but-as-errorbar" title="Permalink to this heading">#</a></h3>
+<p>Which visualization is better to see missing timepoint?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="p">[</span><span class="o">~</span><span class="n">miss_timepoint</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">)</span>	<span class="c1">## Can you spot the missing time point?</span>
+	<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dot</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">())</span> 									<span class="c1"># Geometry: Dot + Statistic: Mean</span>
+	<span class="c1">#!# .add(so.???(), so.Est(errorbar=??)) 					# Geometry: Range + Statistic: Standard deviation</span>
+	<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Range</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Est</span><span class="p">(</span><span class="n">errorbar</span><span class="o">=</span><span class="s2">&quot;sd&quot;</span><span class="p">))</span> 					<span class="c1"># Geometry: Range + Statistic: Standard deviation</span>
+	<span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+	<span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span> 										<span class="c1"># Increase the figure size for a better view</span>
+	<span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+		<span class="n">x</span><span class="o">=</span><span class="n">so</span><span class="o">.</span><span class="n">Temporal</span><span class="p">()</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">upto</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">concise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 		<span class="c1"># Increase the tick size and adjust tick labels for legibility</span>
+	<span class="p">)</span>
+	<span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average temperature for all cities&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5608b2d42509ddd3e71e0bccc19f99a3ad9d7a47fa6254d4ab700b0024c5f1ad.png" src="../_images/5608b2d42509ddd3e71e0bccc19f99a3ad9d7a47fa6254d4ab700b0024c5f1ad.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="the-problem-of-spaghetti-plots">
+<h2>The problem of Spaghetti Plots<a class="headerlink" href="#the-problem-of-spaghetti-plots" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="c1">#!# so.Plot(weather_df, x=&quot;time&quot;, y=??, color=??)</span>
+    <span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Wind_Speed_kmh&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Continent&quot;</span><span class="p">)</span>
+		<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dot</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">())</span>
+		<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Line</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">())</span>
+		<span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average wind speed across continents&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/057e4ac900261c3b57f69e15a5623cdb1ea01e128847c9a4846e95e6d2442e82.png" src="../_images/057e4ac900261c3b57f69e15a5623cdb1ea01e128847c9a4846e95e6d2442e82.png" />
+</div>
+</div>
+<section id="alternatives-1-highlighting">
+<h3>Alternatives: (1) Highlighting<a class="headerlink" href="#alternatives-1-highlighting" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Wind_Speed_kmh&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Continent&quot;</span><span class="p">)</span>
+		<span class="c1">#!# .add(so.Dot(alpha=0.5), so.Agg(), marker=??)		# set transparency by alpha </span>
+		<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dot</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">(),</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;Continent&quot;</span><span class="p">)</span>		<span class="c1"># set transparency by alpha </span>
+		<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">()</span> <span class="p">)</span>
+		<span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="p">(</span>							<span class="c1"># Control the color scale</span>
+			<span class="s2">&quot;gray&quot;</span><span class="p">,</span>								<span class="c1"># Asia</span>
+		<span class="c1">#!#	???,								# Highlight Europe</span>
+			<span class="s2">&quot;red&quot;</span><span class="p">,</span>								<span class="c1"># Highlight Europe</span>
+			<span class="s2">&quot;gray&quot;</span><span class="p">,</span>								<span class="c1"># Africa</span>
+			<span class="s2">&quot;gray&quot;</span><span class="p">,</span>								<span class="c1"># Pacific</span>
+			<span class="s2">&quot;gray&quot;</span><span class="p">,</span>								<span class="c1"># America</span>
+			<span class="s2">&quot;gray&quot;</span><span class="p">,</span>								<span class="c1"># Australia</span>
+			<span class="s2">&quot;gray&quot;</span><span class="p">,</span>								<span class="c1"># Atlantic</span>
+			<span class="s2">&quot;gray&quot;</span>								<span class="c1"># Indian</span>
+			<span class="p">))</span>
+		<span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average wind speed across continents&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e283b2ffa274d534765afa0745900d6c4de391a9e3af9f2f8aa4c40bee46bc36.png" src="../_images/e283b2ffa274d534765afa0745900d6c4de391a9e3af9f2f8aa4c40bee46bc36.png" />
+</div>
+</div>
+</section>
+<section id="alternatives-2-facet">
+<h3>Alternatives: (2) Facet<a class="headerlink" href="#alternatives-2-facet" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Wind_Speed_kmh&quot;</span><span class="p">)</span>
+		<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dot</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">())</span>
+		<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Line</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Agg</span><span class="p">())</span>
+		<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Band</span><span class="p">())</span>
+		<span class="c1">#!# .facet(??, wrap=4)			# All you need for subplots</span>
+		<span class="o">.</span><span class="n">facet</span><span class="p">(</span><span class="s2">&quot;Continent&quot;</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>		<span class="c1"># All you need for subplots</span>
+		<span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3fce4a96bb73047e8498bbde3a53a435c73aa09024907bcbdc2686ede6b397dc.png" src="../_images/3fce4a96bb73047e8498bbde3a53a435c73aa09024907bcbdc2686ede6b397dc.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="example-relationship-of-temperature-date-and-latitude-south-north">
+<h2>Example: relationship of temperature, date and latitude (south - north)<a class="headerlink" href="#example-relationship-of-temperature-date-and-latitude-south-north" title="Permalink to this heading">#</a></h2>
+<section id="how-to-not-do-it-spaghetti-line-plot">
+<h3>How to not do it: spaghetti line plot<a class="headerlink" href="#how-to-not-do-it-spaghetti-line-plot" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="c1">#!#	so.Plot(weather_df.loc[weather_df[&quot;Continent&quot;] == ???], x=&quot;time&quot;, y=&quot;Temp_Avg_°C&quot;, color=??)</span>
+	<span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">weather_df</span><span class="p">[</span><span class="s2">&quot;Continent&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Asia&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dot</span><span class="p">())</span>
+	<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Line</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Latitude effect on temperature&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d0aae363102bb06189102b2a0bc0ae1050b76adf079787c31029bfee73e37331.png" src="../_images/d0aae363102bb06189102b2a0bc0ae1050b76adf079787c31029bfee73e37331.png" />
+</div>
+</div>
+</section>
+<section id="alternative-dot-array-and-flip-latitude-and-temperature-axis">
+<h3>Alternative: Dot array and flip latitude and temperature axis<a class="headerlink" href="#alternative-dot-array-and-flip-latitude-and-temperature-axis" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">weather_df</span><span class="p">[</span><span class="s2">&quot;Continent&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Asia&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">)</span>
+    <span class="c1">#!# .add(so.??(alpha=0.5, pointsize=10, edgecolor=&quot;black&quot;))</span>
+    <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dot</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">pointsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">))</span>
+	<span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+	<span class="c1">#!# color = so.Continuous(??).tick(upto=10) # Important: choosing an intuitive colormap (https://seaborn.pydata.org/tutorial/color_palettes.html)</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">so</span><span class="o">.</span><span class="n">Continuous</span><span class="p">(</span><span class="s2">&quot;Spectral_r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">upto</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># Important: choosing an intuitive colormap (https://seaborn.pydata.org/tutorial/color_palettes.html)</span>
+        <span class="p">)</span> 
+    <span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Latitude effect on temperature - dot array&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6a121475ace28a383a99f772d307f0f62c1579b1dcb1937f4b38ef9181b4fe96.png" src="../_images/6a121475ace28a383a99f772d307f0f62c1579b1dcb1937f4b38ef9181b4fe96.png" />
+</div>
+</div>
+</section>
+<section id="alternative-heatmap-like-via-dash">
+<h3>Alternative: Heatmap-like (via Dash)<a class="headerlink" href="#alternative-heatmap-like-via-dash" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">weather_df</span><span class="p">[</span><span class="s2">&quot;Continent&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Asia&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">)</span>
+	<span class="c1">#!# .add(so.??(alpha=0.8, width=0.8,  linewidth=8))</span>
+	<span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+	<span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">so</span><span class="o">.</span><span class="n">Continuous</span><span class="p">(</span><span class="s2">&quot;Spectral_r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">upto</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1">#!#	.theme({**style.library[??]}) # Increasing visibility on screens?</span>
+    <span class="o">.</span><span class="n">theme</span><span class="p">({</span><span class="o">**</span><span class="n">style</span><span class="o">.</span><span class="n">library</span><span class="p">[</span><span class="s2">&quot;dark_background&quot;</span><span class="p">]})</span> <span class="c1"># Increasing visibility on screens?</span>
+    <span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Latitude effect on temperature - heatmap&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c74cdee4aebee743c23e669daa68514dd243e9097a791273c1ae1e6ac9bb0362.png" src="../_images/c74cdee4aebee743c23e669daa68514dd243e9097a791273c1ae1e6ac9bb0362.png" />
+</div>
+</div>
+</section>
+<section id="on-all-continents-no-problem-facet">
+<h3>On all continents? no problem: facet<a class="headerlink" href="#on-all-continents-no-problem-facet" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">so</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">weather_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+	<span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">so</span><span class="o">.</span><span class="n">Continuous</span><span class="p">(</span><span class="s2">&quot;Spectral_r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">upto</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="p">)</span>
+	<span class="c1">#!# .facet(??, wrap=4).layout(size=(25, 8))</span>
+	<span class="o">.</span><span class="n">facet</span><span class="p">(</span><span class="s2">&quot;Continent&quot;</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+	<span class="o">.</span><span class="n">theme</span><span class="p">({</span><span class="o">**</span><span class="n">style</span><span class="o">.</span><span class="n">library</span><span class="p">[</span><span class="s2">&quot;dark_background&quot;</span><span class="p">]})</span> 
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/00517b6c253002992a1ecb884f1526133b89af02f5e2ec1cb3d2b474924a1999.png" src="../_images/00517b6c253002992a1ecb884f1526133b89af02f5e2ec1cb3d2b474924a1999.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="example-what-to-do-if-you-want-to-plot-3-4-variables">
+<h2>Example: what to do if you want to plot 3-4 variables?<a class="headerlink" href="#example-what-to-do-if-you-want-to-plot-3-4-variables" title="Permalink to this heading">#</a></h2>
+<section id="interactive-3d-plot-with-plotly">
+<h3>interactive 3D plot with plotly<a class="headerlink" href="#interactive-3d-plot-with-plotly" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_3d</span><span class="p">(</span><span class="n">weather_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Dew_point_°C&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="s2">&quot;Temp_Avg_°C&quot;</span><span class="p">,</span>
+                    <span class="c1">#!# color=??, ##  for fourth dimension</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Rel_Humidity_%&quot;</span><span class="p">,</span> <span class="c1">##  for fourth dimension</span>
+					<span class="n">opacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span> 
+<span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">marker_size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Make dots smaller</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="c1"># Reduce figure margins</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>                            <div id="c14df9b9-f393-495b-8a24-8f0a7842aa16" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c14df9b9-f393-495b-8a24-8f0a7842aa16")) {                    Plotly.newPlot(                        "c14df9b9-f393-495b-8a24-8f0a7842aa16",                        [{"hovertemplate":"Dew_point_\u00b0C=%{x}\u003cbr\u003elatitude=%{y}\u003cbr\u003eTemp_Avg_\u00b0C=%{z}\u003cbr\u003eRel_Humidity_%=%{marker.color}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":[100.0,100.0,94.0,54.0,50.0,51.0,52.0,57.0,39.0,55.0,59.0,57.0,94.0,59.0,35.0,43.0,35.0,38.0,35.0,41.0,72.0,72.0,72.0,94.0,72.0,72.0,67.0,63.0,77.0,55.0,79.0,77.0,72.0,67.0,55.0,63.0,59.0,63.0,67.0,51.0,48.0,55.0,64.0,68.0,68.0,72.0,49.0,63.0,43.0,59.0,59.0,63.0,64.0,68.0,64.0,60.0,47.0,39.0,57.0,47.0,92.0,90.0,93.0,94.0,79.0,88.0,77.0,85.0,85.0,92.0,85.0,91.0,92.0,89.0,92.0,89.0,34.0,34.0,58.0,36.0,39.0,55.0,55.0,31.0,77.0,67.0,53.0,42.0,48.0,63.0,66.0,49.0,56.0,50.0,50.0,82.0,84.0,75.0,84.0,79.0,84.0,79.0,75.0,77.0,79.0,79.0,73.0,75.0,75.0,75.0,76.0,75.0,70.0,70.0,74.0,79.0,74.0,74.0,100.0,70.0,67.0,72.0,74.0,82.0,82.0,77.0,82.0,70.0,65.0,61.0,87.0,79.0,72.0,77.0,80.0,82.0,82.0,68.0,45.0,48.0,59.0,54.0,61.0,79.0,53.0,52.0,67.0,67.0,95.0,93.0,78.0,81.0,65.0,83.0,83.0,88.0,87.0,94.0,87.0,82.0,87.0,92.0,71.0,82.0,94.0,76.0,70.0,76.0,82.0,82.0,87.0,82.0,87.0,87.0,71.0,87.0,46.0,46.0,49.0,49.0,52.0,56.0,75.0,75.0,66.0,59.0,75.0,49.0,53.0,56.0,52.0,56.0,59.0,59.0,53.0,75.0,82.0,85.0,71.0,94.0,87.0,76.0,55.0,91.0,91.0,97.0,90.0,75.0,95.0,92.0,99.0,99.0,92.0,88.0,84.0,80.0,35.0,36.0,35.0,65.0,45.0,43.0,46.0,70.0,61.0,70.0,45.0,48.0,43.0,29.0,58.0,35.0,37.0,87.0,82.0,57.0,65.0,74.0,74.0,79.0,70.0,79.0,89.0,74.0,74.0,55.0,54.0,61.0,58.0,62.0,74.0,66.0,74.0,70.0,53.0,45.0,49.0,56.0,73.0,56.0,49.0,83.0,71.0,56.0,69.0,74.0,53.0,56.0,69.0,74.0,69.0,73.0,65.0,64.0,53.0,78.0,62.0,75.0,94.0,53.0,70.0,69.0,68.0,55.0,60.0,67.0,68.0,89.0,85.0,79.0,53.0,75.0,62.0,76.0,73.0,70.0,55.0,60.0,61.0,61.0,60.0,71.0,65.0,63.0,61.0,50.0,56.0,49.0,61.0,52.0,61.0,70.0,66.0,49.0,56.0,93.0,65.0,56.0,100.0,80.0,55.0,55.0,61.0,69.0,47.0,40.0,52.0,65.0,70.0,59.0,66.0,93.0,87.0,73.0,70.0,76.0,100.0,87.0,62.0,76.0,58.0,66.0,49.0,58.0,71.0,92.0,100.0,72.0,68.0,70.0,62.0,100.0,67.0,56.0,49.0,79.0,75.0,75.0,75.0,75.0,75.0,75.0,79.0,75.0,74.0,79.0,70.0,75.0,70.0,70.0,75.0,75.0,71.0,75.0,70.0,59.0,60.0,68.0,64.0,69.0,78.0,83.0,83.0,64.0,56.0,56.0,60.0,94.0,60.0,73.0,83.0,88.0,94.0,49.0,57.0,67.0,64.0,75.0,55.0,65.0,52.0,46.0,45.0,54.0,49.0,52.0,58.0,52.0,75.0,47.0,41.0,44.0,64.0,79.0,23.0,24.0,21.0,24.0,13.0,11.0,52.0,30.0,34.0,30.0,26.0,24.0,22.0,11.0,18.0,23.0,16.0,40.0,23.0,33.0,53.0,66.0,55.0,66.0,49.0,55.0,49.0,52.0,49.0,52.0,53.0,94.0,62.0,52.0,52.0,49.0,44.0,47.0,49.0,56.0,89.0,94.0,94.0,100.0,94.0,94.0,100.0,94.0,89.0,94.0,94.0,94.0,89.0,94.0,94.0,76.0,87.0,66.0,71.0,71.0,82.0,87.0,71.0,71.0,63.0,66.0,76.0,71.0,81.0,58.0,62.0,62.0,44.0,57.0,40.0,8.0,10.0,8.0,8.0,7.0,8.0,9.0,11.0,8.0,16.0,14.0,12.0,9.0,9.0,23.0,7.0,7.0,11.0,9.0,9.0,94.0,57.0,57.0,57.0,61.0,57.0,57.0,61.0,57.0,61.0,61.0,61.0,61.0,61.0,65.0,66.0,51.0,65.0,65.0,64.0,61.0,79.0,94.0,84.0,89.0,84.0,84.0,94.0,72.0,74.0,74.0,78.0,74.0,84.0,94.0,79.0,94.0,94.0,94.0,75.0,79.0,71.0,82.0,81.0,80.0,95.0,98.0,81.0,75.0,81.0,79.0,85.0,79.0,87.0,83.0,80.0,78.0,81.0,79.0,78.0,99.0,58.0,85.0,93.0,78.0,58.0,95.0,53.0,51.0,52.0,55.0,47.0,50.0,41.0,64.0,65.0,69.0,76.0,46.0,40.0,52.0,53.0,58.0,35.0,52.0,62.0,53.0,54.0,39.0,50.0,48.0,51.0,59.0,52.0,68.0,56.0,50.0,79.0,59.0,84.0,6.0,8.0,7.0,7.0,8.0,7.0,8.0,12.0,10.0,8.0,6.0,6.0,6.0,6.0,7.0,9.0,7.0,10.0,7.0,5.0,25.0,34.0,29.0,27.0,27.0,32.0,34.0,28.0,32.0,32.0,40.0,38.0,44.0,38.0,32.0,28.0,24.0,26.0,24.0,67.0,82.0,67.0,94.0,94.0,94.0,78.0,77.0,77.0,82.0,88.0,92.0,73.0,88.0,88.0,92.0,100.0,94.0,94.0,71.0,60.0,81.0,71.0,67.0,82.0,86.0,82.0,67.0,67.0,71.0,88.0,93.0,67.0,58.0,88.0,100.0,94.0,88.0,76.0,76.0,58.0,46.0,79.0,79.0,70.0,74.0,79.0,79.0,79.0,87.0,79.0,79.0,79.0,79.0,79.0,84.0,84.0,75.0,89.0,79.0,74.0,89.0,51.0,37.0,42.0,35.0,43.0,45.0,38.0,55.0,62.0,45.0,51.0,58.0,45.0,51.0,52.0,52.0,55.0,46.0,43.0,37.0,70.0,75.0,94.0,75.0,75.0,75.0,84.0,77.0,71.0,75.0,76.0,79.0,79.0,84.0,78.0,71.0,75.0,79.0,81.0,75.0,76.0,74.0,79.0,74.0,77.0,82.0,85.0,87.0,85.0,67.0,64.0,67.0,67.0,72.0,77.0,77.0,82.0,69.0,69.0,49.0,59.0,73.0,72.0,72.0,63.0,55.0,66.0,63.0,55.0,53.0,68.0,64.0,56.0,65.0,72.0,72.0,94.0,48.0,82.0,93.0,77.0,75.0,53.0,79.0,59.0,65.0,67.0,67.0,75.0,58.0,57.0,58.0,68.0,52.0,75.0,48.0,42.0,32.0,48.0,55.0,66.0,79.0,47.0,73.0,56.0,52.0,55.0,56.0,54.0,74.0,86.0,62.0,72.0,64.0,39.0,52.0,37.0,67.0,62.0,66.0,66.0,62.0,70.0,66.0,75.0,63.0,75.0,70.0,62.0,66.0,66.0,59.0,59.0,70.0,70.0,62.0,66.0,70.0,63.0,36.0,64.0,68.0,64.0,56.0,60.0,56.0,68.0,69.0,59.0,60.0,71.0,60.0,68.0,70.0,60.0,73.0,68.0,66.0,53.0,45.0,52.0,55.0,52.0,45.0,51.0,62.0,58.0,51.0,62.0,52.0,48.0,58.0,51.0,52.0,52.0,62.0,55.0,39.0,36.0,58.0,88.0,71.0,64.0,79.0,84.0,88.0,73.0,68.0,57.0,86.0,53.0,69.0,81.0,57.0,63.0,75.0,84.0,53.0,89.0,66.0,75.0,75.0,75.0,75.0,75.0,75.0,70.0,66.0,66.0,73.0,79.0,75.0,75.0,71.0,66.0,63.0,75.0,70.0,75.0,94.0,94.0,94.0,94.0,94.0,84.0,100.0,94.0,94.0,94.0,100.0,94.0,94.0,100.0,100.0,100.0,94.0,100.0,100.0,100.0,82.0,93.0,66.0,54.0,71.0,66.0,58.0,55.0,87.0,71.0,77.0,88.0,72.0,59.0,73.0,59.0,82.0,63.0,51.0,43.0,63.0,89.0,63.0,66.0,66.0,89.0,66.0,71.0,52.0,63.0,67.0,79.0,75.0,71.0,67.0,66.0,67.0,66.0,66.0,59.0,84.0,79.0,79.0,84.0,84.0,84.0,89.0,84.0,84.0,84.0,84.0,89.0,79.0,79.0,70.0,74.0,74.0,79.0,89.0,79.0,34.0,26.0,19.0,31.0,15.0,33.0,55.0,59.0,34.0,28.0,34.0,26.0,25.0,36.0,21.0,17.0,6.0,27.0,45.0,52.0,81.0,82.0,88.0,82.0,82.0,72.0,87.0,82.0,76.0,76.0,75.0,54.0,52.0,87.0,88.0,100.0,82.0,87.0,90.0,82.0,80.0,68.0,64.0,74.0,63.0,66.0,48.0,45.0,60.0,62.0,55.0,56.0,50.0,60.0,60.0,63.0,51.0,54.0,40.0,41.0,71.0,71.0,63.0,63.0,66.0,67.0,66.0,71.0,59.0,59.0,67.0,63.0,75.0,75.0,65.0,71.0,67.0,71.0,71.0,71.0,100.0,86.0,49.0,57.0,62.0,73.0,85.0,79.0,70.0,79.0,75.0,100.0,100.0,74.0,93.0,68.0,79.0,85.0,67.0,93.0,49.0,70.0,71.0,71.0,58.0,56.0,62.0,75.0,66.0,75.0,59.0,40.0,56.0,49.0,30.0,56.0,47.0,59.0,71.0,59.0,69.0,68.0,64.0,63.0,52.0,63.0,70.0,67.0,53.0,53.0,60.0,67.0,63.0,71.0,62.0,50.0,44.0,47.0,53.0,59.0,26.0,26.0,25.0,24.0,27.0,26.0,50.0,23.0,33.0,30.0,11.0,27.0,27.0,32.0,12.0,22.0,30.0,30.0,23.0,53.0,71.0,69.0,69.0,72.0,70.0,75.0,73.0,74.0,69.0,67.0,66.0,68.0,69.0,68.0,68.0,72.0,75.0,71.0,69.0,69.0,72.0,82.0,55.0,82.0,77.0,54.0,62.0,63.0,82.0,88.0,79.0,72.0,72.0,59.0,77.0,77.0,72.0,72.0,68.0,68.0,48.0,51.0,51.0,45.0,45.0,48.0,51.0,51.0,48.0,55.0,54.0,45.0,45.0,47.0,58.0,61.0,57.0,54.0,45.0,51.0,50.0,37.0,44.0,76.0,66.0,93.0,76.0,68.0,66.0,57.0,52.0,76.0,57.0,48.0,80.0,81.0,76.0,100.0,77.0,100.0,47.0,88.0,43.0,45.0,48.0,45.0,43.0,58.0,46.0,49.0,50.0,57.0,56.0,47.0,55.0,49.0,49.0,43.0,53.0,26.0,26.0,29.0,34.0,57.0,26.0,35.0,27.0,15.0,41.0,50.0,26.0,28.0,25.0,38.0,44.0,25.0,45.0,58.0,38.0,28.0,24.0,30.0,87.0,71.0,43.0,33.0,33.0,34.0,35.0,46.0,37.0,21.0,41.0,36.0,58.0,31.0,87.0,65.0,53.0,83.0,79.0,74.0,67.0,72.0,59.0,65.0,58.0,79.0,85.0,78.0,97.0,97.0,97.0,71.0,89.0,91.0,82.0,91.0,84.0,24.0,83.0,72.0,72.0,59.0,72.0,68.0,72.0,68.0,59.0,54.0,49.0,73.0,68.0,68.0,68.0,46.0,77.0,68.0,46.0,66.0,70.0,66.0,66.0,63.0,66.0,56.0,71.0,71.0,66.0,66.0,66.0,59.0,63.0,66.0,66.0,59.0,66.0,71.0,56.0,43.0,71.0,42.0,78.0,72.0,72.0,93.0,70.0,78.0,93.0,77.0,85.0,73.0,74.0,47.0,65.0,42.0,69.0,53.0,68.0,93.0,85.0,76.0,85.0,73.0,85.0,85.0,82.0,87.0,86.0,83.0,86.0,85.0,85.0,84.0,79.0,92.0,69.0,91.0,86.0,88.0,50.0,73.0,88.0,60.0,60.0,41.0,37.0,64.0,47.0,33.0,29.0,36.0,43.0,37.0,27.0,34.0,40.0,28.0,31.0,29.0,32.0,64.0,40.0,28.0,27.0,43.0,22.0,29.0,25.0,72.0,38.0,25.0,38.0,66.0,61.0,41.0,39.0,88.0,53.0,86.0,74.0,93.0,86.0,80.0,80.0,65.0,62.0,61.0,87.0,80.0,71.0,93.0,93.0,72.0,86.0,65.0,53.0,58.0,87.0,79.0,83.0,78.0,79.0,83.0,78.0,84.0,67.0,78.0,79.0,74.0,78.0,79.0,79.0,65.0,79.0,68.0,79.0,80.0,78.0,76.0,71.0,61.0,60.0,65.0,69.0,93.0,86.0,86.0,55.0,43.0,87.0,100.0,93.0,62.0,100.0,93.0,81.0,75.0,81.0,24.0,40.0,48.0,44.0,36.0,46.0,44.0,48.0,44.0,38.0,37.0,29.0,24.0,42.0,50.0,51.0,34.0,37.0,59.0,67.0,25.0,20.0,19.0,19.0,60.0,63.0,28.0,22.0,14.0,19.0,23.0,37.0,19.0,24.0,11.0,8.0,24.0,22.0,38.0,53.0,50.0,33.0,27.0,20.0,22.0,56.0,87.0,57.0,56.0,87.0,60.0,55.0,44.0,80.0,80.0,44.0,29.0,93.0,87.0,93.0,66.0,93.0,75.0,75.0,81.0,61.0,55.0,62.0,63.0,76.0,80.0,64.0,55.0,51.0,59.0,64.0,69.0,94.0,85.0,67.0,92.0,64.0,73.0,79.0,55.0,56.0,88.0,100.0,88.0,87.0,94.0,91.0,94.0,94.0,83.0,83.0,86.0,94.0,74.0,89.0,94.0,73.0,83.0,81.0,85.0,94.0,73.0,82.0,88.0,94.0,84.0,84.0,89.0,89.0,84.0,89.0,95.0,89.0,86.0,84.0,79.0,94.0,89.0,74.0,89.0,81.0,70.0,75.0,75.0,70.0,70.0,75.0,85.0,70.0,75.0,7.0,8.0,7.0,7.0,8.0,7.0,7.0,16.0,10.0,12.0,12.0,8.0,9.0,8.0,9.0,7.0,6.0,6.0,12.0,29.0,77.0,77.0,88.0,63.0,72.0,63.0,77.0,77.0,82.0,83.0,67.0,67.0,72.0,68.0,72.0,72.0,63.0,77.0,73.0,68.0,24.0,22.0,19.0,24.0,20.0,20.0,23.0,11.0,22.0,23.0,11.0,18.0,23.0,19.0,6.0,16.0,16.0,21.0,5.0,18.0,70.0,78.0,89.0,92.0,84.0,79.0,74.0,79.0,94.0,94.0,77.0,79.0,84.0,84.0,76.0,74.0,84.0,84.0,86.0,74.0,77.0,88.0,77.0,67.0,59.0,63.0,63.0,65.0,82.0,72.0,77.0,77.0,77.0,77.0,81.0,77.0,77.0,82.0,79.0,77.0,85.0,78.0,84.0,78.0,67.0,61.0,62.0,60.0,86.0,63.0,60.0,80.0,60.0,73.0,63.0,79.0,68.0,74.0,50.0,80.0,59.0,63.0,64.0,68.0,72.0,68.0,94.0,65.0,94.0,56.0,64.0,73.0,73.0,68.0,78.0,51.0,39.0,30.0,70.0,64.0,70.0,66.0,70.0,66.0,66.0,74.0,66.0,75.0,79.0,75.0,73.0,84.0,70.0,83.0,72.0,59.0,70.0,74.0,62.0,77.0,37.0,61.0,66.0,72.0,68.0,59.0,70.0,65.0,67.0,68.0,53.0,55.0,50.0,63.0,60.0,57.0,47.0,66.0,38.0,48.0,73.0,54.0,81.0,70.0,66.0,86.0,72.0,93.0,85.0,79.0,64.0,69.0,83.0,92.0,77.0,88.0,55.0,86.0,69.0,78.0,78.0,82.0,86.0,96.0,95.0,96.0,95.0,96.0,94.0,97.0,99.0,97.0,93.0,96.0,97.0,96.0,96.0,100.0,93.0,97.0,99.0,96.0,99.0,46.0,49.0,49.0,49.0,52.0,46.0,59.0,49.0,52.0,43.0,49.0,49.0,49.0,55.0,44.0,46.0,49.0,52.0,52.0,52.0,3.0,4.0,5.0,5.0,4.0,4.0,5.0,6.0,4.0,4.0,8.0,6.0,14.0,13.0,12.0,3.0,4.0,5.0,7.0,5.0,28.0,24.0,40.0,37.0,19.0,25.0,33.0,28.0,28.0,26.0,29.0,31.0,24.0,59.0,34.0,27.0,40.0,17.0,11.0,29.0,85.0,88.0,79.0,82.0,82.0,82.0,85.0,79.0,82.0,85.0,81.0,82.0,85.0,82.0,79.0,79.0,76.0,74.0,74.0,79.0,53.0,40.0,54.0,65.0,74.0,93.0,87.0,98.0,80.0,78.0,81.0,48.0,54.0,57.0,61.0,61.0,54.0,51.0,76.0,70.0,91.0,100.0,91.0,92.0,91.0,91.0,100.0,63.0,93.0,86.0,92.0,69.0,85.0,100.0,74.0,92.0,87.0,94.0,100.0,91.0,71.0,70.0,66.0,75.0,66.0,84.0,75.0,75.0,79.0,71.0,79.0,79.0,75.0,79.0,79.0,79.0,71.0,84.0,67.0,79.0,95.0,99.0,95.0,93.0,96.0,95.0,97.0,96.0,88.0,99.0,99.0,100.0,96.0,97.0,99.0,96.0,98.0,100.0,100.0,99.0,47.0,45.0,63.0,75.0,62.0,54.0,42.0,53.0,42.0,48.0,42.0,40.0,34.0,34.0,34.0,34.0,66.0,48.0,36.0,34.0,79.0,62.0,62.0,66.0,70.0,66.0,70.0,69.0,61.0,70.0,74.0,65.0,69.0,78.0,69.0,69.0,69.0,83.0,74.0,79.0,70.0,74.0,70.0,84.0,84.0,74.0,70.0,70.0,70.0,70.0,79.0,74.0,70.0,74.0,74.0,74.0,66.0,74.0,70.0,70.0,81.0,82.0,66.0,81.0,93.0,56.0,48.0,45.0,37.0,47.0,77.0,87.0,93.0,71.0,57.0,94.0,87.0,93.0,65.0,53.0,46.0,46.0,53.0,78.0,64.0,41.0,83.0,75.0,69.0,73.0,71.0,43.0,69.0,57.0,61.0,69.0,65.0,65.0,51.0,39.0,66.0,71.0,53.0,62.0,75.0,50.0,60.0,57.0,39.0,40.0,74.0,93.0,93.0,87.0,85.0,81.0,67.0,93.0,82.0,70.0,72.0,56.0,83.0,84.0,94.0,74.0,79.0,75.0,74.0,74.0,79.0,79.0,84.0,74.0,82.0,61.0,79.0,70.0,78.0,79.0,71.0,62.0,50.0,62.0,71.0,66.0,53.0,62.0,50.0,44.0,68.0,94.0,94.0,87.0,72.0,54.0,59.0,71.0,69.0,43.0,91.0,64.0,90.0,61.0,68.0,100.0,92.0,95.0,89.0,83.0,98.0,91.0,98.0,60.0,85.0,71.0,70.0,100.0,91.0,70.0,63.0,77.0,88.0,94.0,77.0,58.0,67.0,82.0,88.0,94.0,72.0,72.0,77.0,88.0,67.0,67.0,77.0,94.0,72.0,59.0,6.0,10.0,9.0,14.0,19.0,15.0,17.0,25.0,18.0,12.0,22.0,16.0,15.0,17.0,31.0,31.0,41.0,94.0,64.0,38.0,78.0,69.0,65.0,51.0,57.0,78.0,74.0,72.0,61.0,65.0,66.0,65.0,65.0,65.0,65.0,54.0,48.0,69.0,75.0,74.0,84.0,75.0,84.0,79.0,79.0,84.0,89.0,80.0,84.0,79.0,82.0,89.0,89.0,84.0,80.0,89.0,79.0,79.0,86.0,84.0,91.0,91.0,89.0,90.0,92.0,94.0,91.0,85.0,86.0,77.0,82.0,78.0,86.0,83.0,82.0,84.0,77.0,81.0,79.0,76.0,89.0,69.0,44.0,59.0,59.0,72.0,70.0,82.0,76.0,93.0,91.0,33.0,33.0,39.0,47.0,65.0,39.0,82.0,61.0,38.0,89.0,93.0,94.0,94.0,87.0,99.0,89.0,85.0,92.0,100.0,89.0,87.0,87.0,98.0,89.0,87.0,87.0,93.0,88.0,100.0,76.0,70.0,75.0,70.0,70.0,70.0,75.0,74.0,70.0,70.0,63.0,66.0,70.0,70.0,76.0,66.0,75.0,84.0,75.0,79.0,60.0,68.0,80.0,93.0,60.0,59.0,73.0,69.0,78.0,65.0,64.0,73.0,64.0,69.0,64.0,64.0,45.0,69.0,78.0,69.0,39.0,31.0,25.0,31.0,37.0,29.0,27.0,27.0,31.0,32.0,25.0,25.0,24.0,24.0,28.0,25.0,24.0,27.0,27.0,24.0,54.0,93.0,57.0,72.0,44.0,47.0,87.0,55.0,81.0,58.0,46.0,41.0,40.0,67.0,52.0,68.0,60.0,60.0,38.0,49.0,16.0,12.0,12.0,14.0,8.0,8.0,17.0,16.0,12.0,17.0,12.0,13.0,8.0,8.0,11.0,9.0,11.0,51.0,28.0,16.0,65.0,66.0,63.0,67.0,56.0,59.0,65.0,77.0,69.0,90.0,77.0,68.0,59.0,66.0,57.0,58.0,74.0,65.0,79.0,65.0,93.0,86.0,80.0,75.0,70.0,87.0,57.0,55.0,76.0,66.0,58.0,94.0,81.0,61.0,47.0,37.0,33.0,47.0,55.0,35.0,54.0,69.0,60.0,53.0,68.0,58.0,86.0,73.0,54.0,47.0,39.0,80.0,96.0,78.0,51.0,47.0,84.0,50.0,46.0,43.0,70.0,79.0,75.0,75.0,79.0,84.0,84.0,78.0,79.0,75.0,81.0,75.0,75.0,79.0,76.0,79.0,79.0,79.0,81.0,84.0,94.0,92.0,93.0,94.0,95.0,93.0,97.0,99.0,100.0,99.0,100.0,99.0,99.0,93.0,94.0,99.0,95.0,92.0,91.0,94.0,72.0,55.0,68.0,63.0,77.0,63.0,63.0,58.0,73.0,68.0,56.0,59.0,63.0,68.0,62.0,64.0,68.0,47.0,54.0,68.0,65.0,36.0,39.0,53.0,50.0,54.0,44.0,50.0,82.0,67.0,62.0,81.0,50.0,66.0,55.0,68.0,52.0,56.0,47.0,100.0,73.0,59.0,62.0,83.0,54.0,52.0,44.0,43.0,69.0,73.0,53.0,34.0,42.0,34.0,35.0,28.0,34.0,37.0,31.0,28.0,57.0,62.0,87.0,65.0,60.0,72.0,66.0,47.0,54.0,49.0,42.0,89.0,64.0,68.0,82.0,75.0,79.0,94.0,69.0,98.0,46.0,49.0,40.0,57.0,78.0,69.0,69.0,58.0,88.0,78.0,51.0,61.0,83.0,83.0,62.0,51.0,66.0,61.0,57.0,62.0,54.0,74.0,52.0,56.0,61.0,68.0,66.0,66.0,68.0,94.0,81.0,87.0,75.0,71.0,76.0,60.0,68.0,76.0,85.0,55.0,74.0,62.0,62.0,74.0,84.0,56.0,54.0,53.0,68.0,65.0,43.0,51.0,49.0,52.0,60.0,48.0,68.0,61.0,76.0,58.0,27.0,93.0,54.0,67.0,80.0,93.0,58.0,62.0,86.0,29.0,28.0,42.0,28.0,45.0,40.0,48.0,29.0,32.0,24.0,68.0,97.0,49.0,47.0,55.0,52.0,43.0,70.0,57.0,54.0,64.0,85.0,90.0,90.0,88.0,94.0,40.0,69.0,85.0,96.0,75.0,93.0,87.0,75.0,75.0,49.0,61.0,40.0,94.0,82.0,55.0,93.0,70.0,80.0,47.0,57.0,58.0,59.0,35.0,49.0,98.0,99.0,95.0,100.0,94.0,90.0,97.0,83.0,97.0,95.0,97.0,95.0,100.0,99.0,99.0,97.0,99.0,99.0,99.0,100.0,49.0,52.0,49.0,41.0,47.0,50.0,53.0,56.0,56.0,59.0,53.0,56.0,47.0,47.0,44.0,42.0,47.0,42.0,47.0,42.0,67.0,77.0,94.0,94.0,94.0,73.0,64.0,77.0,94.0,94.0,86.0,73.0,94.0,88.0,96.0,94.0,94.0,89.0,81.0,83.0,78.0,38.0,68.0,64.0,64.0,64.0,47.0,44.0,65.0,50.0,61.0,60.0,47.0,73.0,77.0,78.0,57.0,73.0,69.0,47.0],"coloraxis":"coloraxis","opacity":0.7,"symbol":"circle","size":2},"mode":"markers","name":"","scene":"scene","showlegend":false,"x":[11.0,10.0,5.0,3.0,1.9,4.9,6.1,3.0,2.9,7.9,7.7,7.6,13.0,8.0,-2.0,6.1,5.8,6.1,4.3,8.8,8.1,8.1,9.0,10.1,8.1,9.0,5.1,6.1,8.1,7.9,9.7,8.1,8.1,7.0,5.1,7.1,8.0,9.0,8.0,4.0,4.1,7.9,6.9,11.1,11.1,11.9,9.9,8.2,7.9,8.9,8.5,9.9,11.1,11.1,12.0,12.0,11.1,9.2,12.5,12.9,26.0,27.2,25.3,25.0,24.1,23.5,24.3,25.9,25.7,24.8,25.3,25.2,24.8,24.0,24.4,24.3,1.0,1.0,2.1,-0.8,1.1,5.1,7.0,0.3,8.1,7.0,3.9,4.0,5.9,8.0,11.8,9.0,9.1,11.1,9.1,12.0,24.1,24.1,26.0,26.0,26.0,26.0,25.1,24.9,26.0,25.0,25.0,26.0,26.0,26.0,24.1,26.0,25.9,23.9,25.0,26.0,22.2,22.0,23.3,21.8,21.1,22.3,23.2,24.4,24.4,23.9,24.4,22.9,21.1,22.7,24.4,23.8,23.3,24.5,25.1,24.9,21.9,21.3,9.8,11.6,12.7,12.4,17.5,20.6,19.0,14.6,18.9,17.2,22.1,21.2,21.0,21.2,17.2,22.3,22.5,21.3,7.0,9.1,7.9,8.0,7.9,-0.5,4.0,6.1,-1.5,4.0,-5.5,6.0,9.0,9.0,7.9,7.1,7.9,7.9,4.0,7.0,19.8,19.8,20.0,20.0,20.9,22.1,25.1,26.0,23.9,23.9,25.1,20.9,22.2,23.1,20.9,23.1,23.0,23.9,24.0,25.1,14.3,13.0,7.3,7.7,10.7,8.6,8.5,16.2,12.1,13.7,9.0,11.2,17.8,12.1,11.4,13.0,13.4,15.3,16.7,0.8,-11.0,-8.9,-11.0,-1.0,-5.0,-2.9,-2.0,-1.1,-1.0,-1.0,-5.0,-5.1,-2.9,-3.8,2.9,-3.9,-4.0,6.0,6.9,0.9,18.9,20.0,21.0,22.1,20.1,22.1,22.1,22.0,22.0,15.7,15.0,17.9,17.1,19.1,22.0,21.1,22.0,21.1,12.9,5.9,7.1,11.0,16.0,11.9,9.9,17.0,16.4,11.9,16.1,17.9,10.1,11.9,16.1,17.5,17.0,16.9,18.0,16.3,12.0,13.6,13.5,16.6,19.0,12.7,11.9,13.6,12.2,9.2,11.4,12.7,16.7,22.1,20.5,18.8,16.6,18.5,16.8,20.0,16.6,22.7,19.5,22.7,23.0,22.9,23.2,25.1,24.2,23.7,23.2,19.8,22.1,19.6,22.9,20.4,21.4,25.1,24.2,19.4,22.1,3.0,-1.0,-4.0,1.0,-3.0,-7.0,-8.0,-3.4,-5.0,-10.0,-10.0,-5.9,-2.9,-1.0,0.5,3.0,3.0,2.0,0.7,-1.0,5.0,7.0,5.0,3.1,5.0,3.0,3.9,2.6,4.9,5.9,7.7,10.0,9.0,10.1,8.6,4.9,12.0,8.0,7.2,7.1,24.0,24.1,24.1,24.1,25.1,25.1,25.1,25.0,26.0,22.9,25.0,23.0,24.1,23.9,23.9,25.1,25.1,25.1,25.1,23.9,8.9,10.1,13.9,13.0,15.1,18.0,19.0,19.0,12.0,9.1,10.0,12.0,14.0,12.0,16.9,18.0,19.9,21.0,7.1,11.8,13.5,15.2,16.4,11.1,11.7,8.8,7.9,7.0,9.8,10.9,11.7,12.0,11.3,16.1,10.1,7.6,10.8,16.7,15.4,6.7,7.7,6.6,8.6,0.7,-0.5,12.8,12.9,12.9,13.1,9.9,8.9,6.0,-2.1,5.7,10.0,4.6,14.9,8.2,11.1,22.2,23.9,20.0,22.0,20.0,20.9,20.0,20.9,20.0,20.9,23.1,24.0,21.9,20.9,20.9,20.9,20.9,22.0,20.0,22.1,26.0,26.0,26.0,27.0,26.9,26.9,27.0,26.9,26.0,26.0,26.9,26.9,26.0,26.0,26.0,5.0,6.0,3.9,4.0,3.1,6.1,4.0,0.8,3.1,6.1,6.4,5.0,3.1,3.0,2.2,4.0,4.9,1.9,-0.3,-3.0,-1.8,2.6,-0.7,-0.5,-2.2,-0.5,1.5,3.4,0.3,11.0,8.5,6.8,2.6,1.9,13.5,-1.6,-1.6,2.9,0.0,0.4,18.0,15.9,15.0,15.0,16.0,15.0,15.0,15.1,14.4,15.1,16.0,16.0,17.0,16.0,17.0,17.9,16.0,17.0,17.0,17.2,17.0,24.0,24.0,24.1,23.1,23.1,24.1,24.0,23.2,22.9,22.9,23.3,22.9,24.1,24.0,23.1,24.0,24.0,24.0,22.9,23.0,25.3,27.6,27.1,26.8,27.1,27.7,25.0,24.2,24.6,25.4,26.0,24.8,25.1,23.6,25.8,25.2,24.8,25.0,24.8,25.7,-9.1,2.8,3.5,5.3,6.5,4.9,-3.3,-5.0,-1.5,-7.8,-3.6,-1.8,-2.7,2.6,-1.0,-0.2,-1.8,-10.1,-9.3,22.4,23.1,23.6,19.0,23.6,20.0,22.6,22.0,19.9,23.0,22.5,22.7,23.5,22.5,22.7,23.4,22.1,22.1,22.5,23.1,-6.9,-2.7,-3.6,-3.5,-0.3,-1.3,-0.1,5.8,3.5,0.7,-3.7,-4.4,-3.8,-3.3,-2.0,0.8,-6.7,-1.9,-6.8,-10.1,7.0,8.9,8.3,7.7,6.9,8.9,9.0,3.7,7.2,9.0,10.6,7.9,10.1,9.3,7.2,4.8,3.9,5.9,4.7,10.5,8.0,7.0,16.0,22.0,22.0,14.1,12.9,12.5,12.9,15.0,14.1,14.1,17.0,17.0,18.1,20.0,21.0,19.0,12.7,12.0,4.0,3.1,6.1,11.0,19.5,8.0,5.1,5.0,5.0,9.1,11.3,6.1,4.9,12.0,14.4,14.0,11.1,6.9,8.7,4.0,8.9,25.0,25.0,23.0,22.9,25.0,25.0,25.0,24.7,25.0,25.0,24.3,25.0,26.0,26.0,25.1,25.1,25.0,25.0,23.9,26.0,15.1,12.8,13.9,12.0,15.2,15.9,14.1,19.0,19.1,15.0,16.9,18.0,14.1,16.9,18.2,18.2,19.0,17.1,15.2,12.8,23.9,26.0,23.0,24.1,25.1,25.1,27.0,25.7,25.1,26.0,26.5,26.0,26.0,27.0,26.2,25.1,27.0,26.9,26.5,25.1,21.1,21.1,22.2,21.7,22.8,23.4,24.0,24.4,24.5,17.9,19.3,21.1,21.1,22.3,23.4,23.4,24.9,18.9,20.8,7.1,8.9,13.1,11.9,11.9,9.0,7.9,10.5,9.0,7.0,8.7,12.0,12.0,9.1,11.1,11.9,11.9,13.0,8.6,12.9,6.6,5.9,5.6,4.0,2.9,-1.0,-2.1,0.0,3.5,6.1,2.9,2.1,2.1,7.2,6.6,7.2,-1.4,-4.1,-7.1,2.6,-13.7,-4.6,0.7,-2.8,1.1,-1.8,-7.7,-9.0,-8.3,-5.5,0.2,0.8,-2.8,-0.2,-0.7,-1.9,-5.9,-6.5,-1.8,-5.8,23.0,22.0,21.0,23.9,23.9,24.1,23.1,25.1,23.0,21.9,23.9,23.0,22.1,23.0,23.9,23.9,21.9,23.9,23.9,24.1,7.1,12.0,11.1,11.1,11.0,10.1,9.1,10.8,11.0,8.9,9.2,13.2,12.0,12.0,11.7,10.1,14.1,10.5,10.0,10.1,15.9,18.2,18.1,18.2,15.9,16.9,19.1,19.0,16.9,20.0,18.2,16.0,19.0,16.9,18.2,19.1,21.0,20.0,17.2,14.2,23.5,24.1,24.4,23.8,26.9,23.1,24.7,23.9,24.3,26.1,25.0,24.0,24.6,24.5,24.0,26.0,27.0,25.0,22.6,25.0,23.0,24.1,25.1,25.1,25.1,25.1,25.1,21.7,22.0,23.0,24.6,26.0,25.1,25.1,23.9,23.9,23.1,25.1,23.0,24.1,25.0,26.0,24.0,24.0,23.0,25.0,24.0,23.0,22.0,24.0,24.0,24.0,24.0,25.0,25.0,24.0,23.0,25.0,23.0,23.0,7.1,6.9,3.0,2.0,3.1,3.0,4.0,4.4,7.9,5.9,6.3,10.1,8.1,8.9,10.1,6.1,12.0,9.0,7.2,7.0,23.1,25.0,23.1,23.9,23.9,25.0,23.9,25.1,20.9,24.1,25.1,26.0,25.1,25.1,25.1,23.9,25.1,23.9,23.9,23.0,23.1,22.1,23.0,23.1,23.1,24.1,23.1,22.1,23.1,23.1,23.1,25.0,23.0,23.0,20.1,22.9,21.0,23.0,24.0,23.0,15.1,11.8,7.9,11.9,7.7,12.9,18.1,19.2,15.9,12.1,14.7,11.8,12.0,15.9,11.3,11.1,-2.9,14.1,17.7,18.2,4.9,8.0,9.1,8.0,8.0,7.1,7.0,5.9,6.0,4.0,5.6,3.0,6.1,7.9,8.4,9.0,7.1,7.9,7.6,7.1,6.3,6.7,6.5,6.8,-1.0,1.1,-3.1,-2.9,2.1,4.8,4.4,4.1,3.2,7.1,9.1,2.5,-1.9,-2.4,-3.3,3.3,25.1,25.1,23.1,24.5,23.9,25.1,23.0,25.1,22.1,23.0,25.2,24.1,26.0,26.0,25.1,25.1,25.1,25.1,25.8,26.1,1.3,-8.0,-14.1,-15.0,-15.0,-13.0,-11.1,-13.9,-16.2,-13.0,-6.0,-4.0,-5.0,-7.0,-6.0,-9.0,-9.1,-11.1,-14.0,-8.9,20.0,22.0,26.1,25.1,19.9,22.1,21.9,24.1,23.0,26.0,21.1,14.9,22.1,19.0,13.1,22.1,20.8,23.0,27.0,23.9,23.8,24.0,23.4,24.1,20.9,23.1,23.9,24.0,23.1,23.1,23.3,25.1,23.1,25.1,23.6,22.1,20.9,21.1,21.0,22.1,16.0,16.0,16.2,14.8,18.3,16.0,23.0,11.5,18.1,18.3,4.5,19.2,18.3,20.2,5.5,16.7,20.9,20.0,12.5,23.1,24.5,24.0,24.0,24.6,24.6,24.7,25.2,25.0,24.7,24.2,24.2,24.4,24.7,24.7,24.7,24.9,25.2,24.9,24.5,24.6,7.1,10.0,6.0,6.1,9.1,3.9,4.9,6.1,10.0,11.1,9.1,8.1,8.1,7.1,10.0,11.0,10.0,10.0,10.1,10.1,14.1,15.1,15.1,13.2,13.2,16.0,16.9,16.9,15.1,18.1,16.0,14.1,13.2,12.9,17.1,17.0,15.9,16.9,15.0,16.0,-11.0,-13.0,-9.9,3.1,2.0,6.9,4.0,2.9,2.0,-0.9,-4.7,2.1,-1.9,-7.0,-0.9,3.0,3.1,3.0,-1.3,2.0,11.1,17.0,6.1,4.1,5.9,5.9,7.0,11.7,7.1,9.9,13.2,14.0,11.9,11.1,11.6,9.9,9.9,8.8,13.8,-12.9,-12.1,-9.0,-6.9,0.0,-6.9,-2.1,-5.5,-13.1,-0.9,-0.3,-7.8,-5.1,-4.0,1.5,1.9,-4.0,4.1,5.7,-1.0,-13.8,-12.2,-6.8,3.0,2.1,-2.9,-3.8,-5.0,-6.0,-3.9,-2.2,-4.9,-8.8,0.9,0.0,4.0,-2.9,7.9,5.8,-0.1,2.5,2.1,3.1,3.2,5.0,3.0,3.1,1.3,5.6,6.3,6.0,10.1,9.9,10.3,5.8,8.1,9.4,8.0,9.2,7.5,-1.2,15.1,11.9,11.9,8.9,11.9,11.1,11.0,10.1,8.0,8.7,9.0,14.1,11.1,11.2,11.1,8.9,12.9,10.1,7.1,23.0,22.0,23.9,23.0,23.1,23.9,22.1,25.1,25.1,23.9,23.0,23.0,22.1,23.1,23.9,23.9,22.1,23.9,25.1,23.1,-22.1,-21.0,-16.9,-16.0,-18.9,-18.0,-3.0,-11.8,-16.0,-6.9,-3.8,-12.0,-10.1,-7.0,-7.6,-2.9,-14.1,-6.0,-12.9,-11.0,-8.9,-15.0,-28.0,-14.0,-13.9,-13.0,-11.1,-6.8,1.0,-3.0,-9.4,-8.9,-12.0,-15.0,-9.4,-10.0,-13.0,-6.0,-0.9,-4.0,15.0,11.1,14.1,16.0,12.9,12.9,9.0,6.7,13.9,10.2,5.0,4.0,7.1,8.8,5.9,3.0,7.2,6.9,3.9,5.0,-1.2,1.1,11.1,6.9,1.8,1.3,7.9,-0.6,4.0,2.8,12.4,6.1,1.1,7.0,16.0,17.0,10.8,10.1,16.1,11.1,-9.9,-6.0,-6.0,-7.0,-6.0,-5.0,-2.9,-2.2,-1.9,3.0,2.7,4.0,-2.0,-5.0,-8.0,-4.0,-2.0,-2.9,2.3,7.0,23.0,20.0,18.0,21.1,20.0,19.9,23.1,21.2,17.0,22.1,22.2,19.9,23.0,21.1,21.0,25.0,23.3,23.0,20.9,19.0,6.0,3.1,0.0,-3.1,-2.0,-5.0,-2.0,-2.1,-3.0,-6.1,-6.3,1.0,4.0,5.9,4.0,7.0,0.0,-0.9,-2.9,1.0,-8.0,4.2,4.1,1.9,0.9,3.6,1.9,4.2,1.0,-0.1,1.8,-1.2,-2.0,3.1,4.6,4.9,1.9,2.2,4.5,8.0,8.9,-0.3,1.4,4.7,25.1,25.0,0.9,-3.2,-5.2,-5.2,-0.1,4.0,-1.1,3.5,-4.4,-8.6,1.9,-0.7,6.1,10.1,11.3,5.0,3.8,2.1,3.7,11.9,4.0,-1.9,-3.1,-0.9,-4.0,-7.0,-9.0,-4.0,-4.0,-9.9,-12.0,1.0,0.1,1.0,1.1,6.9,-2.0,-1.0,2.0,0.0,0.0,3.8,5.7,3.8,3.1,1.9,-1.4,0.1,2.9,3.7,3.7,5.8,8.2,8.8,10.0,3.2,6.3,9.7,6.3,8.0,16.0,21.0,18.9,17.5,20.0,18.8,20.0,20.0,19.0,19.0,18.9,19.0,18.1,19.1,19.0,16.9,20.9,18.0,18.1,19.0,16.9,16.9,18.9,24.0,24.1,24.1,26.0,25.0,25.0,25.0,24.6,25.0,25.4,25.0,23.0,26.0,25.6,22.9,25.0,24.6,22.0,24.1,24.1,23.9,23.9,25.1,26.4,23.9,25.1,-3.7,-2.0,-3.0,-3.7,-1.2,-3.0,-2.3,9.0,3.4,6.0,5.1,0.3,1.9,0.3,1.2,-1.6,-4.4,-3.7,5.2,16.9,10.0,10.0,14.0,6.1,9.0,8.0,11.0,12.0,12.9,14.1,9.8,8.9,9.0,10.1,10.0,11.0,9.9,12.0,13.1,10.1,13.1,11.8,8.8,12.3,12.8,12.8,13.3,0.6,10.9,10.8,0.8,10.4,14.1,12.0,-4.2,11.0,10.2,14.4,-6.2,12.8,20.1,22.6,25.4,25.5,24.1,22.1,21.0,23.0,25.0,26.0,22.8,23.0,23.1,24.1,22.6,21.0,24.1,23.1,23.3,22.0,10.0,12.0,9.1,8.0,8.0,6.1,7.1,5.9,9.0,8.1,8.1,11.0,11.0,10.0,11.3,12.0,11.0,12.0,12.5,12.0,-11.1,-17.0,-20.0,-18.0,-15.9,-17.1,-14.0,-12.8,-4.0,-10.0,-9.9,-6.9,-4.0,-11.0,-11.0,-13.0,-11.0,-6.0,-9.1,-5.0,7.1,9.9,11.1,11.1,11.0,12.0,14.0,9.8,14.0,9.1,10.8,14.1,13.1,13.9,15.6,15.1,11.9,6.2,15.1,12.0,21.1,21.1,23.0,22.0,23.9,22.9,23.0,25.1,24.0,24.1,24.0,24.1,20.1,20.9,20.6,23.0,21.1,21.0,21.9,22.9,10.2,19.3,20.1,13.2,14.2,13.8,15.3,15.1,12.2,11.4,10.6,8.3,9.5,13.2,12.8,12.2,9.4,13.6,7.8,8.6,16.0,14.1,15.6,3.5,4.3,7.8,3.7,7.0,6.0,2.7,1.9,4.3,6.2,5.7,6.1,8.4,5.5,9.0,2.8,7.9,7.1,8.1,8.7,23.6,24.1,24.4,23.7,23.8,24.1,23.9,23.3,23.9,24.2,24.9,25.0,24.6,24.3,24.4,23.0,23.9,23.9,23.2,22.9,18.9,20.0,19.0,19.0,19.1,17.1,21.1,18.1,20.0,17.9,20.0,20.0,19.0,20.9,19.1,19.8,20.9,20.9,20.9,20.9,-15.2,-9.0,-6.1,-5.4,-9.0,-8.3,-6.1,-3.9,-9.0,-8.3,1.1,-1.5,9.0,7.9,5.0,-12.6,-9.0,-8.2,-4.4,-8.2,15.1,13.9,21.2,19.9,11.5,15.0,18.1,16.3,15.8,16.0,17.5,17.9,14.7,20.5,17.7,16.4,22.1,9.0,3.1,16.9,22.3,22.9,21.1,22.3,22.8,21.1,23.3,22.1,22.8,21.7,22.6,22.8,22.3,22.3,22.1,21.7,21.4,20.0,19.1,19.5,11.1,5.1,11.2,17.0,18.1,22.3,20.9,23.4,18.5,19.0,20.2,14.1,15.0,15.9,16.0,17.9,16.9,16.9,22.9,21.1,23.4,23.7,22.8,23.3,22.7,23.5,24.2,17.1,23.2,22.6,23.3,18.6,22.5,23.2,20.3,23.1,22.9,23.7,23.5,23.2,25.1,23.9,23.9,25.1,23.9,26.0,25.1,25.1,26.0,25.1,26.0,26.0,25.1,26.0,26.0,26.0,25.1,27.0,25.1,26.0,23.9,24.3,23.7,23.5,24.1,24.4,24.3,24.0,23.4,24.9,24.7,24.3,24.2,24.3,23.9,24.1,24.4,24.1,23.0,23.9,21.1,23.1,25.0,24.1,21.9,16.9,22.0,24.9,22.9,24.2,22.9,23.0,21.2,22.0,22.0,22.0,22.0,24.2,22.1,21.2,21.1,20.0,20.0,20.1,21.1,20.1,20.1,18.9,17.9,20.1,20.0,18.9,18.9,19.0,18.9,18.9,18.9,20.0,21.0,21.1,21.1,21.0,21.1,24.1,23.1,22.9,21.1,21.1,21.1,21.1,23.0,22.9,22.0,22.0,22.0,22.0,20.1,22.0,21.1,21.1,4.9,6.1,3.9,2.0,4.0,-3.1,-5.1,-4.3,-4.9,0.1,2.7,5.0,4.0,3.1,2.5,10.1,0.1,1.0,-0.2,-1.0,7.1,7.1,10.1,17.0,13.9,8.1,17.0,18.1,16.1,16.0,17.9,7.9,15.1,14.0,15.6,18.0,18.0,17.0,14.6,9.2,3.9,2.1,-0.1,2.1,0.9,-0.9,-3.1,-4.4,-6.9,-2.1,2.7,5.0,3.0,2.0,3.9,4.9,6.1,2.0,0.6,0.9,19.3,16.5,24.3,22.9,25.0,21.0,21.1,21.3,21.0,22.0,22.7,23.0,23.1,22.0,22.8,17.9,23.0,20.1,22.2,22.1,4.0,3.1,1.0,4.9,3.1,2.0,-1.9,-0.6,0.0,1.0,7.0,8.1,9.1,5.0,3.5,3.9,6.1,4.0,0.0,-1.1,-8.8,-8.2,1.4,-4.5,-2.5,3.0,-0.6,-1.9,-2.1,-2.9,0.5,0.2,1.3,-3.3,-0.3,-2.3,-1.9,1.0,-0.4,-1.0,7.1,9.1,11.1,10.1,9.1,3.0,5.1,9.0,10.1,10.1,7.0,8.1,9.1,11.1,8.0,8.9,11.0,13.0,9.0,6.1,-21.7,-11.8,-9.3,-6.0,-2.7,-5.8,0.7,1.7,-1.8,-6.4,2.8,-5.0,-4.2,0.7,9.0,10.2,10.8,20.0,13.5,7.0,18.0,18.9,16.1,14.2,15.0,19.9,19.1,18.4,15.1,16.1,17.4,17.0,17.0,17.0,18.0,16.9,15.1,18.0,19.2,19.1,25.0,24.1,25.0,25.0,25.0,25.0,24.0,24.6,25.0,25.0,25.1,24.0,23.1,25.0,24.9,25.0,24.0,26.0,25.2,24.1,23.9,24.3,24.0,24.3,24.6,25.4,25.0,24.0,24.3,22.9,23.7,22.9,23.8,23.7,23.4,23.9,23.2,23.9,23.7,22.9,7.4,5.8,0.4,4.0,4.1,4.3,2.0,1.5,3.4,6.1,5.8,-3.3,-1.4,2.1,5.6,7.4,3.2,7.9,3.5,0.6,24.2,24.8,24.0,25.0,23.8,25.3,24.3,24.4,24.5,25.0,24.8,25.1,24.8,25.8,24.2,24.6,24.6,25.5,24.3,25.0,24.7,23.9,25.1,23.9,23.9,23.9,24.1,24.3,23.9,23.9,21.7,23.0,23.9,23.9,24.2,23.0,25.1,25.0,23.8,25.0,15.1,15.3,16.5,15.6,12.1,12.5,16.9,17.0,16.7,15.1,16.0,16.9,13.9,15.1,13.9,13.0,13.2,16.1,17.0,17.0,18.1,14.9,12.9,16.2,16.9,13.7,14.9,13.7,15.1,15.9,12.5,12.9,12.4,12.3,13.7,12.0,13.1,14.1,14.3,13.1,2.0,1.0,0.0,7.1,0.1,1.9,7.0,0.7,2.0,3.0,0.2,1.8,4.2,8.0,7.5,10.1,11.1,12.0,7.5,9.0,1.4,-3.3,-6.4,-2.0,-7.9,-8.6,-0.9,-1.1,-1.6,3.1,-2.4,-0.6,-6.4,-6.4,-3.4,-5.6,2.4,9.6,3.3,-1.8,3.1,3.3,4.0,3.3,0.3,-0.7,1.1,2.3,3.9,4.9,3.6,3.0,4.8,8.8,6.1,5.1,6.6,7.0,9.0,9.7,-3.0,-5.0,-6.0,-3.9,-1.0,2.0,0.9,2.2,6.0,3.9,5.0,8.1,1.0,-1.9,-1.0,-4.0,-2.0,1.9,8.3,4.1,5.1,6.1,8.4,6.6,6.4,5.5,4.4,2.6,5.3,6.6,4.0,7.9,8.1,5.8,4.2,4.7,8.9,4.9,-2.6,-0.6,23.9,25.0,25.1,25.1,25.0,26.0,26.0,25.5,25.0,25.1,25.3,25.1,24.1,25.0,25.3,25.0,24.0,25.0,24.3,23.1,24.9,25.1,24.3,24.8,25.4,25.1,25.7,25.4,25.6,25.0,25.2,25.0,24.9,24.6,25.0,25.0,24.8,24.4,23.7,24.4,8.1,7.9,10.1,7.1,12.0,9.0,9.9,10.3,13.1,10.1,7.7,8.0,9.9,12.0,10.3,12.0,12.0,12.0,10.0,13.0,-2.0,-8.9,-6.9,-1.9,-0.9,1.1,1.9,4.0,6.1,8.0,4.8,4.9,1.0,3.9,3.9,11.1,8.0,9.1,8.9,14.0,16.0,13.3,14.2,16.0,12.5,11.4,11.0,9.8,16.1,16.0,12.0,8.9,12.1,8.9,6.9,6.1,9.8,11.1,6.2,6.1,-0.6,-0.9,-0.8,0.5,0.2,-3.7,-5.9,-5.8,-4.5,-5.3,-9.6,-1.7,-3.4,-1.7,2.2,3.1,5.4,1.1,0.0,2.6,8.0,9.0,6.9,15.0,19.0,15.1,16.1,17.7,18.0,18.0,13.5,14.1,19.0,20.0,16.9,16.9,20.1,17.9,18.4,19.1,0.2,3.6,0.8,0.8,3.4,4.7,3.8,2.6,5.8,8.3,5.8,11.8,9.1,9.2,9.7,4.1,10.4,9.5,9.9,7.7,19.1,19.1,20.0,19.1,18.8,14.7,16.9,14.9,17.8,18.0,13.5,16.9,14.6,15.5,16.9,16.0,17.5,17.9,18.5,18.0,-8.2,7.8,7.3,8.9,7.8,11.1,8.4,5.7,6.1,-7.8,-0.5,5.2,4.3,8.3,1.0,5.1,-7.2,-7.7,-2.6,18.4,18.0,10.4,11.5,10.8,11.3,13.8,21.5,20.6,14.1,16.8,18.6,21.5,20.0,21.4,22.2,9.3,21.5,21.3,20.3,-2.0,0.0,-0.9,-2.0,-1.0,-2.1,0.9,-0.2,8.1,6.1,5.0,3.0,0.0,-5.0,-6.0,-0.9,2.1,7.1,2.2,8.0,24.8,25.1,26.1,25.0,25.6,25.5,23.2,24.7,24.8,25.6,24.9,25.2,25.3,25.2,25.2,24.8,24.8,25.2,23.7,22.9,20.9,20.9,20.0,18.9,21.1,22.1,23.1,24.0,23.1,23.9,23.1,24.0,21.1,22.0,21.8,21.1,22.0,21.1,22.0,21.1,8.0,11.0,15.0,20.0,21.0,16.0,13.0,14.5,16.0,16.0,14.5,16.0,19.0,18.9,22.2,21.0,22.0,22.1,15.1,16.0,14.1,7.0,13.9,13.9,13.9,13.0,11.1,8.3,16.1,12.0,13.2,12.0,12.9,16.0,16.6,18.0,15.9,16.9,16.2,11.1],"y":[34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,34.0167,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,41.3333,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,36.7167,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,-14.3333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,42.7333,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,-8.85,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,18.3333,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,-34.5667,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,39.7167,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,11.5333,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,-35.3,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,38.0833,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,25.05,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,26.2667,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,23.8833,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,10.6167,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,53.9333,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,50.5667,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,17.5333,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,32.3667,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,26.3333,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-25.7833,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,-16.7167,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,4.9333,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,42.65,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,12.35,-1.9667,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,16.7333,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,10.2167,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,45.0,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,13.4167,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,-33.3833,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,22.1667,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,26.0833,4.7167,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,-12.8,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,5.25,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,24.55,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,34.8833,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,50.1,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,36.3,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,18.2,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,31.0833,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,13.7,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,4.85,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,16.9,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,-18.05,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,48.7333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,4.8333,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,-17.55,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,13.35,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,41.65,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,52.4667,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,5.6,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,64.1667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,13.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,9.5667,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,12.55,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,6.8,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,41.7833,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,14.05,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,64.1333,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,28.5667,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,35.6833,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,34.2667,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,53.25,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,32.0,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,17.9333,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,43.1167,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,49.8,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,0.5333,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,30.3667,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,43.2333,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,17.95,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,56.4833,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,33.4167,-29.1,-29.1,-29.1,-29.1,6.25,6.25,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,33.8833,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,54.6333,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,49.6167,-18.8,-18.8,-18.8,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,-13.3,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,2.7333,8.4667,8.4667,8.4667,8.4667,8.4667,8.4667,8.4667,8.4667,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,12.5333,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,35.85,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,16.65,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,-20.4333,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,43.65,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,52.2667,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,34.05,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,-25.9167,18.7833,18.7833,18.7833,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,26.6333,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,52.9167,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,-19.5333,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,12.15,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,13.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,8.4833,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,15.1167,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,23.5833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,-0.8833,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,7.8167,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-6.5667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-25.2667,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,-12.0,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,14.5167,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,52.1667,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,25.25,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,47.1667,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,-20.8833,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,44.5,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,46.7667,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,44.0333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,24.9333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,14.7333,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,-4.6667,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,1.1167,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,46.65,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-9.4167,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-3.2333,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,-33.9833,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,3.1167,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,40.3833,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,23.9667,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,46.8167,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,38.55,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,43.3333,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,13.9167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,-8.2167,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,36.8333,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,37.9667,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,1.0167,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,50.4,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,24.4333,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,51.4833,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,-6.1667,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,38.85,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,-34.8333,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,41.2667,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,-17.7,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,6.1667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,20.9667,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45,28.45],"z":[12.3,10.8,8.9,11.3,13.7,14.9,16.5,16.0,17.2,17.8,19.6,19.9,15.6,15.8,17.8,18.3,20.1,20.4,21.7,22.0,13.6,12.4,12.7,10.9,10.4,11.8,9.7,9.6,11.1,14.2,12.2,11.7,11.3,10.2,11.9,12.6,13.5,13.1,12.3,10.6,12.4,11.1,12.6,13.2,14.1,11.9,15.3,14.4,15.2,15.5,14.4,12.9,12.9,13.8,14.2,15.6,16.0,17.6,16.7,18.9,30.1,30.1,28.9,29.4,29.4,27.2,28.2,29.9,29.4,28.6,29.7,29.4,28.8,29.4,28.9,29.1,12.1,10.6,8.9,11.7,12.1,11.4,10.8,14.2,11.9,10.9,12.2,13.6,13.2,12.7,15.1,17.3,15.3,17.1,17.0,14.9,26.1,27.5,28.4,28.7,28.8,28.9,28.8,28.9,29.4,28.6,29.3,29.3,29.8,28.9,27.7,29.3,29.1,28.5,29.0,29.2,25.1,25.7,24.9,25.1,25.1,25.7,26.4,26.5,26.4,26.3,26.2,26.4,26.2,26.6,26.0,25.6,26.5,27.0,27.4,26.9,24.1,25.3,19.3,16.8,16.8,20.6,23.3,24.5,25.9,21.5,20.4,17.7,22.4,22.4,22.7,23.9,19.0,19.1,23.4,20.6,1.2,2.8,3.9,3.3,5.7,3.3,5.2,0.0,2.2,3.0,-1.3,4.0,4.0,11.4,6.2,4.2,4.4,10.0,8.5,5.2,30.5,30.1,29.1,28.0,29.4,29.4,29.1,29.2,29.1,28.1,29.5,28.1,30.3,30.3,30.7,29.9,30.1,31.9,31.3,29.1,23.3,18.8,18.5,14.9,16.9,20.1,21.5,22.6,21.3,20.5,18.7,22.4,22.8,19.3,14.4,17.0,16.8,18.8,23.1,13.4,1.5,2.9,4.1,4.6,4.7,5.8,7.5,4.1,4.9,5.6,4.4,5.4,7.5,10.4,11.6,9.7,8.2,7.4,11.0,8.9,26.4,23.2,23.5,25.0,23.6,24.7,26.8,26.5,25.0,23.6,21.7,21.5,22.9,23.9,24.4,25.9,25.3,23.8,25.2,18.0,17.7,19.2,21.3,20.6,20.7,20.3,21.5,21.6,22.5,22.8,21.1,20.8,21.9,22.1,23.1,22.9,24.0,23.4,22.2,21.8,22.3,22.9,21.9,23.4,21.8,21.1,21.7,21.3,21.2,22.6,23.8,25.6,24.7,25.1,25.6,27.8,26.4,26.1,24.7,26.5,26.2,26.5,26.5,27.3,27.5,27.7,28.2,28.4,27.9,27.7,27.9,27.7,27.6,28.2,27.4,27.4,28.4,28.3,28.2,3.7,4.1,1.7,0.6,1.7,-0.2,-1.5,-0.2,-0.8,-0.5,-1.3,0.7,0.7,3.0,3.0,5.5,4.6,2.3,4.4,2.5,6.8,6.6,5.8,6.0,6.3,7.2,6.8,7.7,10.3,9.4,8.3,8.7,11.7,12.1,12.8,10.0,10.2,11.2,12.1,12.1,27.1,27.2,27.9,27.9,27.6,27.7,27.7,28.2,25.9,26.1,28.0,27.3,27.8,28.7,28.7,27.9,28.4,28.8,27.6,28.3,16.4,16.9,18.7,19.1,18.8,19.7,19.8,20.1,17.8,18.6,17.1,18.8,17.8,16.4,19.1,19.9,21.2,20.1,16.6,20.7,22.0,22.8,22.5,22.1,20.2,20.0,20.8,21.1,21.6,22.8,23.7,23.2,23.6,23.2,24.1,24.9,24.3,25.2,19.7,23.8,24.6,18.8,18.4,20.0,18.2,17.7,25.4,27.3,27.0,27.9,27.0,18.2,18.4,25.9,16.6,15.0,15.9,14.9,17.0,27.2,25.5,24.9,24.3,25.0,26.5,27.4,26.4,26.3,26.5,27.8,25.8,26.1,26.7,27.2,23.0,22.3,26.1,27.2,27.3,28.7,28.3,28.5,28.2,28.9,29.1,28.7,28.5,28.3,28.4,28.3,28.4,28.8,28.4,28.3,8.9,7.1,7.0,7.6,8.0,6.8,5.8,4.4,5.3,8.4,9.9,9.1,7.6,6.7,6.4,7.4,7.9,8.7,6.7,5.2,31.4,32.3,33.2,33.7,33.4,33.3,32.6,31.9,33.3,33.3,35.1,34.6,36.1,34.4,33.9,34.0,32.9,32.8,33.6,33.4,20.7,22.5,21.9,21.6,21.7,21.9,21.8,21.7,21.8,21.5,21.4,21.8,22.2,21.8,21.6,22.1,22.7,22.2,22.1,22.1,22.1,28.7,28.1,28.2,27.9,28.3,28.7,27.9,28.3,29.1,29.1,28.0,28.9,28.2,27.6,26.9,27.2,27.8,28.2,28.4,28.4,27.3,28.4,28.5,28.6,27.4,26.8,27.7,29.8,28.0,29.3,29.7,29.5,29.6,25.7,28.2,29.9,27.9,26.0,28.1,27.8,-3.4,1.5,5.0,9.0,12.8,5.5,3.2,2.8,5.3,1.3,4.6,5.1,5.1,6.7,2.8,3.4,-1.1,-3.1,-1.3,28.2,28.9,28.3,30.1,31.4,29.4,28.6,29.2,28.7,30.2,30.5,30.7,29.1,27.6,27.7,29.0,29.3,27.7,28.3,25.7,33.1,32.9,31.7,31.1,34.4,35.5,36.3,36.7,35.2,37.3,36.2,35.8,34.1,36.3,33.2,36.8,32.7,29.8,29.7,32.3,22.9,22.1,22.5,22.6,21.7,21.2,19.7,18.3,15.6,21.1,19.5,18.2,20.4,21.1,11.9,19.9,14.4,13.4,13.9,15.5,11.3,10.7,14.5,21.3,22.9,19.6,17.2,18.5,16.4,14.6,16.2,18.9,18.6,19.4,20.0,20.4,21.9,20.7,19.9,20.2,8.4,8.1,12.1,14.7,20.6,14.0,12.0,12.2,10.6,12.3,12.3,15.6,13.3,14.3,14.5,15.4,16.6,12.5,13.6,13.6,16.3,27.2,30.1,29.4,28.1,30.0,30.1,26.7,27.9,21.6,30.1,28.7,29.5,24.4,29.3,28.6,29.2,22.4,26.1,29.5,29.5,23.7,24.2,23.9,24.5,24.5,24.6,25.1,25.1,24.2,24.3,25.1,24.8,24.2,25.0,25.4,25.3,25.3,25.8,26.0,25.6,29.0,29.1,26.7,26.5,28.0,28.5,27.7,28.1,28.9,29.1,29.4,29.1,28.6,29.1,28.6,29.1,29.8,29.9,28.3,28.1,24.2,24.6,24.7,24.9,25.3,25.5,25.7,26.3,26.6,23.6,24.6,25.6,26.1,26.1,26.2,26.7,27.1,25.8,24.3,14.9,15.9,15.7,15.4,15.1,16.4,15.5,14.9,15.4,14.2,14.9,15.6,16.9,17.3,15.5,15.2,15.6,16.6,16.3,16.0,5.4,7.9,8.1,6.7,5.7,4.5,2.7,2.7,5.1,7.0,9.0,8.1,6.8,8.2,10.8,9.6,4.7,3.3,2.4,7.0,-1.6,-1.3,4.8,7.1,7.0,6.8,5.2,3.2,2.2,4.3,5.7,5.9,6.4,7.9,8.9,13.3,9.7,6.9,6.3,3.7,28.8,28.1,25.7,28.3,28.7,26.4,26.6,28.9,28.1,28.8,27.3,27.3,27.4,27.8,27.5,26.9,27.0,24.0,25.4,26.2,21.3,18.8,16.3,17.1,17.3,16.3,15.8,14.6,16.8,14.7,15.0,17.8,16.9,16.7,16.9,16.1,17.6,17.0,15.7,18.3,27.5,26.9,26.9,27.4,26.1,26.9,26.5,27.7,27.9,29.5,28.5,27.3,27.4,27.6,27.9,28.7,29.0,28.3,30.3,30.2,28.4,26.6,28.6,29.6,29.9,28.0,28.5,28.1,27.9,31.2,28.6,29.2,28.1,26.4,30.3,29.9,29.7,28.6,27.7,28.2,29.2,29.0,29.4,29.1,29.7,29.8,29.5,29.1,29.3,29.0,30.6,30.2,30.0,30.1,30.1,30.2,30.9,30.4,30.1,29.9,28.5,29.7,28.7,28.7,28.1,28.8,27.1,27.7,25.8,26.9,26.0,25.9,26.2,27.3,27.4,25.4,26.3,26.3,25.3,25.1,7.4,6.4,6.3,6.5,7.3,6.7,7.5,8.7,8.6,8.0,8.3,9.6,11.4,12.0,13.5,12.1,11.9,13.7,12.4,13.4,27.4,24.2,26.9,27.1,25.4,23.0,23.2,28.9,27.7,26.6,27.6,26.7,26.3,26.8,27.4,28.7,27.9,28.9,29.0,28.5,28.7,28.4,29.0,29.1,28.4,27.8,26.2,27.7,28.4,27.2,28.8,29.3,29.8,29.7,29.1,29.6,29.2,29.1,28.9,28.9,24.7,25.2,26.5,26.8,28.1,25.7,23.7,23.1,24.1,26.2,26.0,26.9,26.6,26.0,27.3,29.1,28.9,26.9,23.9,23.8,9.8,13.1,11.1,10.4,11.2,14.1,9.2,8.4,9.1,7.4,8.6,12.6,16.9,12.9,10.7,9.9,10.3,10.6,9.7,9.4,7.8,9.4,10.4,9.4,4.6,4.2,4.9,3.7,5.6,8.4,10.4,9.8,10.2,11.2,12.8,9.6,4.7,2.3,4.6,10.9,29.6,29.6,27.8,28.9,29.6,30.3,29.0,28.9,28.6,29.5,30.5,30.4,29.9,29.9,29.3,29.7,30.4,30.5,29.2,30.0,1.2,-4.1,-6.5,-7.9,-9.2,-9.4,-9.0,-11.1,-11.0,-10.0,-3.0,-3.4,-5.4,-5.5,-4.9,-5.3,-6.7,-9.2,-9.5,-8.6,30.0,28.8,30.0,29.5,29.4,30.7,29.6,29.6,28.0,31.4,30.1,31.2,31.6,32.3,31.7,30.3,30.7,32.1,26.6,32.3,28.4,28.3,28.6,28.9,28.9,29.0,28.5,28.3,29.6,29.9,28.5,28.7,28.7,28.7,29.6,29.9,30.3,30.3,29.6,28.5,27.1,27.1,28.4,28.2,29.5,29.1,26.9,26.6,26.4,27.9,31.2,30.5,29.4,28.6,28.0,29.2,28.8,28.2,26.9,25.9,29.8,30.1,29.3,29.1,29.7,28.8,27.6,30.3,28.0,30.3,30.6,27.8,27.9,27.8,27.9,29.9,29.3,30.2,27.8,30.3,11.4,12.4,12.7,9.5,10.8,10.4,9.4,11.1,12.6,14.7,11.1,11.0,11.1,11.9,11.8,13.1,13.5,14.1,14.8,14.1,24.4,23.0,24.3,24.8,25.2,24.4,25.3,25.1,24.4,24.4,24.9,24.6,23.7,23.1,24.2,24.2,24.6,22.4,26.9,25.7,-3.5,-3.7,-1.9,3.6,6.1,7.1,6.5,7.9,5.6,4.1,2.1,2.1,4.5,1.7,1.2,3.6,5.0,5.0,1.4,2.3,22.0,20.7,18.9,17.7,16.9,16.8,19.4,20.4,19.6,21.4,23.5,23.5,22.4,23.4,22.7,22.3,22.0,22.2,23.5,2.9,4.8,6.6,6.9,6.9,9.7,11.3,11.1,11.3,12.4,9.4,9.5,10.9,14.7,14.8,14.4,15.1,15.4,14.0,12.1,2.3,5.2,7.5,7.0,6.5,7.0,9.9,8.7,7.8,10.8,9.7,8.1,10.0,13.8,15.3,10.4,10.9,10.4,10.6,9.0,4.2,4.2,6.1,7.1,7.9,6.5,6.9,6.6,7.1,7.7,7.7,9.8,10.3,10.2,9.7,4.0,10.2,10.4,10.3,8.9,19.4,17.2,16.8,16.2,16.2,16.2,16.6,15.6,15.5,15.3,15.9,18.4,17.7,17.1,15.9,15.9,19.6,17.7,15.0,16.9,27.6,26.6,27.2,28.3,27.9,28.0,28.2,28.1,28.6,28.6,28.7,29.3,28.7,28.6,28.6,29.2,28.5,29.4,29.2,28.9,-9.5,-7.6,-6.3,-5.9,-3.8,-4.2,-7.1,-5.6,-4.3,-0.4,0.8,-0.2,1.4,4.7,4.3,1.7,-0.9,-0.3,-2.7,-3.1,-9.6,-11.0,-15.1,-13.3,-8.9,-8.2,-7.7,-5.7,1.2,-0.4,-3.1,-6.6,-8.7,-13.2,-9.5,-7.6,-7.8,-3.2,0.5,-0.1,18.6,19.1,18.9,18.7,19.0,19.3,19.4,20.0,19.3,19.7,19.8,19.7,19.9,19.9,19.4,18.7,19.9,19.9,20.6,19.9,14.6,15.1,17.2,19.5,17.9,18.8,20.1,19.0,20.6,22.2,17.9,18.2,19.7,21.8,23.6,23.2,23.4,24.6,18.2,19.1,-3.3,-1.7,-2.3,-1.9,-1.4,0.2,4.7,5.5,7.9,5.9,6.6,9.3,0.7,0.6,-3.3,-0.4,3.6,6.0,11.7,11.9,27.9,24.8,22.4,27.0,28.1,27.6,28.7,28.6,22.1,27.2,27.9,26.9,28.0,28.7,29.3,29.3,30.3,30.4,27.4,24.1,6.8,6.5,5.8,2.6,2.6,1.3,-0.5,-0.3,-1.0,0.6,2.7,2.0,3.2,5.6,8.1,6.8,2.2,0.5,0.9,2.2,8.7,11.5,13.6,11.3,10.9,12.2,12.4,11.6,11.5,10.8,10.9,12.5,14.4,13.8,11.8,11.9,14.7,15.9,12.1,12.3,15.1,18.1,20.8,25.0,28.5,29.2,14.9,14.2,17.6,15.3,14.5,15.7,17.2,19.5,21.0,24.6,19.4,17.4,16.7,15.4,17.0,17.7,17.1,19.3,22.7,17.9,5.5,5.1,3.1,1.2,2.1,0.5,-0.1,-1.5,-1.3,-0.1,0.9,1.8,1.7,3.1,4.8,6.9,3.7,1.9,3.4,4.3,6.2,7.5,9.2,6.4,5.7,5.1,5.1,4.6,7.8,8.7,7.3,6.3,9.7,9.6,10.4,8.6,7.2,10.5,10.7,11.5,20.1,22.3,21.8,19.4,20.2,20.9,20.1,20.4,20.8,21.6,22.1,20.7,21.2,21.1,20.8,22.1,21.8,21.2,20.6,20.5,21.2,19.8,20.6,29.2,28.3,28.7,29.4,28.5,28.2,28.2,27.5,28.7,29.6,29.4,29.6,29.4,29.3,29.6,29.9,30.2,29.7,29.7,29.7,30.1,30.1,30.5,30.9,30.4,30.3,29.8,30.0,31.2,30.6,32.5,31.9,31.5,31.3,32.8,32.6,33.5,33.1,32.9,33.5,33.0,33.1,32.2,31.9,34.1,34.0,12.9,14.0,15.2,13.0,13.5,13.9,13.5,15.6,15.9,17.1,15.6,14.5,14.0,13.9,13.5,14.4,14.9,15.0,16.9,15.6,27.8,27.9,27.7,27.4,29.8,28.6,27.1,28.1,28.0,27.7,28.7,28.4,29.0,29.1,32.6,31.1,30.9,32.3,31.4,32.7,26.2,27.0,27.5,27.5,27.2,26.8,26.7,26.3,26.2,27.4,27.7,27.5,26.3,26.9,27.4,26.5,27.1,27.0,27.4,27.1,13.9,12.4,12.0,11.3,12.8,10.8,11.1,9.6,10.6,11.0,10.6,12.2,12.9,12.6,13.5,13.6,13.4,14.2,14.7,14.6,-9.1,-9.6,-13.5,-13.4,-9.3,-8.4,-6.9,-5.0,-3.3,-1.5,-0.8,-0.9,0.7,-3.9,-3.2,-6.2,-4.7,-0.4,3.5,3.0,11.6,12.3,13.8,13.2,13.3,12.5,13.9,14.3,14.8,15.0,13.8,12.7,14.6,16.3,15.4,18.4,19.4,20.6,19.2,17.3,25.4,26.9,27.8,27.7,30.1,28.1,27.9,28.3,28.5,29.1,29.0,26.7,25.3,24.0,24.6,27.8,26.8,25.4,26.9,26.5,28.8,28.7,27.2,21.0,22.1,22.1,22.0,21.7,21.0,20.1,21.0,20.6,22.0,23.2,23.4,22.9,24.6,23.2,24.3,24.4,24.2,25.3,22.3,7.6,8.6,9.3,7.2,7.0,7.3,5.7,5.3,6.9,7.2,6.8,8.2,10.2,12.2,11.3,7.3,9.1,9.7,10.6,9.9,27.6,29.7,29.8,29.3,29.1,29.4,28.4,26.4,26.7,27.9,28.3,27.3,28.0,27.7,27.8,25.9,27.3,27.4,26.1,25.6,28.4,29.0,28.6,28.7,28.9,28.6,28.8,28.6,28.8,29.9,30.7,29.5,30.0,29.9,30.4,30.6,30.6,30.3,30.6,31.0,30.4,31.9,33.8,34.7,34.3,33.9,33.5,33.3,33.5,33.9,35.1,35.7,36.6,36.5,34.3,33.3,32.8,32.9,32.1,32.7,31.2,34.8,33.9,32.1,31.2,31.3,35.2,34.6,35.4,32.3,31.6,31.1,33.5,32.1,32.6,31.4,35.2,34.5,34.5,33.1,26.0,26.4,26.7,26.1,27.3,26.6,25.8,26.3,26.5,26.6,26.6,26.9,26.5,27.4,26.7,26.6,27.3,27.2,26.1,25.9,21.5,19.4,20.4,23.9,25.3,23.6,23.4,23.6,23.4,23.0,23.9,25.5,24.3,24.1,24.2,26.1,27.6,28.0,27.3,27.6,29.3,27.5,26.1,28.8,28.8,26.8,29.0,27.6,28.3,26.9,27.6,28.9,28.6,26.9,28.6,27.2,27.9,28.3,28.1,27.8,29.8,29.0,29.5,26.6,29.7,28.4,29.7,29.2,29.8,30.2,28.6,29.3,28.6,29.8,28.3,29.9,29.6,29.9,27.9,26.7,28.5,27.2,26.8,27.4,28.2,28.2,28.1,27.5,27.9,27.9,26.6,29.7,27.9,28.6,27.6,27.7,27.2,28.6,29.3,28.4,29.0,31.6,30.6,26.3,27.3,27.6,30.1,31.1,32.6,32.4,33.0,34.3,34.1,35.9,34.9,34.8,29.8,30.1,34.3,33.6,24.3,25.5,25.6,25.1,24.8,24.8,24.9,23.8,24.1,24.4,23.7,19.1,23.7,23.0,23.3,18.2,17.8,23.3,24.5,19.4,28.8,28.1,28.6,28.8,28.7,30.1,29.5,29.0,27.9,28.6,28.5,29.1,28.9,28.8,27.9,29.2,28.9,28.7,29.1,28.6,9.2,7.4,8.6,5.2,4.4,5.2,2.3,2.0,3.4,7.1,5.0,6.2,4.6,5.7,5.8,9.1,3.9,1.4,3.0,3.5,18.6,18.6,19.1,21.1,21.8,21.2,20.8,22.2,21.9,22.1,23.4,22.6,21.2,22.5,23.5,24.1,25.0,24.9,25.7,24.3,7.6,6.8,6.9,6.5,2.6,5.9,3.2,1.8,3.0,6.9,5.8,6.0,4.1,2.7,4.5,7.2,8.1,4.8,3.1,3.7,26.4,27.1,27.5,26.2,27.1,26.6,26.2,26.5,26.9,27.6,27.0,27.7,27.0,27.2,26.8,25.9,27.3,27.6,27.5,27.5,7.7,8.4,7.3,7.8,6.9,6.8,6.2,5.0,6.0,7.1,8.8,8.6,8.5,6.1,6.0,7.6,10.3,8.6,3.8,6.2,-6.1,-4.6,1.6,1.4,-0.6,1.9,3.9,3.0,-1.2,-2.2,0.2,0.9,2.6,2.3,1.1,1.1,4.1,3.4,1.8,1.5,13.2,12.4,12.7,10.8,11.9,9.3,9.2,9.1,11.2,11.2,10.7,10.6,9.3,9.8,11.3,13.4,12.6,12.7,12.2,10.7,12.6,16.9,22.3,20.2,19.0,19.1,23.6,19.7,20.3,22.4,25.4,19.6,20.8,25.2,24.6,26.5,24.4,21.1,19.9,19.8,21.8,22.4,21.2,21.7,21.7,21.3,21.5,21.4,21.1,20.6,21.1,21.5,21.3,21.3,21.7,23.1,22.7,21.8,21.7,22.1,27.2,28.6,27.7,29.6,29.3,28.8,28.4,29.2,28.9,29.4,29.5,28.3,28.8,28.8,28.8,27.6,28.3,28.9,28.6,27.3,29.2,28.1,27.4,27.3,26.7,28.2,29.7,26.8,29.1,28.0,28.8,29.1,28.9,28.5,28.6,29.1,29.0,29.3,29.6,29.4,7.6,8.2,7.9,7.0,7.3,7.9,4.3,3.1,4.8,6.3,6.2,8.0,7.1,7.9,10.3,10.1,9.3,9.2,8.0,7.2,28.0,27.9,26.4,28.5,28.4,27.7,27.2,28.5,28.8,26.2,26.6,27.3,26.8,29.0,28.7,26.4,28.8,26.1,28.3,27.3,30.9,30.4,30.3,30.5,31.1,30.8,28.1,29.8,30.4,30.3,30.3,30.7,30.8,30.6,30.6,30.8,30.3,30.3,30.8,30.0,21.3,20.9,21.2,17.6,18.4,18.7,19.7,20.4,19.7,20.2,22.4,21.6,19.9,20.1,19.8,19.6,21.7,21.1,21.7,22.2,30.9,31.4,33.4,32.1,32.7,32.8,32.7,33.4,33.3,32.9,33.3,32.9,33.2,33.6,32.5,31.5,33.3,33.6,34.0,33.5,7.0,5.8,5.1,8.2,8.0,7.3,7.5,6.6,5.6,7.4,7.8,8.5,10.6,10.7,10.9,11.2,14.4,14.7,16.4,16.3,24.2,23.9,21.6,22.1,24.0,23.6,22.1,21.8,24.8,27.7,25.8,26.7,27.4,27.4,25.6,26.8,30.2,21.4,19.5,20.4,6.7,4.8,7.1,7.1,6.7,5.2,4.5,2.5,4.5,5.9,4.9,6.7,9.2,8.1,11.7,10.3,7.7,9.9,7.9,8.8,-2.3,-3.0,-3.1,-1.2,3.4,5.0,7.8,9.6,10.6,10.8,13.4,10.6,3.1,5.7,8.3,11.3,14.5,14.6,16.7,18.0,13.6,9.3,10.3,12.9,10.9,8.9,7.8,5.2,7.3,13.5,13.3,10.6,8.6,7.9,9.7,11.7,8.3,10.1,8.2,6.1,31.3,30.4,31.2,31.7,32.0,31.2,31.4,31.1,30.8,31.1,31.7,30.9,30.9,31.9,31.6,31.0,31.0,31.5,30.9,26.6,28.8,29.3,29.1,29.3,28.6,28.0,29.1,27.4,27.3,25.6,26.4,27.1,27.7,27.2,28.1,28.1,28.1,27.8,28.7,28.2,12.2,14.5,14.6,12.2,14.1,13.6,13.6,15.7,15.8,16.2,13.4,13.7,13.9,13.9,14.2,15.8,16.3,17.3,18.0,15.8,3.8,4.2,4.9,5.7,6.9,10.0,13.9,14.4,7.8,10.7,12.7,7.8,9.3,7.8,9.1,13.9,16.3,16.1,18.1,14.9,20.6,21.7,21.4,20.5,22.1,20.9,23.1,21.8,20.5,20.4,21.1,21.4,22.3,22.6,23.3,22.2,22.0,23.3,22.7,22.1,4.7,3.4,1.7,3.6,5.1,2.0,-1.3,1.6,1.9,2.6,-0.2,-0.7,1.6,3.1,4.6,5.8,6.6,2.3,2.8,2.5,19.6,19.6,19.8,23.3,22.8,21.6,22.4,25.3,22.8,22.5,23.0,23.3,22.4,23.6,24.6,27.8,28.8,26.7,28.1,27.7,5.3,5.2,4.5,5.8,7.9,6.2,7.3,6.8,9.2,8.5,8.1,10.3,11.8,11.6,12.6,9.6,11.9,11.3,11.4,13.0,23.7,24.8,24.5,24.0,23.9,23.5,24.4,24.3,23.9,25.2,25.5,25.2,24.9,25.3,25.9,24.6,24.0,24.8,24.8,25.3,6.2,8.3,11.2,13.6,11.4,11.3,14.1,11.7,8.8,7.5,13.3,15.0,15.5,18.8,14.2,14.6,10.2,5.9,11.8,22.8,22.4,20.7,18.5,18.3,18.1,19.5,24.0,23.9,22.6,20.5,18.9,21.6,21.7,22.2,22.8,22.0,17.8,22.6,21.8,3.3,0.7,0.6,2.5,3.9,6.3,8.6,12.2,9.7,9.4,12.6,7.2,5.4,0.6,2.1,7.1,11.2,15.4,17.0,19.4,27.1,28.2,28.5,28.3,28.2,27.9,25.8,25.3,26.7,28.2,27.5,27.5,26.2,27.1,27.0,26.8,26.8,26.5,25.3,27.4,30.8,32.7,31.1,30.7,27.7,27.1,30.9,31.6,32.7,32.7,32.0,32.4,33.6,32.2,30.3,34.4,28.9,28.2,30.4,35.7,14.0,14.4,17.4,19.1,23.2,24.6,21.6,19.0,17.4,17.1,19.5,21.9,21.2,20.9,22.2,23.2,23.8,23.9,19.9,19.9,18.7,18.8,18.6,18.8,19.1,18.4,18.9,18.0,19.7,20.0,18.9,18.0,19.7,19.1,19.4,19.9,23.0,21.9,20.2,20.2],"type":"scatter3d"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"scene":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"xaxis":{"title":{"text":"Dew_point_\u00b0C"}},"yaxis":{"title":{"text":"latitude"}},"zaxis":{"title":{"text":"Temp_Avg_\u00b0C"}}},"coloraxis":{"colorbar":{"title":{"text":"Rel_Humidity_%"}},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"legend":{"tracegroupgap":0},"margin":{"t":0,"l":0,"r":0,"b":0}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('c14df9b9-f393-495b-8a24-8f0a7842aa16');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></div></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./day3.3b_advanced_plotting"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#my-first-seaborn-objects-plot">My first seaborn.objects plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-distributions">Plotting distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-is-the-temperature-range-over-all-cities">How is the temperature range over all cities?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-so-band-and-so-agg-doing-in-the-backgorund">What are so.Band and so.Agg doing in the backgorund?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#another-visualization-date-is-categorical-show-data-range-not-as-min-max-but-as-errorbar">Another visualization (date is categorical, show data range not as min-max but as errorbar)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-of-spaghetti-plots">The problem of Spaghetti Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternatives-1-highlighting">Alternatives: (1) Highlighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternatives-2-facet">Alternatives: (2) Facet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-relationship-of-temperature-date-and-latitude-south-north">Example: relationship of temperature, date and latitude (south - north)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-not-do-it-spaghetti-line-plot">How to not do it: spaghetti line plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-dot-array-and-flip-latitude-and-temperature-axis">Alternative: Dot array and flip latitude and temperature axis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-heatmap-like-via-dash">Alternative: Heatmap-like (via Dash)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#on-all-continents-no-problem-facet">On all continents? no problem: facet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-what-to-do-if-you-want-to-plot-3-4-variables">Example: what to do if you want to plot 3-4 variables?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-3d-plot-with-plotly">interactive 3D plot with plotly</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-04-30.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p>
+Copyright: Licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a> unless mentioned otherwise. 
+Contributions and feedback are welcome.
+</p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
