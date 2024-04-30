@@ -335,7 +335,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -351,6 +353,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Plotting</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-for-day-3-3b-advanced-plotting">Instructions for Day 3.3b - Advanced Plotting</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -362,7 +374,24 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="plotting">
 <h1>Plotting<a class="headerlink" href="#plotting" title="Permalink to this heading">#</a></h1>
-<p>In this session we will learn how to visualize primarily tabular data using the seaborn library.</p>
+<p>Note that the plotting training is divided into two distinct sessions.</p>
+<p>This session (Day 3.3a - Plotting Basics):</p>
+<ul class="simple">
+<li><p><em>Focus</em>: This session is centered on Seaborn’s figure-level functions, which provide a high-level interface for drawing statistical graphics.</p></li>
+<li><p><em>Content</em>: We exclusively use Seaborn’s built-in functionalities to create comprehensive plots without the need to manually handle Matplotlib objects. This simplifies the process, making it easier for those new to programming. We will learn how to visualize tabular data using the Seaborn library. We will start by visualizing basic relational charts before moving on to distributions and, if time permits, multivariate views.</p></li>
+<li><p><em>Audience</em>: It is specifically designed for beginners who are not yet familiar with programming. The goal is to introduce the basic concepts of data visualization without delving into more complex coding structures.</p></li>
+</ul>
+<p>Parallel session (Day 3.3b - Advanced Plotting):</p>
+<ul class="simple">
+<li><p><em>Focus</em>: This session explores the use of Seaborn’s grammar of graphics objects. This involves a more detailed manipulation of plot elements and integration with Matplotlib for enhanced customization.</p></li>
+<li><p><em>Content</em>: We will dive into how to structure plots using the grammar of graphics philosophy, which provides a powerful framework for understanding and creating complex visualizations. This includes modifying aesthetic attributes and integrating multiple plots.</p></li>
+<li><p><em>Audience</em>: This session is aimed at participants who feel more comfortable with coding and are ready to explore more advanced data visualization techniques. It is best for those looking to gain deeper insights into the graphical representation of data and how to manipulate these visualizations programmatically.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="instructions-for-day-3-3b-advanced-plotting">
+<h1>Instructions for Day 3.3b - Advanced Plotting<a class="headerlink" href="#instructions-for-day-3-3b-advanced-plotting" title="Permalink to this heading">#</a></h1>
+<p>Start with opening the notebook <code class="docutils literal notranslate"><span class="pre">00_getdata.ipynb</span></code> and execute the first and only cell to get the required weather data for the visualization course.</p>
+<p>During the course we will go through each of the other notebooks (<code class="docutils literal notranslate"><span class="pre">..._open.ipynb</span></code>) where you need to fill out some code at lines indicated with <code class="docutils literal notranslate"><span class="pre">#!#</span></code>. If you missed the solution in the course, you can find them in the notebooks with the ending <code class="docutils literal notranslate"><span class="pre">..._solution.ipynb</span></code> or ask your helpful and supportive tutors. :)</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -406,6 +435,22 @@ document.write(`
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Plotting</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-for-day-3-3b-advanced-plotting">Instructions for Day 3.3b - Advanced Plotting</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -426,7 +471,7 @@ By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on 2024-04-15.
+  Last updated on 2024-04-30.
   <br/>
 </p>
   </div>
