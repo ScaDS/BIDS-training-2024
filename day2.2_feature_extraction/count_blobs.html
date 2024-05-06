@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Feature extraction &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+    <title>Counting bright objects in images &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
   
   
   
@@ -61,7 +61,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'day2.2_feature_extraction/readme';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day2.2_feature_extraction/count_blobs';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -236,7 +236,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday2.2_feature_extraction/readme.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday2.2_feature_extraction/count_blobs.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -266,7 +266,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/day2.2_feature_extraction/readme.md" target="_blank"
+      <li><a href="../_sources/day2.2_feature_extraction/count_blobs.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -276,7 +276,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -335,7 +335,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -346,11 +348,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Feature extraction</h1>
+    <h1>Counting bright objects in images</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -360,14 +370,84 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="feature-extraction">
-<h1>Feature extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this heading">#</a></h1>
-<p>In this chapter we will introduce measurements of segmented objects in microscopy images. We will measure intensity, size and shape of objects using two napari plugins that can also be used from Python:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/haesleinhuepf/napari-skimage-regionprops/">napari-skimage-regionprops</a></p></li>
-<li><p><a class="reference external" href="https://github.com/haesleinhuepf/napari-simpleitk-image-processing">napari-simpleitk-image-processing</a></p></li>
-</ul>
-<p>You can download the slides <a class="reference download internal" download="" href="../_downloads/8e2afba250173dc42fc853f8d6b42192/Feature_Extraction.pdf"><span class="xref download myst">here</span></a>.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="counting-bright-objects-in-images">
+<h1>Counting bright objects in images<a class="headerlink" href="#counting-bright-objects-in-images" title="Permalink to this heading">#</a></h1>
+<p>A common use case for image processing in the biology context is counting blobs of high signal intensity surrounded by a low intensity background. Thresholding is the method of choice in this scenario. We demonstrate it with Otsu’s thresholding method (Otsu et al., IEEE Transactions on Systems, Man, and Cybernetics, Vol. 9 (1), 1979)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyclesperanto_prototype</span> <span class="k">as</span> <span class="nn">cle</span>
+
+<span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imsave</span><span class="p">,</span> <span class="n">imshow</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># initialize GPU</span>
+<span class="n">cle</span><span class="o">.</span><span class="n">select_device</span><span class="p">(</span><span class="s2">&quot;GTX&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\haase\mambaforge\envs\tea2024\lib\site-packages\pyclesperanto_prototype\_tier0\_device.py:77: UserWarning: No OpenCL device found with GTX in their name. Using gfx1035 instead.
+  warnings.warn(f&quot;No OpenCL device found with {name} in their name. Using {device.name} instead.&quot;)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;gfx1035 on Platform: AMD Accelerated Parallel Processing (2 refs)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;data/blobs.tif&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded image size: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+<span class="n">cle</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded image size: (254, 256)
+</pre></div>
+</div>
+<img alt="../_images/e6728dd614bf2048c6f3ddb166fc407842752233db29f93d1a04adc5c9914f6e.png" src="../_images/e6728dd614bf2048c6f3ddb166fc407842752233db29f93d1a04adc5c9914f6e.png" />
+</div>
+</div>
+<p>We just setup a simple image processing workflow that leads to a label image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># process the image</span>
+<span class="n">blurred</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">gaussian_blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sigma_x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sigma_y</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">binary</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">blurred</span><span class="p">)</span>
+<span class="n">labeled</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">connected_components_labeling_box</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span>
+
+<span class="c1"># show result</span>
+<span class="n">cle</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labeled</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/44262776347f6cd0fb2b3535a9b887688d6f40d589c8741a6bda980c0a2929a5.png" src="../_images/44262776347f6cd0fb2b3535a9b887688d6f40d589c8741a6bda980c0a2929a5.png" />
+</div>
+</div>
+<p>The maximum intensity in a label image corresponds to the number of objects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_labels</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">maximum_of_all_pixels</span><span class="p">(</span><span class="n">labeled</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of objects in the image: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_labels</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of objects in the image: 62.0
+</pre></div>
+</div>
+</div>
+</div>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>Remove the labels that touch the image border and count the objects again.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -410,6 +490,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -1,0 +1,895 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Parametric maps &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day2.2_feature_extraction/parametric_maps';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bio-Image Data Science Training Schools 2024
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day0_preparation/readme.html">Setting up your computer</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imprint.html">Imprint</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday2.2_feature_extraction/parametric_maps.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/day2.2_feature_extraction/parametric_maps.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Parametric maps</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-maps-using-scikit-image">Parametric maps using scikit-image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#area-map">Area map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-count-map">Pixel count map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-maps-using-simpleitk-based-measurements">Parametric maps using SimpleITK-based measurements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-pixels-map">Number of pixels map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aspect-ratio-map">Aspect ratio map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="parametric-maps">
+<h1>Parametric maps<a class="headerlink" href="#parametric-maps" title="Permalink to this heading">#</a></h1>
+<p>This notebook demonstrates how parametric maps can be made. In such parametric images, pixel intensity corresponds to  measurements of the objects, for example area.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pyclesperanto_prototype</span> <span class="k">as</span> <span class="nn">cle</span>
+<span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imsave</span>
+<span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">regionprops</span><span class="p">,</span> <span class="n">regionprops_table</span>
+<span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">map_array</span>
+<span class="kn">from</span> <span class="nn">napari_simpleitk_image_processing</span> <span class="kn">import</span> <span class="n">label_statistics</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Starting point for drawing parametric maps is always a label image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binary</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">artificial_objects_2d</span><span class="p">()</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="n">cle</span><span class="o">.</span><span class="n">voronoi_otsu_labeling</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">spot_sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">cle</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c9f12695d5a93178f252933249c1acf76c88238b1ef3320edc95099411edab93.png" src="../_images/c9f12695d5a93178f252933249c1acf76c88238b1ef3320edc95099411edab93.png" />
+</div>
+</div>
+<section id="parametric-maps-using-scikit-image">
+<h2>Parametric maps using scikit-image<a class="headerlink" href="#parametric-maps-using-scikit-image" title="Permalink to this heading">#</a></h2>
+<p>You can also compute your own measurement for each object and then visualize it in a parametric map image. Consider using <a class="reference external" href="https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops">scikit-image’s <code class="docutils literal notranslate"><span class="pre">regionprops()</span></code></a> for computing the measurements.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">statistics_table</span> <span class="o">=</span> <span class="n">regionprops_table</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;area&#39;</span><span class="p">,))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="area-map">
+<h2>Area map<a class="headerlink" href="#area-map" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">remapped</span> <span class="o">=</span> <span class="n">map_array</span><span class="p">(</span>
+        <span class="n">labels</span><span class="p">,</span>
+        <span class="n">statistics_table</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span>
+        <span class="n">statistics_table</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+<span class="n">cle</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">remapped</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_map</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\haase\mambaforge\envs\tea2024\lib\site-packages\pyclesperanto_prototype\_tier9\_imshow.py:46: UserWarning: The imshow parameter color_map is deprecated. Use colormap instead.
+  warnings.warn(&quot;The imshow parameter color_map is deprecated. Use colormap instead.&quot;)
+</pre></div>
+</div>
+<img alt="../_images/75253a0daa11812b958d4e0fad2e22afeb90500ce8881d191f4c8751fc3d9a1d.png" src="../_images/75253a0daa11812b958d4e0fad2e22afeb90500ce8881d191f4c8751fc3d9a1d.png" />
+</div>
+</div>
+</section>
+<section id="pixel-count-map">
+<h2>Pixel count map<a class="headerlink" href="#pixel-count-map" title="Permalink to this heading">#</a></h2>
+<p>pyclesperanto comes with some maps built-in. For example the pixel count map derived from a label image expresses area or volume of objects in colour.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pixel_count_map</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">label_pixel_count_map</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+<span class="n">cle</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">pixel_count_map</span><span class="p">,</span> <span class="n">color_map</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\haase\mambaforge\envs\tea2024\lib\site-packages\pyclesperanto_prototype\_tier9\_imshow.py:46: UserWarning: The imshow parameter color_map is deprecated. Use colormap instead.
+  warnings.warn(&quot;The imshow parameter color_map is deprecated. Use colormap instead.&quot;)
+</pre></div>
+</div>
+<img alt="../_images/75253a0daa11812b958d4e0fad2e22afeb90500ce8881d191f4c8751fc3d9a1d.png" src="../_images/75253a0daa11812b958d4e0fad2e22afeb90500ce8881d191f4c8751fc3d9a1d.png" />
+</div>
+</div>
+</section>
+<section id="parametric-maps-using-simpleitk-based-measurements">
+<h2>Parametric maps using SimpleITK-based measurements<a class="headerlink" href="#parametric-maps-using-simpleitk-based-measurements" title="Permalink to this heading">#</a></h2>
+<p>Furthermore, also <a class="reference external" href="https://simpleitk.readthedocs.io/">SimpleITK</a> comes with quantitative measurements for labeled images. For convenience reasons, we will use the scriptable napari plugin <a class="reference external" href="https://github.com/haesleinhuepf/napari-simpleitk-image-processing">napari-simpleitk-image-processing</a> for deriving measurements.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">statistics_sitk</span> <span class="o">=</span> <span class="n">label_statistics</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">perimeter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">statistics_sitk</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;label&#39;, &#39;elongation&#39;, &#39;feret_diameter&#39;, &#39;flatness&#39;, &#39;roundness&#39;,
+       &#39;equivalent_ellipsoid_diameter_0&#39;, &#39;equivalent_ellipsoid_diameter_1&#39;,
+       &#39;equivalent_spherical_perimeter&#39;, &#39;equivalent_spherical_radius&#39;,
+       &#39;number_of_pixels&#39;, &#39;number_of_pixels_on_border&#39;, &#39;perimeter&#39;,
+       &#39;perimeter_on_border&#39;, &#39;perimeter_on_border_ratio&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">statistics_sitk</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>elongation</th>
+      <th>feret_diameter</th>
+      <th>flatness</th>
+      <th>roundness</th>
+      <th>equivalent_ellipsoid_diameter_0</th>
+      <th>equivalent_ellipsoid_diameter_1</th>
+      <th>equivalent_spherical_perimeter</th>
+      <th>equivalent_spherical_radius</th>
+      <th>number_of_pixels</th>
+      <th>number_of_pixels_on_border</th>
+      <th>perimeter</th>
+      <th>perimeter_on_border</th>
+      <th>perimeter_on_border_ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>11.661904</td>
+      <td>1.000000</td>
+      <td>1.023476</td>
+      <td>11.780624</td>
+      <td>11.780624</td>
+      <td>37.009923</td>
+      <td>5.890312</td>
+      <td>109</td>
+      <td>0</td>
+      <td>36.161012</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1.000000</td>
+      <td>13.416408</td>
+      <td>1.000000</td>
+      <td>1.027991</td>
+      <td>13.587484</td>
+      <td>13.587484</td>
+      <td>42.686341</td>
+      <td>6.793742</td>
+      <td>145</td>
+      <td>0</td>
+      <td>41.524046</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1.000000</td>
+      <td>15.620499</td>
+      <td>1.000000</td>
+      <td>1.002829</td>
+      <td>15.675944</td>
+      <td>15.675944</td>
+      <td>49.247432</td>
+      <td>7.837972</td>
+      <td>193</td>
+      <td>0</td>
+      <td>49.108522</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1.000000</td>
+      <td>17.888544</td>
+      <td>1.000000</td>
+      <td>1.026916</td>
+      <td>17.805523</td>
+      <td>17.805523</td>
+      <td>55.937700</td>
+      <td>8.902761</td>
+      <td>249</td>
+      <td>0</td>
+      <td>54.471556</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>1.000000</td>
+      <td>20.000000</td>
+      <td>1.000000</td>
+      <td>1.010632</td>
+      <td>19.963065</td>
+      <td>19.963065</td>
+      <td>62.715819</td>
+      <td>9.981533</td>
+      <td>313</td>
+      <td>0</td>
+      <td>62.056032</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>243</th>
+      <td>244</td>
+      <td>1.732051</td>
+      <td>2.236068</td>
+      <td>1.732051</td>
+      <td>1.014350</td>
+      <td>1.917166</td>
+      <td>3.320629</td>
+      <td>7.926655</td>
+      <td>1.261566</td>
+      <td>5</td>
+      <td>0</td>
+      <td>7.814513</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>244</th>
+      <td>245</td>
+      <td>3.822108</td>
+      <td>8.062258</td>
+      <td>3.822108</td>
+      <td>0.773499</td>
+      <td>2.515825</td>
+      <td>9.615753</td>
+      <td>15.451894</td>
+      <td>2.459245</td>
+      <td>19</td>
+      <td>9</td>
+      <td>19.976625</td>
+      <td>9.0</td>
+      <td>0.450527</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <td>246</td>
+      <td>1.510461</td>
+      <td>8.246211</td>
+      <td>1.510461</td>
+      <td>0.924421</td>
+      <td>5.878848</td>
+      <td>8.879771</td>
+      <td>22.698484</td>
+      <td>3.612576</td>
+      <td>41</td>
+      <td>9</td>
+      <td>24.554261</td>
+      <td>9.0</td>
+      <td>0.366535</td>
+    </tr>
+    <tr>
+      <th>246</th>
+      <td>247</td>
+      <td>2.159943</td>
+      <td>8.062258</td>
+      <td>2.159943</td>
+      <td>0.910818</td>
+      <td>4.205276</td>
+      <td>9.083158</td>
+      <td>19.416259</td>
+      <td>3.090194</td>
+      <td>30</td>
+      <td>9</td>
+      <td>21.317383</td>
+      <td>9.0</td>
+      <td>0.422191</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td>248</td>
+      <td>3.609511</td>
+      <td>6.000000</td>
+      <td>3.609511</td>
+      <td>0.827286</td>
+      <td>2.057413</td>
+      <td>7.426255</td>
+      <td>12.279920</td>
+      <td>1.954410</td>
+      <td>12</td>
+      <td>7</td>
+      <td>14.843629</td>
+      <td>7.0</td>
+      <td>0.471583</td>
+    </tr>
+  </tbody>
+</table>
+<p>248 rows × 14 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="number-of-pixels-map">
+<h2>Number of pixels map<a class="headerlink" href="#number-of-pixels-map" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we&#39;re appending a [0] for the &quot;measurement&quot; of the background and attach all values behind</span>
+<span class="n">number_of_pixels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">statistics_sitk</span><span class="p">[</span><span class="s1">&#39;number_of_pixels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">number_of_pixels_map</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">replace_intensities</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">number_of_pixels</span><span class="p">)</span>
+
+<span class="n">cle</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">number_of_pixels_map</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_map</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\haase\mambaforge\envs\tea2024\lib\site-packages\pyclesperanto_prototype\_tier9\_imshow.py:46: UserWarning: The imshow parameter color_map is deprecated. Use colormap instead.
+  warnings.warn(&quot;The imshow parameter color_map is deprecated. Use colormap instead.&quot;)
+</pre></div>
+</div>
+<img alt="../_images/75253a0daa11812b958d4e0fad2e22afeb90500ce8881d191f4c8751fc3d9a1d.png" src="../_images/75253a0daa11812b958d4e0fad2e22afeb90500ce8881d191f4c8751fc3d9a1d.png" />
+</div>
+</div>
+</section>
+<section id="aspect-ratio-map">
+<h2>Aspect ratio map<a class="headerlink" href="#aspect-ratio-map" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">statistics</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we&#39;re appending a [0] for the &quot;measurement&quot; of the background and attach all values behind</span>
+<span class="n">aspect_ratio</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">statistics</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">minor_axis_length</span><span class="p">:</span>
+        <span class="n">aspect_ratio</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">major_axis_length</span> <span class="o">/</span> <span class="n">s</span><span class="o">.</span><span class="n">minor_axis_length</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">aspect_ratio</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># note: an aspect ratio of 0 is an &quot;invalid&quot; value</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aspect_ratio_map</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">replace_intensities</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="p">)</span>
+
+<span class="n">cle</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">aspect_ratio_map</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_map</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e0431d9986163a0025aed52c66c39c08f628863346b5f006339c9020f83e6b03.png" src="../_images/e0431d9986163a0025aed52c66c39c08f628863346b5f006339c9020f83e6b03.png" />
+</div>
+</div>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>Draw a parametric map image of Feret’s diameter.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./day2.2_feature_extraction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-maps-using-scikit-image">Parametric maps using scikit-image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#area-map">Area map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-count-map">Pixel count map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-maps-using-simpleitk-based-measurements">Parametric maps using SimpleITK-based measurements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-pixels-map">Number of pixels map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aspect-ratio-map">Aspect ratio map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-05-06.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p>
+Copyright: Licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a> unless mentioned otherwise. 
+Contributions and feedback are welcome.
+</p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

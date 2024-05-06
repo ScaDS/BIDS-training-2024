@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Shape features &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day2.2_feature_extraction/roundness_circularity';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bio-Image Data Science Training Schools 2024
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day0_preparation/readme.html">Setting up your computer</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imprint.html">Imprint</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday2.2_feature_extraction/roundness_circularity.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/day2.2_feature_extraction/roundness_circularity.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Shape features</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-modification">Manual modification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="shape-features">
+<h1>Shape features<a class="headerlink" href="#shape-features" title="Permalink to this heading">#</a></h1>
+<p>In this notebook we will compare the impact of small manual modifications to labels/outlines on measured shape features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">stackview</span>
+<span class="kn">import</span> <span class="nn">napari_skimage_regionprops</span> <span class="k">as</span> <span class="nn">nsr</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">disk</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For demonstration purposes, we use a blank image and  a circular region of interest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+<span class="n">labels</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="mi">40</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span><span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="n">disk</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stackview</span><span class="o">.</span><span class="n">insight</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<tr>
+<td>
+<img src="data:image/png;base64,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"></img>
+</td>
+<td style="text-align: center; vertical-align: top;">
+
+<table>
+<tr><td>shape</td><td>(50,&nbsp;50)</td></tr>
+<tr><td>dtype</td><td>uint32</td></tr>
+<tr><td>size</td><td>9.8 kB</td></tr>
+<tr><td>min</td><td>0</td></tr><tr><td>max</td><td>1</td></tr>
+</table>
+
+</td>
+</tr>
+</table></div></div>
+</div>
+<p>We can print out the roundness and circularity of this single object like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">=</span> <span class="n">nsr</span><span class="o">.</span><span class="n">regionprops_table</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;roundness: &quot;</span><span class="p">,</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;roundness&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;circularity: &quot;</span><span class="p">,</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;circularity&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>roundness:  0.9996522134693254
+circularity:  0.9106696648110818
+</pre></div>
+</div>
+</div>
+</div>
+<section id="manual-modification">
+<h2>Manual modification<a class="headerlink" href="#manual-modification" title="Permalink to this heading">#</a></h2>
+<p>When executing the next cell, a small user-interface will open that allows you to modify the object. Change the Eraser radius to 1 and hold the ALT-Key while clicking to remove individual pixels from the object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stackview</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">zoom_factor</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "117d368bbddd478687e70b9739fb66b9", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>When you are done modifying the object, continue executing the next code cells.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stackview</span><span class="o">.</span><span class="n">insight</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<tr>
+<td>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9hAAAPYQGoP6dpAAAbWUlEQVR4nO3dUWzddfn48edgs8Mm7RFQW5YNMmIF2QLBTZchMgTWZKKRcGMyQqbegAxCswtwLpFhYstGskwymE4Nkpg5LmRKflGyJkLRLEu64cIC0YRkQhOojQZPy4QtwPd/oRwoHdv+23q+7Xler+Rc9HtOu2efluW979qHSlEURQAAkMZZZQ8AAEBzCUAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkmkrewDK88gjj8SDDz4Yr732WixcuDC2bNkSX/7yl0/qfd9999149dVXo729PSqVyhRPCsCZVhRFjI+Px9y5c+Oss9wPykYAJvX4449Hb29vPPLII/GlL30pfvrTn8bKlSvjxRdfjAsvvPCE7//qq6/G/PnzmzApAFNpeHg45s2bV/YYNFmlKIqi7CFovqVLl8bnP//52LZtW+Pa5z73ubjpppuiv7//hO9fr9fjE5/4xBROCEAz/Pvf/45arVb2GDSZe74JHT16NPbv3x89PT0Trvf09MSePXuO+T5HjhyJsbGxxmN8fLwZowIwxXwbT04CMKF//vOf8c4770RnZ+eE652dnTEyMnLM9+nv749ardZ4+OdfAJi5BGBiH/5bX1EUH/k3wXXr1kW9Xm88hoeHmzEiADAF/BBIQp/85CfjYx/72KS7faOjo5PuCr6nWq1GtVptxngAwBRzBzChWbNmxeLFi2NgYGDC9YGB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AADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgKQU1IURdkjAHAG+PM8JwHIKRkfHy97BADOAH+e51QppD+n4N13341XX3012tvbo1KpxNjYWMyfPz+Gh4ejo6Oj7PGmLed0cpzTyXFOJ8c5HVtRFDE+Ph5z586Ns85yPyibtrIHYGY666yzYt68eZOud3R0+AP2JDink+OcTo5zOjnOabJarVb2CJRE8gMAJCMAAQCSEYCcEdVqNe67776oVqtljzKtOaeT45xOjnM6Oc4JJvNDIAAAybgDCACQjAAEAEhGAAIAJCMAAQCSEYCctkceeSQWLFgQZ599dixevDj+9Kc/lT1S6Z599tn4+te/HnPnzo1KpRK//e1vJzxfFEVs2LAh5s6dG7Nnz45rr702XnjhhXKGLUl/f3984QtfiPb29vj0pz8dN910U/ztb3+b8BrnFLFt27a4/PLLG0uMly1bFn/4wx8azzujyfr7+6NSqURvb2/jmnOCiQQgp+Xxxx+P3t7eWL9+ffzlL3+JL3/5y7Fy5cp45ZVXyh6tVIcPH44rrrgitm7desznN23aFJs3b46tW7fG0NBQdHV1xYoVK1L9PzkHBwdjzZo1sXfv3hgYGIi33347enp64vDhw43XOKeIefPmxQMPPBD79u2Lffv2xXXXXRff+MY3GvHijCYaGhqK7du3x+WXXz7hunOCDyngNHzxi18sbr/99gnXLr300uJ73/teSRNNPxFR7Nq1q/H2u+++W3R1dRUPPPBA49pbb71V1Gq14ic/+UkJE04Po6OjRUQUg4ODRVE4p+M599xzi5///OfO6EPGx8eL7u7uYmBgoFi+fHlx9913F0XhawmOxR1ATtnRo0dj//790dPTM+F6T09P7Nmzp6Sppr9Dhw7FyMjIhHOrVquxfPny1OdWr9cjIuK8886LCOd0LO+8807s3LkzDh8+HMuWLXNGH7JmzZq48cYb44Ybbphw3TnBZG1lD8DM9c9//jPeeeed6OzsnHC9s7MzRkZGSppq+nvvbI51bi+//HIZI5WuKIpYu3ZtXH311bFo0aKIcE4fdPDgwVi2bFm89dZbcc4558SuXbvisssua8SLM4rYuXNnPPfcczE0NDTpOV9LMJkA5LRVKpUJbxdFMekakzm39915553x/PPPx5///OdJzzmniEsuuSQOHDgQ//73v+M3v/lNrF69OgYHBxvPZz+j4eHhuPvuu2P37t1x9tlnf+Trsp8TfJB/AuaUffKTn4yPfexjk+72jY6OTvqbNu/r6uqKiHBu/3PXXXfFk08+GU8//XTMmzevcd05vW/WrFnxmc98JpYsWRL9/f1xxRVXxI9//GNn9D/79++P0dHRWLx4cbS1tUVbW1sMDg7GQw89FG1tbY2zyH5O8EECkFM2a9asWLx4cQwMDEy4PjAwEFdddVVJU01/CxYsiK6urgnndvTo0RgcHEx1bkVRxJ133hlPPPFE/PGPf4wFCxZMeN45fbSiKOLIkSPO6H+uv/76OHjwYBw4cKDxWLJkSdxyyy1x4MCBuPjii50TfIh/Aua0rF27Nm699dZYsmRJLFu2LLZv3x6vvPJK3H777WWPVqo33ngjXnrppcbbhw4digMHDsR5550XF154YfT29kZfX190d3dHd3d39PX1xZw5c2LVqlUlTt1ca9asiR07dsTvfve7aG9vb9ydqdVqMXv27MYet+zn9P3vfz9WrlwZ8+fPj/Hx8di5c2c888wz8dRTTzmj/2lvb2987+h7Pv7xj8f555/fuO6c4EPK+wFkWsXDDz9cXHTRRcWsWbOKz3/+8401Hpk9/fTTRURMeqxevbooiv+upbjvvvuKrq6uolqtFtdcc01x8ODBcodusmOdT0QUjz76aOM1zqkovvOd7zT++/rUpz5VXH/99cXu3bsbzzujY/vgGpiicE7wYZWiKIqS2hMAgBL4HkAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkhGAAADJCEAAgGQEIABAMgIQACAZAQgAkIwABABIRgACACQjAAEAkvl/vvtAQBA8IggAAAAASUVORK5CYII="></img>
+</td>
+<td style="text-align: center; vertical-align: top;">
+
+<table>
+<tr><td>shape</td><td>(50,&nbsp;50)</td></tr>
+<tr><td>dtype</td><td>uint32</td></tr>
+<tr><td>size</td><td>9.8 kB</td></tr>
+<tr><td>min</td><td>0</td></tr><tr><td>max</td><td>1</td></tr>
+</table>
+
+</td>
+</tr>
+</table></div></div>
+</div>
+<p>As you can see, small modifications to the outline can have huge impact on individual metrics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">=</span> <span class="n">nsr</span><span class="o">.</span><span class="n">regionprops_table</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;roundness: &quot;</span><span class="p">,</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;roundness&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;circularity: &quot;</span><span class="p">,</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;circularity&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>roundness:  0.8564505192042108
+circularity:  0.13777164107308135
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>Modify the code above to also measure aspect ratio and solidity.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./day2.2_feature_extraction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-modification">Manual modification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-05-06.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p>
+Copyright: Licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a> unless mentioned otherwise. 
+Contributions and feedback are welcome.
+</p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
