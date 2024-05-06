@@ -1,14 +1,16 @@
 # Bio-Image Data Science Training School, May 2024
 
-You can read its content at
+You can read the training content under this URL:
 
 https://scads.github.io/BIDS-training-2024
 
-## Usage
+The following instructions are just for contributors and trainers.
+
+## Development
 
 ### Building the book
 
-If you'd like to develop and/or build the My Book book, you should:
+If you'd like to develop and/or build the book, you should:
 
 1. Clone this repository
 2. Run `pip install -r requirements.txt` (it is recommended you do this within a virtual environment)
@@ -31,3 +33,5 @@ We welcome and recognize all contributions. You can see a list of current contri
 ## Credits
 
 This project is created using the excellent open source [Jupyter Book project](https://jupyterbook.org/) and the [executablebooks/cookiecutter-jupyter-book template](https://github.com/executablebooks/cookiecutter-jupyter-book).
+
+We acknowledge the financial support by the Federal Ministry of Education and Research of Germany and by Sächsische Staatsministerium für Wissenschaft, Kultur und Tourismus in the programme Center of Excellence for AI-research „Center for Scalable Data Analytics and Artificial Intelligence Dresden/Leipzig“, project identification number: ScaDS.AI
