@@ -10,7 +10,7 @@ This is the website of the BIDS Training School @ ScaDS.AI 2024. We will provide
 * Date: May 13th-15th 2024
 * Place: ScaDS.AI / Uni Leipzig
 * Target audience: Life scientists with interest in learning Bio-image Analysis and Data Science using Python. No prior programming experience required.
-* [Registration is open](https://app1.edoobox.com/UL-WB/Wbkurse/WWB/Kurs.ed.596f3122222b_988019080.ScaDSAI%20Python%20for%20Data%20Science%20Training/?edref=ulwb)
+* Registration is closed.
 
 This course focuses on bio-image analysis and data science with a focus on fluorescence microscopy imaging data and downstream analysis. Our training includes these python libraries:
 * [aicsimageio](https://github.com/AllenCellModeling/aicsimageio)
@@ -78,11 +78,17 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 
 ## Registration
 
-[Registration is open](https://app1.edoobox.com/UL-WB/Wbkurse/WWB/Kurs.ed.596f3122222b_988019080.ScaDSAI%20Python%20for%20Data%20Science%20Training/?edref=ulwb)
+[Registration is closed](https://app1.edoobox.com/UL-WB/Wbkurse/WWB/Kurs.ed.596f3122222b_988019080.ScaDSAI%20Python%20for%20Data%20Science%20Training/?edref=ulwb)
 
 ## Acknowledgements
 
 Would like to acknowledge people who shared trainng materials and example data which we are reusing in this training school:
 * Nasreddin Abolmaali, OncoRay, TU Dresden
+* Célia Baroux, University of Zurich
+* Sigrun M. Gustafsdottir, Broad Institute of Harvard and MIT
+* Nicolas Rivron
+* Johannes Soltwedel, PoL, TU Dresden
+* Marcelo Leomil Zoccoler, PoL, TU Dresden
+* Ryan Savill George, MPI CBG Dresden
 
 We acknowledge the financial support by the Federal Ministry of Education and Research of Germany and by Sächsische Staatsministerium für Wissenschaft, Kultur und Tourismus in the programme Center of Excellence for AI-research „Center for Scalable Data Analytics and Artificial Intelligence Dresden/Leipzig“, project identification number: ScaDS.AI
