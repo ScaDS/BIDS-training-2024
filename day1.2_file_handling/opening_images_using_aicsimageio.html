@@ -371,20 +371,18 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p>(image_file_formats:aicsimagio=)</p>
-<section class="tex2jax_ignore mathjax_ignore" id="reading-files-with-aicsimageio">
+  <section class="tex2jax_ignore mathjax_ignore" id="reading-files-with-aicsimageio">
 <h1>Reading files with AICSImageIO<a class="headerlink" href="#reading-files-with-aicsimageio" title="Permalink to this heading">#</a></h1>
 <p>The <a class="reference external" href="https://github.com/AllenCellModeling/aicsimageio">AICSImageIO library</a> aims streamlining reading microscopy image data.</p>
-<p>To install the library, you need to call this command.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">aicsimageio</span>
+<p>To install the library, you need to call the following command. Make sure your conda environment is activated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">install</span> <span class="n">aicsimageio</span>
 </pre></div>
 </div>
 <p>In case specific proprietary file formats should be read, additional software must be installed. <a class="reference external" href="https://github.com/AllenCellModeling/aicsimageio#extra-format-installation">Check the documentation for details</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aicsimageio</span> <span class="kn">import</span> <span class="n">AICSImage</span>
-
-<span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imshow</span>
+<span class="kn">import</span> <span class="nn">stackview</span>
 </pre></div>
 </div>
 </div>
@@ -393,17 +391,12 @@ document.write(`
 <p>As example we are using here an image shared by <a class="reference external" href="https://datadryad.org/stash/dataset/doi:10.5061/dryad.02v6wwq2c">Célia Baroux et al(University of Zurich)</a> that was resaved for demonstration purposes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aics_image</span> <span class="o">=</span> <span class="n">AICSImage</span><span class="p">(</span><span class="s2">&quot;../../data/EM_C_6_c0.ome.tif&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aics_image</span> <span class="o">=</span> <span class="n">AICSImage</span><span class="p">(</span><span class="s2">&quot;data/EM_C_6_c0.ome.tif&quot;</span><span class="p">)</span>
 <span class="n">aics_image</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attempted file (C:/structure/code/BioImageAnalysisNotebooks/data/EM_C_6_c0.ome.tif) load with reader: aicsimageio.readers.bfio_reader.OmeTiledTiffReader failed with error: No module named &#39;bfio&#39;
-C:\Users\haase\mambaforge\envs\bio39\lib\site-packages\ome_types\_convenience.py:105: FutureWarning: The default XML parser will be changing from &#39;xmlschema&#39; to &#39;lxml&#39; in version 0.4.0.  To silence this warning, please provide the `parser` argument, specifying either &#39;lxml&#39; (to opt into the new behavior), or&#39;xmlschema&#39; (to retain the old behavior).
-  d = to_dict(os.fspath(xml), parser=parser, validate=validate)
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AICSImage [Reader: OmeTiffReader, Image-is-in-Memory: False]&gt;
 </pre></div>
 </div>

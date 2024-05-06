@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Optional: Accessing image files in the owncloud &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+    <title>Coding assistance &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
   
   
   
@@ -61,7 +61,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'day1.2_file_handling/owncloud';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day1.2_file_handling/bia_bob';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -236,7 +236,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday1.2_file_handling/owncloud.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday1.2_file_handling/bia_bob.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -266,7 +266,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/day1.2_file_handling/owncloud.ipynb" target="_blank"
+      <li><a href="../_sources/day1.2_file_handling/bia_bob.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -335,9 +335,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -348,22 +346,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Optional: Accessing image files in the owncloud</h1>
+    <h1>Coding assistance</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#login">Login</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#browsing-the-remote-server">Browsing the remote server</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-a-file">Retrieving a file</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -373,119 +360,95 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="optional-accessing-image-files-in-the-owncloud">
-<h1>Optional: Accessing image files in the owncloud<a class="headerlink" href="#optional-accessing-image-files-in-the-owncloud" title="Permalink to this heading">#</a></h1>
-<p>This notebook we will demonstrate how to download files from an owncloud server. More detailed example code is available <a class="reference external" href="https://haesleinhuepf.github.io/BioImageAnalysisNotebooks/03_advanced_python/owncloud.html">here</a>.</p>
-<p><strong>Important note:</strong> NEVER save your passwords in Python code.</p>
-<p>Before we can execute the code, we may have to install a Python library for working with the owncloud, such as <a class="reference external" href="https://github.com/owncloud/pyocclient">pyocclient</a>.</p>
-<p>!pip install pyocclient</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="coding-assistance">
+<h1>Coding assistance<a class="headerlink" href="#coding-assistance" title="Permalink to this heading">#</a></h1>
+<p>Writing code for simple tasks such as showing images or iterating over files in a folder can be time-consuming. Generative artificial intelligence tools such as <span class="xref myst">github copilot</span> or <span class="xref myst">bia-bob</span> can help out. In this notebook we will demonstrate how to use bia-bob, a coding assistant specialized in bio-image analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
-<span class="kn">import</span> <span class="nn">owncloud</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## The following cells might be necessary if you run this code on your computer. </span>
+<span class="c1">## Ask a trainer for the key to enter at ... </span>
+<span class="c1"># import os</span>
+<span class="c1"># os.environ[&#39;OPENAI_API_KEY&#39;] = &#39;sk-...&#39;</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="login">
-<h2>Login<a class="headerlink" href="#login" title="Permalink to this heading">#</a></h2>
-<p>After executing the next cell locally, you will see three input fields where you can enter the server url, username and password.</p>
-<p><img alt="" src="../_images/login.png" /></p>
+<p>You can initialize bia-bob like this.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">server_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;https://datashare.zih.tu-dresden.de&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Server&#39;</span><span class="p">)</span>
-<span class="n">username_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Username:&#39;</span><span class="p">)</span>
-<span class="n">password_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Password</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Password&#39;</span><span class="p">)</span>
-
-<span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="n">server_widget</span><span class="p">,</span> <span class="n">username_widget</span><span class="p">,</span> <span class="n">password_widget</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bia_bob</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Afterwards, you ask for assistance by writing <code class="docutils literal notranslate"><span class="pre">%bob</span></code> in front of an English prompt. Bob will generate code right below the cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">bob</span> load blobs.tif and show it
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "29f263a592134a79840aab21a10f9d59", "version_major": 2, "version_minor": 0}</script></div>
-</div>
-<p><strong>Do NOT hit Shift-Enter after entering username and password</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">username_widget</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Enter username and password above&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>I will load an image named <code class="docutils literal notranslate"><span class="pre">blobs.tif</span></code> from disk and display it.</p>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">oc</span> <span class="o">=</span> <span class="n">owncloud</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">server_widget</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-<span class="n">oc</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username_widget</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">password_widget</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>A typical error message is 401: Access denied. Check your username and password.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For safety reasons we reset the password now, after we logged in successfully.</span>
-<span class="n">password_widget</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="browsing-the-remote-server">
-<h2>Browsing the remote server<a class="headerlink" href="#browsing-the-remote-server" title="Permalink to this heading">#</a></h2>
-<p>To see if the connection was successful, we can just list the files in a given folder.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter a folder on the owncloud drive that exists. &#39;/&#39; is the root folder.</span>
-<span class="n">remote_folder</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span>
+<span class="kn">import</span> <span class="nn">stackview</span>
 
-<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">oc</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">remote_folder</span><span class="p">):</span>
-    <span class="nb">print</span> <span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+<span class="c1"># Load image from disk</span>
+<span class="n">image_blobs</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;blobs.tif&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display the image</span>
+<span class="n">stackview</span><span class="o">.</span><span class="n">insight</span><span class="p">(</span><span class="n">image_blobs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If your task is more complex, you can write multi-line prompts behind ´%%bob´. The more details you provide, e.g. which libraries and functions Bob should use, will make the code fit better to what you expect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bob</span>
+For all image files in the folder ´data_banana´:
+* load the image
+* show the image using ´skimage.io.imshow´
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/BiAPoL/
-/Documents/
-/Nextcloud Manual.pdf
-/Nextcloud intro.mp4
-/Nextcloud.png
-/Photos/
-/Projects/
-/Shared/
-/Software/
-</pre></div>
+<p>I will load all image files located in the folder <code class="docutils literal notranslate"><span class="pre">data_banana</span></code> and display each one using <code class="docutils literal notranslate"><span class="pre">skimage.io.imshow</span></code>.</p>
 </div>
 </div>
-</div>
-</section>
-<section id="retrieving-a-file">
-<h2>Retrieving a file<a class="headerlink" href="#retrieving-a-file" title="Permalink to this heading">#</a></h2>
-<p>We can download a file to a local directory.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter the source file here</span>
-<span class="n">remote_source_file</span> <span class="o">=</span> <span class="s1">&#39;/Nextcloud Manual.pdf&#39;</span>
-<span class="c1"># enter the destination</span>
-<span class="n">local_file</span> <span class="o">=</span> <span class="s1">&#39;Nextcloud Manual.pdf&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imshow</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">oc</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">remote_path</span><span class="o">=</span><span class="n">remote_source_file</span><span class="p">,</span> 
-            <span class="n">local_file</span><span class="o">=</span><span class="n">local_file</span><span class="p">)</span>
+<span class="c1"># Get a list of files in &#39;data_banana&#39; directory</span>
+<span class="n">directory_path</span> <span class="o">=</span> <span class="s1">&#39;data_banana&#39;</span>
+<span class="n">file_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory_path</span><span class="p">)</span>
+
+<span class="c1"># Filter out files that are image files (common extensions)</span>
+<span class="n">image_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s1">&#39;.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;.czi&#39;</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s1">&#39;.jpg&#39;</span><span class="p">))]</span>
+
+<span class="c1"># Load and display each image file</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">image_files</span><span class="p">:</span>
+    <span class="c1"># Construct the full image path</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    
+    <span class="c1"># Load the image</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    
+    <span class="c1"># Display the image</span>
+    <span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Displaying image: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
-</pre></div>
 </div>
-</div>
-</div>
-<p>The PDF is now located in the same folder as this notebook.</p>
-</section>
-<section id="exercise">
-<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
-<p>Can you also download <code class="docutils literal notranslate"><span class="pre">Nextcloud.png</span></code> using Python code?</p>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -528,23 +491,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#login">Login</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#browsing-the-remote-server">Browsing the remote server</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-a-file">Retrieving a file</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
