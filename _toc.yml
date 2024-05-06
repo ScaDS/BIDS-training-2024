@@ -9,29 +9,101 @@ parts:
     chapters:
     - file: day0_preparation/readme.md
 
-#  - caption: Monday
-#    chapters:
-#    - file: day1.1_python_basics/readme.md
-#    - file: day1.2_file_handling/readme.md
+  - caption: Monday
+    chapters:
+    - file: day1.1_python_basics/readme.md
+      sections:
+      - file: day1.1_python_basics/01_jupyter_notebooks.ipynb 
+      - file: day1.1_python_basics/02_basic_terms_and_types.ipynb 
+      - file: day1.1_python_basics/03_notebook_pitfalls.ipynb 
+      - file: day1.1_python_basics/04_math_in_python.ipynb 
+      - file: day1.1_python_basics/05_sequence_types.ipynb 
+      - file: day1.1_python_basics/05a_indexing_sequences.ipynb 
+      - file: day1.1_python_basics/05b_masking_arrays.ipynb 
+      - file: day1.1_python_basics/06_dictionaries_and_tables.ipynb 
+      - file: day1.1_python_basics/07_conditions.ipynb 
+      - file: day1.1_python_basics/08_loops.ipynb 
+      - file: day1.1_python_basics/09_custom_functions.ipynb 
+
+    - file: day1.2_file_handling/readme.md
+      sections: 
+
+      - file: day1.2_file_handling/01_list_files_in_a_folder.ipynb 
+      - file: day1.2_file_handling/02_interactive_image_visualization.ipynb 
+      - file: day1.2_file_handling/03_opening_images_using_aicsimageio.ipynb 
+      - file: day1.2_file_handling/04_bia_bob.ipynb 
+      - file: day1.2_file_handling/05_nextcloud.ipynb 
+
+
+    - file: day1.3_image_processing_basics/readme.md
+      sections: 
+
+      - file: day1.3_image_processing_basics/00_images_as_arrays.ipynb 
+      - file: day1.3_image_processing_basics/01_opening_visualizing_images.ipynb 
+      - file: day1.3_image_processing_basics/02_Brightness_and_Contrast.ipynb 
+      - file: day1.3_image_processing_basics/03_Cropping_images.ipynb 
+      - file: day1.3_image_processing_basics/04_Image_Filters.ipynb 
+      - file: day1.3_image_processing_basics/05_Binarization.ipynb 
+      - file: day1.3_image_processing_basics/06_Morphological_operations.ipynb 
+      - file: day1.3_image_processing_basics/bonus_simulated_dataset_remove_noise_and_background.ipynb 
+
+  - caption: Tuesday
+    chapters:
+    - file: day2.1_image_segmentation/readme.md
+      sections: 
+      - file: day2.1_image_segmentation/11_voronoi_otsu_labeling.ipynb 
+      - file: day2.1_image_segmentation/12_Segmentation_3D.ipynb 
+      - file: day2.1_image_segmentation/13_watershed.ipynb 
+      - file: day2.1_image_segmentation/20_napari-assistant.md 
+      - file: day2.1_image_segmentation/21_notebook_export.md 
+      - file: day2.1_image_segmentation/22_napari_intro.ipynb 
+
+    - file: day2.2_feature_extraction/readme.md
+      sections: 
+      - file: day2.2_feature_extraction/01_count_blobs.ipynb 
+      - file: day2.2_feature_extraction/02_statistics_with_scikit_image.ipynb 
+      - file: day2.2_feature_extraction/03_statistics_with_simpleitk.ipynb 
+      - file: day2.2_feature_extraction/04_roundness_circularity.ipynb 
+
+    - file: day2.3_machine_learning/readme.md
 #      sections: 
-#      - file: day1.2_file_handling/list_files_in_a_folder.ipynb
-#      - file: day1.2_file_handling/opening_images_using_aicsimageio.ipynb
-#      - file: day1.2_file_handling/stackview.ipynb
-#      - file: day1.2_file_handling/owncloud.ipynb
-#    - file: day1.3_image_processing_basics/readme.md
+    - file: day2.4_tabular_data_wrangling/readme.md
+      sections: 
+      - file: day2.4_tabular_data_wrangling/01_introduction_dataframes.ipynb 
+      - file: day2.4_tabular_data_wrangling/02_selecting_dataframes.ipynb 
+      - file: day2.4_tabular_data_wrangling/03_appending_dataframes.ipynb 
+      - file: day2.4_tabular_data_wrangling/04_handle_missing_data.ipynb 
+      - file: day2.4_tabular_data_wrangling/05_group_by.ipynb 
+      - file: day2.4_tabular_data_wrangling/06_tidy_data.ipynb 
 
-#  - caption: Tuesday
-#    chapters:
-#    - file: day2.1_image_segmentation/readme.md
-#    - file: day2.2_feature_extraction/readme.md
-#    - file: day2.3_machine_learning/readme.md
-#    - file: day2.4_tabular_data_wrangling/readme.md
+  - caption: Wednesday
+    chapters:
+    - file: day3.1_explorative_data_science/readme.md
+    - file: day3.2_data_visualization/readme.md
+    - file: day3.3a_basic_plotting/readme.md
+      sections: 
+      - file: day3.3a_basic_plotting/01_Introduction_to_Seaborn.ipynb 
+      - file: day3.3a_basic_plotting/02_Plotting_distributions.ipynb 
+      - file: day3.3a_basic_plotting/03_BONUS_Multivariate_views.ipynb 
 
-#  - caption: Wednesday
-#    chapters:
-#    - file: day3.1_explorative_data_science/readme.md
-#    - file: day3.2_data_visualization/readme.md
-#    - file: day3.3_plotting/readme.md
+    - file: day3.3b_advanced_plotting/readme.md 
+      sections: 
+      - file: day3.3b_advanced_plotting/00_getdata.ipynb 
+      - file: day3.3b_advanced_plotting/01_seabornobj_open.ipynb 
+      - file: day3.3b_advanced_plotting/01_seabornobj_solution.ipynb 
+      - file: day3.3b_advanced_plotting/02_dataviz_MLunsupervised_open.ipynb 
+      - file: day3.3b_advanced_plotting/02_dataviz_MLunsupervised_solution.ipynb 
+      - file: day3.3b_advanced_plotting/03_dataviz_MLsupervised_open.ipynb 
+      - file: day3.3b_advanced_plotting/03_dataviz_MLsupervised_solution.ipynb 
+ 
+
+
+ 
+
+
+
+
+
 
   - caption: Information
     chapters:
