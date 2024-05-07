@@ -89,11 +89,11 @@ parts:
     - file: day3.3b_advanced_plotting/readme.md 
       sections: 
       - file: day3.3b_advanced_plotting/00_getdata.ipynb 
-      - file: day3.3b_advanced_plotting/01_seabornobj_open.ipynb 
+#     - file: day3.3b_advanced_plotting/01_seabornobj_open.ipynb 
       - file: day3.3b_advanced_plotting/01_seabornobj_solution.ipynb 
-      - file: day3.3b_advanced_plotting/02_dataviz_MLunsupervised_open.ipynb 
+#     - file: day3.3b_advanced_plotting/02_dataviz_MLunsupervised_open.ipynb 
       - file: day3.3b_advanced_plotting/02_dataviz_MLunsupervised_solution.ipynb 
-      - file: day3.3b_advanced_plotting/03_dataviz_MLsupervised_open.ipynb 
+#     - file: day3.3b_advanced_plotting/03_dataviz_MLsupervised_open.ipynb 
       - file: day3.3b_advanced_plotting/03_dataviz_MLsupervised_solution.ipynb 
  
 
