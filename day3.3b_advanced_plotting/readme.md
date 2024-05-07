@@ -14,7 +14,7 @@ This session (Day 3.3b - Advanced Plotting):
 - _Content_: We will dive into how to structure plots using the grammar of graphics philosophy, which provides a powerful framework for understanding and creating complex visualizations. This includes modifying aesthetic attributes and integrating multiple plots.
 - _Audience_: This session is aimed at participants who feel more comfortable with coding and are ready to explore more advanced data visualization techniques. It is best for those looking to gain deeper insights into the graphical representation of data and how to manipulate these visualizations programmatically.
 
-# Instructions for Day 3.3b - Advanced Plotting
+## Instructions for Day 3.3b - Advanced Plotting
 
 Start with opening the notebook `00_getdata.ipynb` and execute the first and only cell to get the required weather data for the visualization course.
 
