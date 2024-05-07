@@ -64,8 +64,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'day3.3b_advanced_plotting/02_dataviz_MLunsupervised_open';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Part 2 Data exploration by unsupervised learning" href="02_dataviz_MLunsupervised_solution.html" />
-    <link rel="prev" title="Part 1: Time series and other simple plots" href="01_seabornobj_solution.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -235,16 +233,16 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Wednesday</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../day3.1_explorative_data_science/readme.html">Explorative data science</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../day3.2_data_visualization/readme.html">Data Visualization</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3a_basic_plotting/readme.html">Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3a_basic_plotting/readme.html">Plotting Basics</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/01_Introduction_to_Seaborn.html">Introduction to Seaborn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/02_Plotting_distributions.html">Plotting Distributions with Seaborn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/03_BONUS_Multivariate_views.html">Multivariate views</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Advanced Plotting</a></li>
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
@@ -480,7 +478,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="cell docutils container">
+  <section class="tex2jax_ignore mathjax_ignore" id="part-2-data-exploration-by-unsupervised-learning">
+<h1>Part 2 Data exploration by unsupervised learning<a class="headerlink" href="#part-2-data-exploration-by-unsupervised-learning" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span> <span class="c1">## suppress annoying deprecation warnings</span>
@@ -502,8 +502,6 @@ document.write(`
 </div>
 </div>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="part-2-data-exploration-by-unsupervised-learning">
-<h1>Part 2 Data exploration by unsupervised learning<a class="headerlink" href="#part-2-data-exploration-by-unsupervised-learning" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Renaming columns for better axis labels in plots</span>
@@ -761,24 +759,6 @@ document.write(`
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="01_seabornobj_solution.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Part 1: Time series and other simple plots</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="02_dataviz_MLunsupervised_solution.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Part 2 Data exploration by unsupervised learning</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div></div>
   
 </div>
@@ -845,7 +825,7 @@ By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on 2024-05-06.
+  Last updated on 2024-05-07.
   <br/>
 </p>
   </div>

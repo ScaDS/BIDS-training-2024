@@ -1,4 +1,4 @@
-# Plotting
+# Plotting Basics
 
 Note that the plotting training is divided into two distinct sessions.
 
