@@ -44,24 +44,24 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 9:00-10:30	Arrival
 10:30-11:00	Welcome, organizational	(Robert)
 11:00-12:30	Python basics (Matthias, Robert)
-12:30-13:30	Lunch		
-13:30-15:00	File handling + Image loading/visualization	(Robert, Matthias)
-15:00-15:30	Coffee		
-15:30-17:00	Image Processing basics	(Anja, Marie-Sophie)
-17:00-18:00	
+12:45-13:45	Lunch		
+13:45-15:15	File handling + Image loading/visualization	(Robert, Matthias)
+15:15-15:45	Coffee		
+15:15-17:15	Image Processing basics	(Anja, Marie-Sophie)
+17:15-18:00	Work on your own data / discuss with experts
 </pre>
 * Tuesday, May 14th
 <pre>
 
-9:00-10:30	Image Segmentation (Robert, tbd)
+9:00-10:30	Image Segmentation (Robert, Matthias)
 10:30-11:00	Coffee		
 11:00-12:30	Feature extraction (Robert, Christian)
-12:30-13:30	Lunch		
-13:30-15:00	Machine learning (Pixel + Object Classification) (Christian, Anja)
-15:00-15:30	Coffee		
-15:30-17:00	Tabular data wrangling using Pandas	(Matthias, Christian)
-17:00-18:00	Wrap up & work on your own data		
-19:00-21:00	Scientific Networking Event	(tbd, Robert)
+12:45-13:45	Lunch		
+13:45-15:15	Machine learning (Pixel + Object Classification) (Christian, Anja)
+15:15-15:45	Coffee		
+15:45-17:15	Tabular data wrangling using Pandas	(Matthias, Christian)
+17:15-18:00	Wrap up & work on your own data		
+19:00-21:00	Scientific Networking Event	(Matthias, Robert)
 </pre>
 
 * Wednesday, May 15th
@@ -69,12 +69,12 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 <pre>
 9:00-10:30	Explorative data science, unsupervised machine learning	(Laura, Matthias)
 10:30-11:00	Coffee		
-11:00-12:30	Data Visualization theory (Jan, Laura)
-12:30-13:30	Lunch		
-13:30-15:00	Plotting using Seaborn (Marie-Sophie, Jan)
-15:00-15:30	Coffee		
-15:30-17:00	Wrap up & work on your own data		
-17:00-18:00	Departure		
+11:00-12:45	Data Visualization theory (Jan, Laura)
+12:45-13:45	Lunch		
+13:45-15:15	Plotting using Seaborn (Marie-Sophie, Jan)
+15:15-15:45	Coffee		
+15:15-17:15	Wrap up & work on your own data		
+17:15-18:00	Departure		
 </pre>
 
 ## Registration
