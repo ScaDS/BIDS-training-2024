@@ -455,9 +455,10 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-python-and-conda-environments">Setting up Python and Conda environments</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-install-miniforge">Step 1: Install Miniforge</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-install-devbio-napari">Step 2: Install devbio-napari</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-testing-the-installation">Step 3: Testing the installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-testing-the-environment-and-install-additional-packages">Step 3: Testing the environment and install additional packages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-graphics-cards-drivers">Troubleshooting: Graphics cards drivers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-dll-load-failed">Troubleshooting: DLL load failed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-meteostat-cannot-be-loaded">Troubleshooting: Meteostat cannot be loaded</a></li>
 </ul>
 </li>
 </ul>
@@ -506,14 +507,19 @@ If a Conda environment breaks, e.g. incompatible software was installed, you can
 <p><strong>Tip</strong>: It is recommended to create one environment for every project you are executing.
 In that way installed software libraries and tools cannot harm each other.</p>
 </section>
-<section id="step-3-testing-the-installation">
-<h2>Step 3: Testing the installation<a class="headerlink" href="#step-3-testing-the-installation" title="Permalink to this heading">#</a></h2>
-<p>Afterwards you can enter the environment to work with it.
+<section id="step-3-testing-the-environment-and-install-additional-packages">
+<h2>Step 3: Testing the environment and install additional packages<a class="headerlink" href="#step-3-testing-the-environment-and-install-additional-packages" title="Permalink to this heading">#</a></h2>
+<p>Afterwards you can activate the environment to work with it.
 Whenever you want to work on the same project again, you should start a command line and enter this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">activate</span> <span class="n">devbio</span><span class="o">-</span><span class="n">napari</span><span class="o">-</span><span class="n">env</span>
 </pre></div>
 </div>
-<p>Start Napari from the terminal like this:</p>
+<p>When activated, use the following lines to install additional required packages for the training:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">install</span> <span class="n">plotly</span> <span class="n">seaborn</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">meteostat</span>
+</pre></div>
+</div>
+<p>After package installation, try to start Napari from the terminal like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">naparia</span>
 </pre></div>
 </div>
@@ -572,6 +578,13 @@ If everything is installed properly, it should look like this:</p>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/conda/conda/issues/11503">Source</a></p>
+</section>
+<section id="troubleshooting-meteostat-cannot-be-loaded">
+<h2>Troubleshooting: Meteostat cannot be loaded<a class="headerlink" href="#troubleshooting-meteostat-cannot-be-loaded" title="Permalink to this heading">#</a></h2>
+<p>When the import of meteostat fails after installing it with pip, make sure that the pip version of mamba is used for installation by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~/</span><span class="n">miniforge3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">devbio</span><span class="o">-</span><span class="n">napari</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span> <span class="n">install</span> <span class="n">meteostat</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -646,9 +659,10 @@ If everything is installed properly, it should look like this:</p>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-python-and-conda-environments">Setting up Python and Conda environments</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-install-miniforge">Step 1: Install Miniforge</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-install-devbio-napari">Step 2: Install devbio-napari</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-testing-the-installation">Step 3: Testing the installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-testing-the-environment-and-install-additional-packages">Step 3: Testing the environment and install additional packages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-graphics-cards-drivers">Troubleshooting: Graphics cards drivers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-dll-load-failed">Troubleshooting: DLL load failed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-meteostat-cannot-be-loaded">Troubleshooting: Meteostat cannot be loaded</a></li>
 </ul>
 </li>
 </ul>

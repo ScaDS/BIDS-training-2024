@@ -36,16 +36,21 @@ mamba create --name devbio-napari-env python=3.9 devbio-napari pyqt -c conda-for
 **Tip**: It is recommended to create one environment for every project you are executing. 
 In that way installed software libraries and tools cannot harm each other.
 
-## Step 3: Testing the installation
+## Step 3: Testing the environment and install additional packages
 
-Afterwards you can enter the environment to work with it. 
+Afterwards you can activate the environment to work with it. 
 Whenever you want to work on the same project again, you should start a command line and enter this:
 
 ```
 mamba activate devbio-napari-env
 ```
+When activated, use the following lines to install additional required packages for the training:
+```
+mamba install plotly seaborn
+pip install meteostat
+```
 
-Start Napari from the terminal like this:
+After package installation, try to start Napari from the terminal like this:
 
 ```
 naparia
@@ -120,4 +125,11 @@ pip install --upgrade pywin32==228
 ```
 
 [Source](https://github.com/conda/conda/issues/11503)
+
+## Troubleshooting: Meteostat cannot be loaded
+When the import of meteostat fails after installing it with pip, make sure that the pip version of mamba is used for installation by:
+```
+~/miniforge3/envs/devbio-napari-env/bin/pip3 install meteostat
+```
+
 
