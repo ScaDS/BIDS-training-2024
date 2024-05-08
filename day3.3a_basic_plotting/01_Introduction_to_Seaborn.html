@@ -241,7 +241,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="readme.html">Plotting Basics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Introduction to Seaborn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02_Plotting_distributions.html">Plotting Distributions with Seaborn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_BONUS_Multivariate_views.html">Multivariate views</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3b_advanced_plotting/readme.html">Advanced Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -493,84 +492,8 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>area</th>
-      <th>intensity_mean</th>
-      <th>major_axis_length</th>
-      <th>minor_axis_length</th>
-      <th>aspect_ratio</th>
-      <th>file_name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>139</td>
-      <td>96.546763</td>
-      <td>17.504104</td>
-      <td>10.292770</td>
-      <td>1.700621</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>360</td>
-      <td>86.613889</td>
-      <td>35.746808</td>
-      <td>14.983124</td>
-      <td>2.385805</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>43</td>
-      <td>91.488372</td>
-      <td>12.967884</td>
-      <td>4.351573</td>
-      <td>2.980045</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>140</td>
-      <td>73.742857</td>
-      <td>18.940508</td>
-      <td>10.314404</td>
-      <td>1.836316</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>144</td>
-      <td>89.375000</td>
-      <td>13.639308</td>
-      <td>13.458532</td>
-      <td>1.013432</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
-<p>The two images originate from <em>The Broad Bioimage Benchmark Collection</em> and show fluroescent microscopy images of Drosophila Kc167 cells.</p>
+<p>The two images originate from <a class="reference external" href="https://bbbc.broadinstitute.org"><em>The Broad Bioimage Benchmark Collection</em></a> and show fluroescent microscopy images of Drosophila Kc167 cells.</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>20P1_POS0007_D_1UL</p></th>
@@ -639,7 +562,7 @@ document.write(`
             <span class="n">size</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
             <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;major_axis_length&quot;</span><span class="p">,</span>          
             <span class="n">style</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">,</span>       <span class="c1"># Grouping variable that will produce elements with different styles</span>
-            <span class="n">markers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;^&quot;</span><span class="p">]);</span>     <span class="c1"># Which markers are to be used for the style variable</span>
+            <span class="n">markers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;^&quot;</span><span class="p">]);</span>     <span class="c1"># Define which markers are to be used for the style variable</span>
 </pre></div>
 </div>
 </div>
@@ -720,17 +643,13 @@ document.write(`
 </div>
 </div>
 </section>
+<hr class="docutils" />
 <section id="exercise-1">
 <h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this heading">#</a></h2>
 <p>Plot the same line regression model as above, but on a single plot, with points and regression lines having two different colors according to <code class="docutils literal notranslate"><span class="pre">file_name</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39;&#39;&#39; SOLUTION</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
-           <span class="n">x</span><span class="o">=</span><span class="s2">&quot;major_axis_length&quot;</span><span class="p">,</span>
-           <span class="n">y</span><span class="o">=</span><span class="s2">&quot;minor_axis_length&quot;</span><span class="p">,</span>
-           <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">);</span>
-<span class="c1">#&#39;&#39;&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
 </pre></div>
 </div>
 </div>
@@ -744,6 +663,7 @@ document.write(`
 <li><p>the font family: change to “serif”</p></li>
 <li><p>the color palette: change the two colors some red tone and some light green.</p></li>
 </ul>
+<p>Reflect about why this color choice is a bad idea and what you should do instead.</p>
 <p>Then, give your plot a title and position it properly.</p>
 <p>Hints:</p>
 <ul class="simple">
@@ -752,25 +672,11 @@ document.write(`
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39;&#39;&#39; SOLUTION</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;serif&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;firebrick&#39;</span><span class="p">,</span> <span class="s1">&#39;yellowgreen&#39;</span><span class="p">])</span>
-
-<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
-               <span class="n">x</span><span class="o">=</span><span class="s2">&quot;major_axis_length&quot;</span><span class="p">,</span>
-               <span class="n">y</span><span class="o">=</span><span class="s2">&quot;minor_axis_length&quot;</span><span class="p">,</span>
-               <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">);</span>
-
-<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;My very own title&quot;</span><span class="p">,</span>
-               <span class="n">x</span><span class="o">=</span><span class="mf">0.40</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.06</span><span class="p">,</span>
-               <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">);</span>
-<span class="c1">#&#39;&#39;&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Note: This color choice is a very bad idea as it affects readers with red-green impairment. For this reason, Seaborn offers a palette called <code class="docutils literal notranslate"><span class="pre">colorblind</span></code> which you should use whenever possible.</strong></p>
-<p><strong>Note: This color choice is a very bad idea as it affects readers with red-green impairment. For this reason, Seaborn offers a palette called <code class="docutils literal notranslate"><span class="pre">colorblind</span></code> which you should use whenever possible.</strong></p>
 </section>
 </section>
 

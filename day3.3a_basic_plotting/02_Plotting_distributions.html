@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'day3.3a_basic_plotting/02_Plotting_distributions';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Multivariate views" href="03_BONUS_Multivariate_views.html" />
+    <link rel="next" title="Advanced Plotting" href="../day3.3b_advanced_plotting/readme.html" />
     <link rel="prev" title="Introduction to Seaborn" href="01_Introduction_to_Seaborn.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -241,7 +241,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="readme.html">Plotting Basics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="01_Introduction_to_Seaborn.html">Introduction to Seaborn</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Plotting Distributions with Seaborn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_BONUS_Multivariate_views.html">Multivariate views</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3b_advanced_plotting/readme.html">Advanced Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -455,7 +454,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-dataframe">Load the dataframe</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-plots">Distribution Plots</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplots">Boxplots</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">Exercise 3</a></li>
 </ul>
             </nav>
         </div>
@@ -469,7 +468,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="plotting-distributions-with-seaborn">
 <h1>Plotting Distributions with Seaborn<a class="headerlink" href="#plotting-distributions-with-seaborn" title="Permalink to this heading">#</a></h1>
-<p>With Seaborn, it is also very practical to plot data distributions. We start with simple boxplots and bar graphs. Then, we show how to plot histograms and kde.</p>
+<p>Seaborn is also very practical to plot data distributions. We start with simple histograms and kde. Then, we show how to plot boxplots, violinplots and bar graphs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -489,82 +488,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>area</th>
-      <th>intensity_mean</th>
-      <th>major_axis_length</th>
-      <th>minor_axis_length</th>
-      <th>aspect_ratio</th>
-      <th>file_name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>139</td>
-      <td>96.546763</td>
-      <td>17.504104</td>
-      <td>10.292770</td>
-      <td>1.700621</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>360</td>
-      <td>86.613889</td>
-      <td>35.746808</td>
-      <td>14.983124</td>
-      <td>2.385805</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>43</td>
-      <td>91.488372</td>
-      <td>12.967884</td>
-      <td>4.351573</td>
-      <td>2.980045</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>140</td>
-      <td>73.742857</td>
-      <td>18.940508</td>
-      <td>10.314404</td>
-      <td>1.836316</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>144</td>
-      <td>89.375000</td>
-      <td>13.639308</td>
-      <td>13.458532</td>
-      <td>1.013432</td>
-      <td>20P1_POS0010_D_1UL</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 <section id="distribution-plots">
@@ -577,33 +500,24 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/842535aeb1e8dcc1d46343eb8a327d8b52a62ba2244554b28286edaade8ae1e0.png" src="../_images/842535aeb1e8dcc1d46343eb8a327d8b52a62ba2244554b28286edaade8ae1e0.png" />
-</div>
 </div>
 <p>Again, we have the option to either display the distributions of the individual files in a single diagram with different colors or split them into two sub-diagrams. The choice depends on the argument to which we pass the <code class="docutils literal notranslate"><span class="pre">file_name</span></code> parameter: either <code class="docutils literal notranslate"><span class="pre">hue</span></code> for coloring within a single diagram or <code class="docutils literal notranslate"><span class="pre">col</span></code> for creating separate sub-diagrams. Let’s try both.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
             <span class="n">x</span><span class="o">=</span><span class="s2">&quot;intensity_mean&quot;</span><span class="p">,</span>
-            <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">);</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">);</span>     <span class="c1"># Display a different color for each file</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/620a860b5b411f109ba4b5582698944e43891d9343396d4eb91ade9b77ab2fae.png" src="../_images/620a860b5b411f109ba4b5582698944e43891d9343396d4eb91ade9b77ab2fae.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
             <span class="n">x</span><span class="o">=</span><span class="s2">&quot;intensity_mean&quot;</span><span class="p">,</span>
-            <span class="n">col</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">);</span>
+            <span class="n">col</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">);</span>       <span class="c1"># Display a different subplot for each file</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/71edf7d81e994701d8df17adb3ebb4de7ca3109606faea5775a132e09826e21c.png" src="../_images/71edf7d81e994701d8df17adb3ebb4de7ca3109606faea5775a132e09826e21c.png" />
 </div>
 </div>
 <p>We can also add the kernel density estimation (kde) by passing <code class="docutils literal notranslate"><span class="pre">kde=True</span></code>. Just be careful while interpreting these plots (check some pitfalls <a class="reference external" href="https://seaborn.pydata.org/tutorial/distributions.html#kernel-density-estimation-pitfalls">here</a>).</p>
@@ -615,9 +529,6 @@ document.write(`
             <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/8521dd0f198636c797eb2834e917ab63c38fc93f332a0f0476eddd9f4411a7ea.png" src="../_images/8521dd0f198636c797eb2834e917ab63c38fc93f332a0f0476eddd9f4411a7ea.png" />
 </div>
 </div>
 </section>
@@ -633,9 +544,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/e76bae817303bb9555fa134b53b0a0305f1a983d770420a558d55f6f3371ea97.png" src="../_images/e76bae817303bb9555fa134b53b0a0305f1a983d770420a558d55f6f3371ea97.png" />
-</div>
 </div>
 <p>Seaborn automatically identifies <code class="docutils literal notranslate"><span class="pre">file_name</span></code> as a categorical variable and <code class="docutils literal notranslate"><span class="pre">intensity_mean</span></code> as a numerical value. Thus, it plots boxplots for the intensity variable. If we invert x and y, we still get the same graph, but as horizontal boxplots.</p>
 <div class="cell docutils container">
@@ -647,114 +555,26 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/b5a7fb51f48ee54e772077b0f05270a7e1ea10e1a488c728a4d6b2e29ae0e2fc.png" src="../_images/b5a7fb51f48ee54e772077b0f05270a7e1ea10e1a488c728a4d6b2e29ae0e2fc.png" />
-</div>
 </div>
 <p>We can display advanced visualizations, such as side-by-side boxplots, which are particularly useful for comparing pairs of categorical data.</p>
 <p>First, we need to create a second categorical variable by splitting the observations into two categories depending on the size of their areas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;area_cat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">250</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="s1">&#39;small&#39;</span><span class="p">)</span>  <span class="c1"># TODO Check what attendees have learned in previous session</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;area_cat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">250</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="s1">&#39;small&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>area</th>
-      <th>intensity_mean</th>
-      <th>major_axis_length</th>
-      <th>minor_axis_length</th>
-      <th>aspect_ratio</th>
-      <th>file_name</th>
-      <th>area_cat</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>139</td>
-      <td>96.546763</td>
-      <td>17.504104</td>
-      <td>10.292770</td>
-      <td>1.700621</td>
-      <td>20P1_POS0010_D_1UL</td>
-      <td>small</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>360</td>
-      <td>86.613889</td>
-      <td>35.746808</td>
-      <td>14.983124</td>
-      <td>2.385805</td>
-      <td>20P1_POS0010_D_1UL</td>
-      <td>big</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>43</td>
-      <td>91.488372</td>
-      <td>12.967884</td>
-      <td>4.351573</td>
-      <td>2.980045</td>
-      <td>20P1_POS0010_D_1UL</td>
-      <td>small</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>140</td>
-      <td>73.742857</td>
-      <td>18.940508</td>
-      <td>10.314404</td>
-      <td>1.836316</td>
-      <td>20P1_POS0010_D_1UL</td>
-      <td>small</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>144</td>
-      <td>89.375000</td>
-      <td>13.639308</td>
-      <td>13.458532</td>
-      <td>1.013432</td>
-      <td>20P1_POS0010_D_1UL</td>
-      <td>small</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
             <span class="n">x</span><span class="o">=</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span>
             <span class="n">y</span><span class="o">=</span><span class="s1">&#39;intensity_mean&#39;</span><span class="p">,</span>
-            <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;area_cat&#39;</span><span class="p">,</span>
-            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">);</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;area_cat&#39;</span><span class="p">);</span>   <span class="c1"># Display side-by-side boxplots for each file_name and area_cat</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/49b4e6a5719a063899bb8c8d6fd046812f2e888649b47fb5f7a43e9cc8b7fcec.png" src="../_images/49b4e6a5719a063899bb8c8d6fd046812f2e888649b47fb5f7a43e9cc8b7fcec.png" />
 </div>
 </div>
 <p>If you only change the parameter <code class="docutils literal notranslate"><span class="pre">kind</span></code> from <code class="docutils literal notranslate"><span class="pre">box</span></code> to <code class="docutils literal notranslate"><span class="pre">violin</span></code>, we get a violin plot. By providing <code class="docutils literal notranslate"><span class="pre">split=True</span></code>, we can further customize the plot.</p>
@@ -764,12 +584,10 @@ document.write(`
             <span class="n">x</span><span class="o">=</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span>
             <span class="n">y</span><span class="o">=</span><span class="s1">&#39;intensity_mean&#39;</span><span class="p">,</span>
             <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;area_cat&#39;</span><span class="p">,</span>
-            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;violin&#39;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;violin&#39;</span><span class="p">,</span>
+            <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>     <span class="c1"># Display side-by-side violin plots for each file_name and area_cat</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/fd11078e2214fe8a9d1bd7d2311f5817a8ee81fa76f7630acafb1361fc65b5f9.png" src="../_images/fd11078e2214fe8a9d1bd7d2311f5817a8ee81fa76f7630acafb1361fc65b5f9.png" />
 </div>
 </div>
 <p>In a similar way, we get the count for categorical variables with the parameter <code class="docutils literal notranslate"><span class="pre">count</span></code>.</p>
@@ -778,33 +596,22 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
             <span class="n">x</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">,</span>
             <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;area_cat&#39;</span><span class="p">,</span>
-            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">);</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">);</span>   <span class="c1"># Count plot: &quot;histogram&quot; across a categorical, instead of quantitative, variable</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/a66469ccc0bd7c870ea83e0aba5d8d72b9fc17aac361c7c09ce76504f6014e70.png" src="../_images/a66469ccc0bd7c870ea83e0aba5d8d72b9fc17aac361c7c09ce76504f6014e70.png" />
-</div>
 </div>
 </section>
-<section id="exercise">
-<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<section id="exercise-3">
+<h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this heading">#</a></h2>
 <p>You will create a figure with four subplots to visualize the empirical cumulative distribution functions (ECDFs) for the <code class="docutils literal notranslate"><span class="pre">area</span></code> variable. Each subplot will display the ECDF for different categories based on <code class="docutils literal notranslate"><span class="pre">file_name</span></code> and <code class="docutils literal notranslate"><span class="pre">area_cat</span></code>. The rows will correspond to the <code class="docutils literal notranslate"><span class="pre">file_name</span></code> and the columns to the variable <code class="docutils literal notranslate"><span class="pre">area_cat</span></code>.</p>
 <p><em>Hint: explore the function <a class="reference external" href="https://seaborn.pydata.org/generated/seaborn.displot.html#seaborn.displot"><code class="docutils literal notranslate"><span class="pre">displot</span></code></a> in the Seaborn documentation.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39;&#39;&#39; SOLUTION</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
-            <span class="n">x</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
-            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;ecdf&quot;</span><span class="p">,</span>
-            <span class="n">col</span><span class="o">=</span><span class="s2">&quot;area_cat&quot;</span><span class="p">,</span>
-            <span class="n">row</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">);</span>
-<span class="c1">#&#39;&#39;&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/82fcfadd6d154ca7d9cb356cf4d25a87942687c02502e1e1762f9b2c1ffa52da.png" src="../_images/82fcfadd6d154ca7d9cb356cf4d25a87942687c02502e1e1762f9b2c1ffa52da.png" />
 </div>
 </div>
 </section>
@@ -851,11 +658,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="03_BONUS_Multivariate_views.html"
+       href="../day3.3b_advanced_plotting/readme.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Multivariate views</p>
+        <p class="prev-next-title">Advanced Plotting</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -880,7 +687,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-dataframe">Load the dataframe</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-plots">Distribution Plots</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplots">Boxplots</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">Exercise 3</a></li>
 </ul>
   </nav></div>
 
