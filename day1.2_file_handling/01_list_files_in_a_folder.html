@@ -183,8 +183,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">How process files in a folder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02_interactive_image_visualization.html">Image visualization with stackview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03_opening_images_using_aicsimageio.html">Reading files with AICSImageIO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_bia_bob.html">Coding assistance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_nextcloud.html">Optional: Accessing image files in the nextcloud</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day1.3_image_processing_basics/readme.html">Image processing basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -474,6 +472,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span>
+<span class="kn">import</span> <span class="nn">stackview</span>
 </pre></div>
 </div>
 </div>
@@ -600,6 +600,120 @@ banana0025.tif
 banana0026.tif
 </pre></div>
 </div>
+</div>
+</div>
+<p>For reading and showing these images, we introduce a variable within our for loop to store the image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.tif&quot;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
+        <span class="n">stackview</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0002.tif
+</pre></div>
+</div>
+<img alt="../_images/9dcb4fa3cc33fd9ba041a53c100899783830c2d6a1502abf8b0d297132229551.png" src="../_images/9dcb4fa3cc33fd9ba041a53c100899783830c2d6a1502abf8b0d297132229551.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0003.tif
+</pre></div>
+</div>
+<img alt="../_images/3621bb9a497ae303f915b4560eea3f214db14ddefc8a5470bdb2f9389ffe065e.png" src="../_images/3621bb9a497ae303f915b4560eea3f214db14ddefc8a5470bdb2f9389ffe065e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0004.tif
+</pre></div>
+</div>
+<img alt="../_images/5d1d1886e9743966fc97394fa5366f727f8e096703fc4824aa5d1d3d9384efb2.png" src="../_images/5d1d1886e9743966fc97394fa5366f727f8e096703fc4824aa5d1d3d9384efb2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0005.tif
+</pre></div>
+</div>
+<img alt="../_images/da2a4b8c174d38b50e5304f974c528e9acd6f3710bcc9d2c3f7b3f7b20c68a94.png" src="../_images/da2a4b8c174d38b50e5304f974c528e9acd6f3710bcc9d2c3f7b3f7b20c68a94.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0006.tif
+</pre></div>
+</div>
+<img alt="../_images/d7fe86d329fa97ba2028092758922bb1bd033f8f309dcfd3674d242ad779b080.png" src="../_images/d7fe86d329fa97ba2028092758922bb1bd033f8f309dcfd3674d242ad779b080.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0007.tif
+</pre></div>
+</div>
+<img alt="../_images/d6f68e3666217141008af4847f4b1b85362ea709588be1f69fa2bba09605ab6d.png" src="../_images/d6f68e3666217141008af4847f4b1b85362ea709588be1f69fa2bba09605ab6d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0008.tif
+</pre></div>
+</div>
+<img alt="../_images/ac715ecda1e10482a91832ce7f486df0e35dde377d3ebaa793b342101be5bc4f.png" src="../_images/ac715ecda1e10482a91832ce7f486df0e35dde377d3ebaa793b342101be5bc4f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0009.tif
+</pre></div>
+</div>
+<img alt="../_images/7f27c907028429272e21918f702ed11bca27bc8586a64f816f02d5a5b09f0946.png" src="../_images/7f27c907028429272e21918f702ed11bca27bc8586a64f816f02d5a5b09f0946.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0010.tif
+</pre></div>
+</div>
+<img alt="../_images/3a7999d00484841fc9c5fb948b804342d82c2106c165a1089ea657fc54bf2981.png" src="../_images/3a7999d00484841fc9c5fb948b804342d82c2106c165a1089ea657fc54bf2981.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0011.tif
+</pre></div>
+</div>
+<img alt="../_images/1a33eca3b5aa372c6d7c9424f21a1b94315072712ab3a145d05ef4d6777fa03e.png" src="../_images/1a33eca3b5aa372c6d7c9424f21a1b94315072712ab3a145d05ef4d6777fa03e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0012.tif
+</pre></div>
+</div>
+<img alt="../_images/1caae1911b6f111e85860e229a5eb8c20c1120b1254b1a22175b379d3760fdc3.png" src="../_images/1caae1911b6f111e85860e229a5eb8c20c1120b1254b1a22175b379d3760fdc3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0013.tif
+</pre></div>
+</div>
+<img alt="../_images/e012be134a7c4ac946aeac57a9ac7dba445375f393a6588a31d1fa2ca71003a2.png" src="../_images/e012be134a7c4ac946aeac57a9ac7dba445375f393a6588a31d1fa2ca71003a2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0014.tif
+</pre></div>
+</div>
+<img alt="../_images/9a894a5409312539d12102a970f356e96b87ae1606460fbc744b8a0eb0fc37a9.png" src="../_images/9a894a5409312539d12102a970f356e96b87ae1606460fbc744b8a0eb0fc37a9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0015.tif
+</pre></div>
+</div>
+<img alt="../_images/ccff8e4701c90a14e1ac63cff07dc96b75e1f5fbd8f54bceb8e20bde3dd03082.png" src="../_images/ccff8e4701c90a14e1ac63cff07dc96b75e1f5fbd8f54bceb8e20bde3dd03082.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0016.tif
+</pre></div>
+</div>
+<img alt="../_images/05fef5370cac110920e8f47013cb56d911f0f450f689bbbb4cba0b436e4ecf70.png" src="../_images/05fef5370cac110920e8f47013cb56d911f0f450f689bbbb4cba0b436e4ecf70.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0017.tif
+</pre></div>
+</div>
+<img alt="../_images/f12016eea7b75c7920afd287858fc5c0ea062272e4c11ec64f4c63dc9332165b.png" src="../_images/f12016eea7b75c7920afd287858fc5c0ea062272e4c11ec64f4c63dc9332165b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0018.tif
+</pre></div>
+</div>
+<img alt="../_images/a2c35c905a2d60c15761f5370ec0d791d60654ab72e9d578420cf7859d681429.png" src="../_images/a2c35c905a2d60c15761f5370ec0d791d60654ab72e9d578420cf7859d681429.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0019.tif
+</pre></div>
+</div>
+<img alt="../_images/098c999b2e97b7b1f80ae0c30d93439ac415dd0270d402651d502f0e4b70f5c8.png" src="../_images/098c999b2e97b7b1f80ae0c30d93439ac415dd0270d402651d502f0e4b70f5c8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0020.tif
+</pre></div>
+</div>
+<img alt="../_images/c60d9ce1ed9893cf042f62fbf01bb1cfdd3c6e3bb5261404af6357c16f241ba3.png" src="../_images/c60d9ce1ed9893cf042f62fbf01bb1cfdd3c6e3bb5261404af6357c16f241ba3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0021.tif
+</pre></div>
+</div>
+<img alt="../_images/a401c8203e2741e4e5f0ffeb4b2533a09482c8db3531339b200d965698f3cf14.png" src="../_images/a401c8203e2741e4e5f0ffeb4b2533a09482c8db3531339b200d965698f3cf14.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0022.tif
+</pre></div>
+</div>
+<img alt="../_images/c883a5b9f046e800704bc5a94f062deb6614a7d2a456cb77f2981eef8ca13534.png" src="../_images/c883a5b9f046e800704bc5a94f062deb6614a7d2a456cb77f2981eef8ca13534.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0023.tif
+</pre></div>
+</div>
+<img alt="../_images/b2457b9ec4bd2757d1ed3dfd9fd7bf74bf4b56a0e50327da24c7cd401b289953.png" src="../_images/b2457b9ec4bd2757d1ed3dfd9fd7bf74bf4b56a0e50327da24c7cd401b289953.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0024.tif
+</pre></div>
+</div>
+<img alt="../_images/51454523d0863983dba9561b7f0c8086cbc7a5bec03807694708c3dcab34f5c0.png" src="../_images/51454523d0863983dba9561b7f0c8086cbc7a5bec03807694708c3dcab34f5c0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0025.tif
+</pre></div>
+</div>
+<img alt="../_images/8370878803b024aee56ac59c4ec17684b0d0f417e524090d1d87eea279c9b990.png" src="../_images/8370878803b024aee56ac59c4ec17684b0d0f417e524090d1d87eea279c9b990.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>banana0026.tif
+</pre></div>
+</div>
+<img alt="../_images/defb3e394cd4a216e5a4e6bafcdb383accf6f4c63eb85047068eab38c089e614.png" src="../_images/defb3e394cd4a216e5a4e6bafcdb383accf6f4c63eb85047068eab38c089e614.png" />
 </div>
 </div>
 <section id="exercises">

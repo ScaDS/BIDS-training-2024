@@ -186,8 +186,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="01_list_files_in_a_folder.html">How process files in a folder</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Image visualization with stackview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03_opening_images_using_aicsimageio.html">Reading files with AICSImageIO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_bia_bob.html">Coding assistance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_nextcloud.html">Optional: Accessing image files in the nextcloud</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day1.3_image_processing_basics/readme.html">Image processing basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -461,6 +459,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#switch">Switch</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">Exercise 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-exercise">Optional Exercise:</a></li>
 </ul>
             </nav>
         </div>
@@ -482,7 +481,13 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stackview</span>
-<span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imshow</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imshow</span>
 </pre></div>
 </div>
 </div>
@@ -511,7 +516,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x265289cc290&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1ae8b7f02b0&gt;
 </pre></div>
 </div>
 <img alt="../_images/8c464e2de1a06225d76554271716c3e602688822d5e3a66b805511ef68662d7b.png" src="../_images/8c464e2de1a06225d76554271716c3e602688822d5e3a66b805511ef68662d7b.png" />
@@ -554,7 +559,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "f7585d754f7f4d20869037cba5747f14", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9995f54fd14c4a9c9a00c9e31813b887", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 </section>
 <section id="picker">
@@ -562,12 +567,12 @@ document.write(`
 <p>To read the intensity of pixels where the mouse is moving, use the picker.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stackview</span><span class="o">.</span><span class="n">picker</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">continuous_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stackview</span><span class="o">.</span><span class="n">picker</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "ff3ae0ad567a473bb430ab533a30cc05", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "20f60fead3e64b64b61aa6015ab667fb", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 </section>
 <section id="curtain">
@@ -587,7 +592,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1790fe7638d2456e951317a5839db239", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "d67b872cb4ef44479598c2d24d1425f6", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <p>The curtain can also be partially transparent using the alpha value.</p>
 <div class="cell docutils container">
@@ -597,7 +602,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c46768b30a0f46fc84d38af571895a09", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a4bb06a0fc1d454faa46b168392c43f2", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <p>The curtain also works with 2D data</p>
 </section>
@@ -664,7 +669,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "008b365821ea4f0096729f76d6a96477", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "ebc5ab0fdd4e47909fa48d2d0828c97a", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <p>You can also configure corresponding color maps and show multiple channels at a time. You find an overview about possible colormaps <a class="reference external" href="https://matplotlib.org/stable/users/explain/colors/colormaps.html">here</a>. Additionally, color maps called <code class="docutils literal notranslate"><span class="pre">pure_</span></code> and a color are available.</p>
 <div class="cell docutils container">
@@ -686,7 +691,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "887ea0f364e148c0a4450105af5aac73", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "efb253d1800b4fbea1dfc425788006f6", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 </section>
 <section id="exercise-1">
@@ -696,6 +701,10 @@ document.write(`
 <section id="exercise-2">
 <h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this heading">#</a></h2>
 <p>Use the picker tool to get an idea about the intensity in the nuclei.</p>
+</section>
+<section id="optional-exercise">
+<h2>Optional Exercise:<a class="headerlink" href="#optional-exercise" title="Permalink to this heading">#</a></h2>
+<p>Open an own multi-channel file and visualize its content.</p>
 </section>
 </section>
 
@@ -773,6 +782,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#switch">Switch</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">Exercise 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-exercise">Optional Exercise:</a></li>
 </ul>
   </nav></div>
 
