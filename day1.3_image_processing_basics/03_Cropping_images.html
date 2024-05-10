@@ -471,7 +471,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imshow</span>
-<span class="kn">from</span> <span class="nn">microfilm.microplot</span> <span class="kn">import</span> <span class="n">microshow</span>
+<span class="c1">#from microfilm.microplot import microshow</span>
 </pre></div>
 </div>
 </div>
@@ -499,12 +499,12 @@ document.write(`
 <p>Recap: Visualization using <code class="docutils literal notranslate"><span class="pre">imshow</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">microshow</span><span class="p">(</span><span class="n">image</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/daf9fcc12d3a205dfdb54dc26387529d48feea14780e0953a34e91387d82dae0.png" src="../_images/daf9fcc12d3a205dfdb54dc26387529d48feea14780e0953a34e91387d82dae0.png" />
+<img alt="../_images/7f09ea48a7882e44d9111b5580aa7628aab84628936bbb0fd025c565cb75a27f.png" src="../_images/7f09ea48a7882e44d9111b5580aa7628aab84628936bbb0fd025c565cb75a27f.png" />
 </div>
 </div>
 <p>Cropping images works exactly like cropping lists and tuples, by using indices to specify the range of elements to use:</p>
@@ -512,12 +512,12 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cropped_image1</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">128</span><span class="p">]</span>
 
-<span class="n">microshow</span><span class="p">(</span><span class="n">cropped_image1</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">cropped_image1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cdfd9fbdfe0a3fb705350a0d448dae44f4ca62744ec21635a41330e08d662d92.png" src="../_images/cdfd9fbdfe0a3fb705350a0d448dae44f4ca62744ec21635a41330e08d662d92.png" />
+<img alt="../_images/e2b7ebe3bd44422822ee4dcf0ec734131f59a6bfddcc227c517b0531f22d7c95.png" src="../_images/e2b7ebe3bd44422822ee4dcf0ec734131f59a6bfddcc227c517b0531f22d7c95.png" />
 </div>
 </div>
 <p>To crop the image in the second dimension as well, we add a <code class="docutils literal notranslate"><span class="pre">,</span></code> in the square brackets:</p>
@@ -525,12 +525,12 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cropped_image2</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">:]</span>
 
-<span class="n">microshow</span><span class="p">(</span><span class="n">cropped_image2</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">cropped_image2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9eaedacf0e4dae3e80747672ac26f2b14f091213eb28f5b4a4e1080dba94e626.png" src="../_images/9eaedacf0e4dae3e80747672ac26f2b14f091213eb28f5b4a4e1080dba94e626.png" />
+<img alt="../_images/8a62f704a062280113f533864195fd214a1f153eb83ca529ff25e64d62ddac6e.png" src="../_images/8a62f704a062280113f533864195fd214a1f153eb83ca529ff25e64d62ddac6e.png" />
 </div>
 </div>
 <section id="sub-sampling-images">
@@ -540,12 +540,12 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampled_image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[::</span><span class="mi">5</span><span class="p">,</span> <span class="p">::</span><span class="mi">5</span><span class="p">]</span>
 
-<span class="n">microshow</span><span class="p">(</span><span class="n">sampled_image</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">sampled_image</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3c57c26a7fdfcc8a649fb34014f88053865e98883c2db0c9b6321661001e0316.png" src="../_images/3c57c26a7fdfcc8a649fb34014f88053865e98883c2db0c9b6321661001e0316.png" />
+<img alt="../_images/388174550364828d133e44ca6c290b52fa0bcd94faf8b9cd6ee2f186232756b5.png" src="../_images/388174550364828d133e44ca6c290b52fa0bcd94faf8b9cd6ee2f186232756b5.png" />
 </div>
 </div>
 </section>
@@ -556,12 +556,12 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flipped_image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[::,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-<span class="n">microshow</span><span class="p">(</span><span class="n">flipped_image</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">flipped_image</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4fcf5526450b4ddf5624b04160866c32bc8d97377531763a15e8f68ffc07f3ca.png" src="../_images/4fcf5526450b4ddf5624b04160866c32bc8d97377531763a15e8f68ffc07f3ca.png" />
+<img alt="../_images/7e1cc878a73e70f355ebef6395c2844343fa618027daf2483956a4bfb26da5ba.png" src="../_images/7e1cc878a73e70f355ebef6395c2844343fa618027daf2483956a4bfb26da5ba.png" />
 </div>
 </div>
 </section>
@@ -666,7 +666,7 @@ By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on 2024-05-08.
+  Last updated on 2024-05-10.
   <br/>
 </p>
   </div>
