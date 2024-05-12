@@ -31,8 +31,8 @@ parts:
       - file: day1.2_file_handling/01_list_files_in_a_folder.ipynb 
       - file: day1.2_file_handling/02_interactive_image_visualization.ipynb 
       - file: day1.2_file_handling/03_opening_images_using_aicsimageio.ipynb 
-      - file: day1.2_file_handling/04_bia_bob.ipynb 
-      - file: day1.2_file_handling/05_nextcloud.ipynb 
+      - file: day1.2_file_handling/04_nextcloud.ipynb 
+      - file: day1.2_file_handling/05_bia_bob.ipynb 
 
 
     - file: day1.3_image_processing_basics/readme.md
@@ -51,12 +51,12 @@ parts:
     chapters:
     - file: day2.1_image_segmentation/readme.md
       sections: 
-      - file: day2.1_image_segmentation/11_voronoi_otsu_labeling.ipynb 
-      - file: day2.1_image_segmentation/12_Segmentation_3D.ipynb 
+      - file: day2.1_image_segmentation/10_napari-assistant.md 
+      - file: day2.1_image_segmentation/11_notebook_export.md 
+      - file: day2.1_image_segmentation/12_voronoi_otsu_labeling.ipynb 
       - file: day2.1_image_segmentation/13_watershed.ipynb 
-      - file: day2.1_image_segmentation/20_napari-assistant.md 
-      - file: day2.1_image_segmentation/21_notebook_export.md 
       - file: day2.1_image_segmentation/22_napari_intro.ipynb 
+      - file: day2.1_image_segmentation/30_Segmentation_3D.ipynb 
 
     - file: day2.2_feature_extraction/readme.md
       sections: 
