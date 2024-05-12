@@ -64,6 +64,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'day1.2_file_handling/05_bia_bob';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image processing basics" href="../day1.3_image_processing_basics/readme.html" />
+    <link rel="prev" title="Optional: Accessing image files in the nextcloud" href="04_nextcloud.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -160,7 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Monday</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day1.1_python_basics/readme.html">Python basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/01_jupyter_notebooks.html">Python code and Jupyter notebooks</a></li>
 
@@ -177,10 +179,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/09_custom_functions.html">Custom Functions</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="readme.html">File handling and working with images</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="readme.html">File handling and working with images</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="01_list_files_in_a_folder.html">How process files in a folder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02_interactive_image_visualization.html">Image visualization with stackview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03_opening_images_using_aicsimageio.html">Reading files with AICSImageIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_nextcloud.html">Optional: Accessing image files in the nextcloud</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Optional: Coding assistance</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day1.3_image_processing_basics/readme.html">Image processing basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -203,13 +207,13 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tuesday</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day2.1_image_segmentation/readme.html">Image segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/11_voronoi_otsu_labeling.html">Voronoi-Otsu-labeling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/12_Segmentation_3D.html">3D Image Segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/10_napari-assistant.html">Interactive bioimage analysis workflow design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/11_notebook_export.html">Generating Jupyter Notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/12_voronoi_otsu_labeling.html">Voronoi-Otsu-labeling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/13_watershed.html">The [seeded] watershed algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/20_napari-assistant.html">Interactive bioimage analysis workflow design</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/21_notebook_export.html">Generating Jupyter Notebooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/22_napari_intro.html">Scripting Napari using Python</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/30_Segmentation_3D.html">3D Image Segmentation</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../day2.2_feature_extraction/readme.html">Feature extraction</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -599,6 +603,24 @@ For all image files in the folder ´data_banana´:
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="04_nextcloud.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Optional: Accessing image files in the nextcloud</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../day1.3_image_processing_basics/readme.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Image processing basics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
