@@ -455,7 +455,17 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="optional-coding-assistance">
 <h1>Optional: Coding assistance<a class="headerlink" href="#optional-coding-assistance" title="Permalink to this heading">#</a></h1>
-<p>Writing code for simple tasks such as showing images or iterating over files in a folder can be time-consuming. Generative artificial intelligence tools such as <span class="xref myst">github copilot</span> or <span class="xref myst">bia-bob</span> can help out. In this notebook we will demonstrate how to use bia-bob, a coding assistant specialized in bio-image analysis.</p>
+<p>Writing code for simple tasks such as showing images or iterating over files in a folder can be time-consuming. Generative artificial intelligence tools such as <a class="reference external" href="https://github.com/features/copilot">github copilot</a> or <a class="reference external" href="https://github.com/haesleinhuepf/bia-bob">bia-bob</a> can help out. You can install bia-bob in your conda environment by opening another terminal, activating your environment and using pip:</p>
+<p>Activate your environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">activate</span> <span class="n">devbio</span><span class="o">-</span><span class="n">napari</span><span class="o">-</span><span class="n">env</span>
+</pre></div>
+</div>
+<p>Install bia-bob:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">bia</span><span class="o">-</span><span class="n">bob</span> <span class="n">openai</span>
+</pre></div>
+</div>
+<p>Afterwards, restart the kernel of this notebook.</p>
+<p>In this notebook we will demonstrate how to use bia-bob, a coding assistant specialized in bio-image analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## The following cells might be necessary if you run this code on your computer. </span>
