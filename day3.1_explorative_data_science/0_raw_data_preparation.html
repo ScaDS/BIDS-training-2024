@@ -1,0 +1,1431 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Create a multichannel timelapse (DNA [DAPI], F-actin, and Β-tubulin) for each of these compounds, where each timepoint is different concentration &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day3.1_explorative_data_science/0_raw_data_preparation';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bio-Image Data Science Training Schools 2024
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day0_preparation/readme.html">Setting up your computer</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Monday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.1_python_basics/readme.html">Python basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/01_jupyter_notebooks.html">Python code and Jupyter notebooks</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/02_basic_terms_and_types.html">Basics terms and types for Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/03_notebook_pitfalls.html">Pitfalls when working with Jupyter notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/04_math_in_python.html">Basic math in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05_sequence_types.html">Sequences in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05a_indexing_sequences.html">Indexing and slicing of sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05b_masking_arrays.html">Masking NumPy arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/06_dictionaries_and_tables.html">Dictionaries</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/07_conditions.html">Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/08_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/09_custom_functions.html">Custom Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.2_file_handling/readme.html">File handling and working with images</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/01_list_files_in_a_folder.html">How process files in a folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/02_interactive_image_visualization.html">Image visualization with stackview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/03_opening_images_using_aicsimageio.html">Reading files with AICSImageIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/04_nextcloud.html">Optional: Accessing image files in the nextcloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/05_bia_bob.html">Optional: Coding assistance</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.3_image_processing_basics/readme.html">Image processing basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/00_images_as_arrays.html">Images are arrays of numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/01_opening_visualizing_images.html">Opening and visualizing images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/02_Brightness_and_Contrast.html">Brightness and Contrast</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/03_Cropping_images.html">Cropping images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/04_Image_Filters.html">Image Processing Filters</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/05_Binarization.html">Image Binarization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/06_Morphological_operations.html">Morphological Image Processing</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/bonus_simulated_dataset_remove_noise_and_background.html">Simulation of image formation + image restoration</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tuesday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.1_image_segmentation/readme.html">Image segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/10_napari-assistant.html">Interactive bioimage analysis workflow design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/11_notebook_export.html">Generating Jupyter Notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/12_voronoi_otsu_labeling.html">Voronoi-Otsu-labeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/13_watershed.html">The [seeded] watershed algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/22_napari_intro.html">Scripting Napari using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/30_Segmentation_3D.html">3D Image Segmentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.2_feature_extraction/readme.html">Feature extraction</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/01_count_blobs.html">Counting bright objects in images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/02_statistics_with_scikit_image.html">Statistics using Scikit-image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/03_statistics_with_simpleitk.html">Statistics using SimpleITK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/04_roundness_circularity.html">Shape features</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.3_machine_learning/readme.html">Machine Learning</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/interaction/pixel_classification/sources/pixel_classification.html">Interactive pixel classification and object segmentation in Napari</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/interaction/object_classification/sources/readme.html">Interactive object classification in Napari</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/notebooks/03_apoc_object_segmenter.html">Object segmentation and classifiation on OpenCL-compatible GPUs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.4_tabular_data_wrangling/readme.html">Tabular data wrangling</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/01_introduction_dataframes.html">Introduction to working with DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/02_selecting_dataframes.html">Selecting data from DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/03_appending_dataframes.html">Appending and extending DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/04_handle_missing_data.html">Handling missing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/05_group_by.html">Group by: split-apply-combine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/06_tidy_data.html">Tidy-Data</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Wednesday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Explorative data science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day3.2_data_visualization/readme.html">Data Visualization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3a_basic_plotting/readme.html">Plotting Basics</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/01_Introduction_to_Seaborn.html">Introduction to Seaborn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/02_Plotting_distributions.html">Plotting Distributions with Seaborn</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3b_advanced_plotting/readme.html">Advanced Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/00_getdata.html">Part 0: Get data set for plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/01_seabornobj_solution.html">Part 1: Time series and other simple plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/02_dataviz_MLunsupervised_solution.html">Part 2 Data exploration by unsupervised learning</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/03_dataviz_MLsupervised_solution.html">Part 3: Machine Learning insights by Data Viz</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imprint.html">Imprint</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday3.1_explorative_data_science/0_raw_data_preparation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/day3.1_explorative_data_science/0_raw_data_preparation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Create a multichannel timelapse (DNA [DAPI], F-actin, and Β-tubulin) for each of these compounds, where each timepoint is different concentration</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tifffile</span> <span class="k">as</span> <span class="nn">tiff</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">cmcrameri</span> <span class="kn">import</span> <span class="n">cm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the metadata CSV file</span>
+<span class="n">metadata_path</span> <span class="o">=</span> <span class="s1">&#39;/Users/laura/projects/Bio-image_analysis_school_ScadsAI/data/BBBC021_v1_image.csv&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">metadata_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TableNumber</th>
+      <th>ImageNumber</th>
+      <th>Image_FileName_DAPI</th>
+      <th>Image_PathName_DAPI</th>
+      <th>Image_FileName_Tubulin</th>
+      <th>Image_PathName_Tubulin</th>
+      <th>Image_FileName_Actin</th>
+      <th>Image_PathName_Actin</th>
+      <th>Image_Metadata_Plate_DAPI</th>
+      <th>Image_Metadata_Well_DAPI</th>
+      <th>Replicate</th>
+      <th>Image_Metadata_Compound</th>
+      <th>Image_Metadata_Concentration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4</td>
+      <td>233</td>
+      <td>G10_s1_w1BEDC2073-A983-4B98-95E9-84466707A25D.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s1_w2DCEC82F3-05F7-4F2F-B779-C5DF9698141E.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s1_w43CD51CBC-2370-471F-BA01-EE250B14B3C8.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>Week4_27481</td>
+      <td>G10</td>
+      <td>1</td>
+      <td>5-fluorouracil</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>234</td>
+      <td>G10_s2_w11C3B9BCC-E48F-4C2F-9D31-8F46D8B5B972.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s2_w2570437EF-C8DC-4074-8D63-7FA3A7271FEE.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s2_w400B21F33-BDAB-4363-92C2-F4FB7545F08C.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>Week4_27481</td>
+      <td>G10</td>
+      <td>1</td>
+      <td>5-fluorouracil</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>235</td>
+      <td>G10_s3_w1F4FCE330-C71C-4CA3-9815-EAF9B9876EB5.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s3_w2194A9AC7-369B-4D84-99C0-DA809B0042B8.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s3_w4E0452054-9FC1-41AB-8C5B-D0ACD058991F.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>Week4_27481</td>
+      <td>G10</td>
+      <td>1</td>
+      <td>5-fluorouracil</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>236</td>
+      <td>G10_s4_w1747818B4-FFA7-40EE-B0A0-6A5974AF2644.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s4_w298D4652F-B5BF-49F2-BE51-8149DF83EAFD.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>G10_s4_w42648D36D-6B77-41CD-B520-6E4C533D9ABC.tif</td>
+      <td>Week4/Week4_27481</td>
+      <td>Week4_27481</td>
+      <td>G10</td>
+      <td>1</td>
+      <td>5-fluorouracil</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>473</td>
+      <td>G10_s1_w10034568D-CC12-43C3-93A9-DC3782099DD3.tif</td>
+      <td>Week4/Week4_27521</td>
+      <td>G10_s1_w2A29ED14B-952C-4BA1-89B9-4F92B6DADEB4.tif</td>
+      <td>Week4/Week4_27521</td>
+      <td>G10_s1_w4DAA2E9D1-F6E9-45FA-ADC0-D341B647A680.tif</td>
+      <td>Week4/Week4_27521</td>
+      <td>Week4_27521</td>
+      <td>G10</td>
+      <td>2</td>
+      <td>5-fluorouracil</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>13195</th>
+      <td>9</td>
+      <td>3560</td>
+      <td>Week9_090907_F11_s4_w19580FF4D-DC3D-4BD0-93FE-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_F11_s4_w2DC65EC6F-BDCA-4B05-B243-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_F11_s4_w45699A0F4-9AEE-4CD4-8973-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_39301</td>
+      <td>F11</td>
+      <td>3</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>13196</th>
+      <td>9</td>
+      <td>3597</td>
+      <td>Week9_090907_G11_s1_w1EDE534D2-FCEE-4F92-A30B-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s1_w26A22E27F-6A81-43F5-9587-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s1_w4554A2BF7-0D53-4D27-BF92-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_39301</td>
+      <td>G11</td>
+      <td>3</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>13197</th>
+      <td>9</td>
+      <td>3598</td>
+      <td>Week9_090907_G11_s2_w10B010F39-3B4B-4DCB-8E34-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s2_w2720AC778-3F85-4293-8D75-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s2_w49B290958-BCF2-4DDD-B0E9-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_39301</td>
+      <td>G11</td>
+      <td>3</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>13198</th>
+      <td>9</td>
+      <td>3599</td>
+      <td>Week9_090907_G11_s3_w10394282C-6D3D-4E0E-9FA3-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s3_w24C59DB62-E99B-4284-BAD2-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s3_w471FE25C8-2477-456F-9D74-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_39301</td>
+      <td>G11</td>
+      <td>3</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>13199</th>
+      <td>9</td>
+      <td>3600</td>
+      <td>Week9_090907_G11_s4_w1C447A151-1F85-4E19-9C96-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s4_w22E574F48-321D-4470-ACC4-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_090907_G11_s4_w4200C5003-7F75-47DF-928C-...</td>
+      <td>Week9/Week9_39301</td>
+      <td>Week9_39301</td>
+      <td>G11</td>
+      <td>3</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+<p>13200 rows × 13 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s look only at Week 1 to simplify our dataset</span>
+<span class="n">filtered_metadata</span> <span class="o">=</span> <span class="n">metadata_df</span><span class="p">[</span><span class="n">metadata_df</span><span class="p">[</span><span class="s1">&#39;Image_PathName_DAPI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Week1_&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Further filter to include only filenames with &quot;s1&quot; in the DAPI image filenames (looking only at site 1)</span>
+<span class="n">filtered_metadata</span> <span class="o">=</span> <span class="n">filtered_metadata</span><span class="p">[</span><span class="n">filtered_metadata</span><span class="p">[</span><span class="s1">&#39;Image_FileName_DAPI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;s1&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s look for now only at replicates 1</span>
+<span class="n">filtered_metadata</span> <span class="o">=</span> <span class="n">filtered_metadata</span><span class="p">[</span><span class="n">filtered_metadata</span><span class="p">[</span><span class="s1">&#39;Replicate&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TableNumber</th>
+      <th>ImageNumber</th>
+      <th>Image_FileName_DAPI</th>
+      <th>Image_PathName_DAPI</th>
+      <th>Image_FileName_Tubulin</th>
+      <th>Image_PathName_Tubulin</th>
+      <th>Image_FileName_Actin</th>
+      <th>Image_PathName_Actin</th>
+      <th>Image_Metadata_Plate_DAPI</th>
+      <th>Image_Metadata_Well_DAPI</th>
+      <th>Replicate</th>
+      <th>Image_Metadata_Compound</th>
+      <th>Image_Metadata_Concentration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>672</th>
+      <td>1</td>
+      <td>73</td>
+      <td>Week1_150607_C10_s1_w171173D63-FDAC-457A-9E33-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C10_s1_w29DCB015C-38C2-41D2-A798-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C10_s1_w48B202CFA-2040-4647-8F8B-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_22123</td>
+      <td>C10</td>
+      <td>1</td>
+      <td>aphidicolin</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>684</th>
+      <td>1</td>
+      <td>69</td>
+      <td>Week1_150607_C09_s1_w1CC450920-31F4-45D3-B500-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C09_s1_w27BEDAEBE-0D98-4D1A-A6DD-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C09_s1_w4190BB82C-2D17-4263-A251-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_22123</td>
+      <td>C09</td>
+      <td>1</td>
+      <td>aphidicolin</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>696</th>
+      <td>1</td>
+      <td>65</td>
+      <td>Week1_150607_C08_s1_w1F53B52B0-CE67-45C2-9A69-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C08_s1_w25D455F3B-E5DB-44A9-85CF-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C08_s1_w433CA7503-C3C0-4202-9E29-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_22123</td>
+      <td>C08</td>
+      <td>1</td>
+      <td>aphidicolin</td>
+      <td>0.030</td>
+    </tr>
+    <tr>
+      <th>708</th>
+      <td>1</td>
+      <td>61</td>
+      <td>Week1_150607_C07_s1_w1C8C66DFB-08F8-4AAA-BB23-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C07_s1_w2E533E75A-2247-476A-B195-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C07_s1_w46D54AA9A-CB2C-4F47-BD09-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_22123</td>
+      <td>C07</td>
+      <td>1</td>
+      <td>aphidicolin</td>
+      <td>0.100</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>1</td>
+      <td>57</td>
+      <td>Week1_150607_C06_s1_w10E977263-BE9D-4ED2-9931-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C06_s1_w20B01C3F8-1CA8-442E-8965-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_150607_C06_s1_w4B1ED3D57-0D79-49E4-94B7-...</td>
+      <td>Week1/Week1_22123</td>
+      <td>Week1_22123</td>
+      <td>C06</td>
+      <td>1</td>
+      <td>aphidicolin</td>
+      <td>0.300</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>12028</th>
+      <td>1</td>
+      <td>2921</td>
+      <td>Week1_150607_C02_s1_w1ABFACD53-F9A2-4139-8EB1-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_C02_s1_w29414A130-7191-4B7E-B61A-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_C02_s1_w431C347AD-6596-426A-B8EF-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_22361</td>
+      <td>C02</td>
+      <td>1</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>12032</th>
+      <td>1</td>
+      <td>2961</td>
+      <td>Week1_150607_D02_s1_w105AB7990-5B18-4F15-A679-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_D02_s1_w297C73E52-531B-4406-834E-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_D02_s1_w4CA0A136A-6645-4DA7-853B-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_22361</td>
+      <td>D02</td>
+      <td>1</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>12036</th>
+      <td>1</td>
+      <td>3037</td>
+      <td>Week1_150607_E11_s1_w1547D9388-86B4-4D2A-85C4-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_E11_s1_w2067628A9-A6E6-4912-A8F8-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_E11_s1_w45381CCE8-6387-465D-B9E0-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_22361</td>
+      <td>E11</td>
+      <td>1</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>12040</th>
+      <td>1</td>
+      <td>3077</td>
+      <td>Week1_150607_F11_s1_w15D6B81BE-146D-4A68-84C7-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_F11_s1_w25A53438C-F6B9-4AF3-B6CD-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_F11_s1_w40C9E2448-B597-4452-9C48-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_22361</td>
+      <td>F11</td>
+      <td>1</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>12044</th>
+      <td>1</td>
+      <td>3117</td>
+      <td>Week1_150607_G11_s1_w1177CE3C6-E958-4783-9D89-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_G11_s1_w295E4DA49-E19D-4C81-AC76-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_150607_G11_s1_w41FCBABBC-ECF0-4900-A443-...</td>
+      <td>Week1/Week1_22361</td>
+      <td>Week1_22361</td>
+      <td>G11</td>
+      <td>1</td>
+      <td>DMSO</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+<p>120 rows × 13 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Available compounds: </span><span class="si">{</span><span class="n">filtered_metadata</span><span class="p">[</span><span class="s1">&#39;Image_Metadata_Compound&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of available compounds: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_metadata</span><span class="p">[</span><span class="s1">&#39;Image_Metadata_Compound&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Available compounds: [&#39;aphidicolin&#39; &#39;colchicine&#39; &#39;cytochalasin B&#39; &#39;doxorubicin&#39; &#39;epothilone B&#39;
+ &#39;latrunculin B&#39; &#39;monastrol&#39; &#39;nocodazole&#39; &#39;taxol&#39; &#39;AZ-A&#39; &#39;AZ-H&#39; &#39;AZ-I&#39;
+ &#39;DMSO&#39;]
+Number of available compounds: 13
+</pre></div>
+</div>
+</div>
+</div>
+<section id="create-a-multichannel-timelapse-dna-dapi-f-actin-and-tubulin-for-each-of-these-compounds-where-each-timepoint-is-different-concentration">
+<h1>Create a multichannel timelapse (DNA [DAPI], F-actin, and Β-tubulin) for each of these compounds, where each timepoint is different concentration<a class="headerlink" href="#create-a-multichannel-timelapse-dna-dapi-f-actin-and-tubulin-for-each-of-these-compounds-where-each-timepoint-is-different-concentration" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Group by compound to simulate timelapse frames based on increasing concentration</span>
+<span class="n">compound_groups</span> <span class="o">=</span> <span class="n">filtered_metadata</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Image_Metadata_Compound&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For each compound, we&#39;ll prepare a list of timelapse frames for demonstration</span>
+<span class="n">timelapse_frames</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">for</span> <span class="n">compound</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">compound_groups</span><span class="p">:</span>
+    <span class="c1"># Extracting only the first three concentrations for simplicity</span>
+    <span class="n">unique_concentrations</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;Image_Metadata_Concentration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[:])</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">concentration</span> <span class="ow">in</span> <span class="n">unique_concentrations</span><span class="p">:</span>
+        <span class="c1"># Selecting the first occurrence of each concentration</span>
+        <span class="n">concentration_group</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;Image_Metadata_Concentration&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">concentration</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;DAPI&#39;</span><span class="p">:</span> <span class="n">concentration_group</span><span class="p">[</span><span class="s1">&#39;Image_FileName_DAPI&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Tubulin&#39;</span><span class="p">:</span> <span class="n">concentration_group</span><span class="p">[</span><span class="s1">&#39;Image_FileName_Tubulin&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Actin&#39;</span><span class="p">:</span> <span class="n">concentration_group</span><span class="p">[</span><span class="s1">&#39;Image_FileName_Actin&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Concentration&#39;</span><span class="p">:</span> <span class="n">concentration</span>
+        <span class="p">})</span>
+    <span class="n">timelapse_frames</span><span class="p">[</span><span class="n">compound</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">timelapse_frames</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;AZ-A&#39;, &#39;AZ-H&#39;, &#39;AZ-I&#39;, &#39;DMSO&#39;, &#39;aphidicolin&#39;, &#39;colchicine&#39;, &#39;cytochalasin B&#39;, &#39;doxorubicin&#39;, &#39;epothilone B&#39;, &#39;latrunculin B&#39;, &#39;monastrol&#39;, &#39;nocodazole&#39;, &#39;taxol&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">timelapse_frames</span><span class="p">[</span><span class="s1">&#39;nocodazole&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;DAPI&#39;: &#39;Week1_150607_E10_s1_w1CA7826FB-76BC-496D-9AD3-93BD9CDD6191.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E10_s1_w225625006-6AF8-45F2-A1D8-74B8F751F88F.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E10_s1_w4288C0B45-A218-462A-ADF9-9981999D71DB.tif&#39;,
+  &#39;Concentration&#39;: 0.001},
+ {&#39;DAPI&#39;: &#39;Week1_150607_E09_s1_w1B5C7A17F-3BAB-4CBC-AC5F-330FDA00BA72.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E09_s1_w2D013258C-70C2-4A4C-8E6D-88DA824429D1.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E09_s1_w4B88F72FD-5E35-4179-BF5C-FE59EC7C7B33.tif&#39;,
+  &#39;Concentration&#39;: 0.003},
+ {&#39;DAPI&#39;: &#39;Week1_150607_E08_s1_w1CEEA4B32-8E5E-4A7E-96B4-7DBA712707EE.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E08_s1_w216AE8CA6-1EE1-4051-9BEB-FEC620076A83.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E08_s1_w4FB151688-AE38-4413-9B96-CF3F90C1046B.tif&#39;,
+  &#39;Concentration&#39;: 0.01},
+ {&#39;DAPI&#39;: &#39;Week1_150607_E07_s1_w13C94606D-7D62-433B-9FC8-6866ED66FE56.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E07_s1_w28793CA02-5665-40C7-AD77-B506FFD23023.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E07_s1_w4DBE94139-AD8E-4552-9A3F-B3C4890EDF70.tif&#39;,
+  &#39;Concentration&#39;: 0.03},
+ {&#39;DAPI&#39;: &#39;Week1_150607_E06_s1_w12A799099-5B5E-4113-B5BE-7C33EF966E74.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E06_s1_w2450A3D76-BED1-441E-92F3-3F333AF2566E.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E06_s1_w44DF425B3-7A78-4C61-8A63-1FC1936EC795.tif&#39;,
+  &#39;Concentration&#39;: 0.1},
+ {&#39;DAPI&#39;: &#39;Week1_150607_E05_s1_w1FB128A45-74C9-4CC3-8E67-021B9FD15CE2.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E05_s1_w25638D64A-4A43-43C2-A060-5136F0676AE6.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E05_s1_w481DC059D-76AC-449F-9F98-1928951CC7B3.tif&#39;,
+  &#39;Concentration&#39;: 0.3},
+ {&#39;DAPI&#39;: &#39;Week1_150607_E04_s1_w171BF0848-4027-44D3-B6B8-863C8523F226.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E04_s1_w2C709B861-E4A8-499D-B575-33072064F217.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E04_s1_w479EC1B1E-86DB-4761-886C-1F96AC095E30.tif&#39;,
+  &#39;Concentration&#39;: 1.0},
+ {&#39;DAPI&#39;: &#39;Week1_150607_E03_s1_w1CC9CF6DE-5D49-485C-B53A-C5F23960F132.tif&#39;,
+  &#39;Tubulin&#39;: &#39;Week1_150607_E03_s1_w2104E0137-752D-45DB-ACA6-2438B95BD17D.tif&#39;,
+  &#39;Actin&#39;: &#39;Week1_150607_E03_s1_w44CBCF5A0-2A59-4426-925F-5E5673C685FF.tif&#39;,
+  &#39;Concentration&#39;: 3.0}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;/Users/laura/projects/Bio-image_analysis_school_ScadsAI/data&quot;</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;/Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset&quot;</span>
+
+<span class="k">def</span> <span class="nf">open_image</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+    <span class="c1"># Construct a search pattern to look for the file across all subfolders</span>
+    <span class="n">search_pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+    <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">search_pattern</span><span class="p">)</span>  <span class="c1"># Find all matching files</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">file_list</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2"> not found in any subdirectory under </span><span class="si">{</span><span class="n">data_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">normalize_image</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Normalize the image data to [0, 1] &quot;&quot;&quot;</span>
+    <span class="n">image_min</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">image_max</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">image</span> <span class="o">-</span> <span class="n">image_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">image_max</span> <span class="o">-</span> <span class="n">image_min</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">compound</span><span class="p">,</span> <span class="n">frames</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">timelapse_frames</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">multichannel_images</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">:</span>
+        <span class="c1"># Load images for DAPI, Tubulin, and Actin channels</span>
+        <span class="n">dapi_image</span> <span class="o">=</span> <span class="n">open_image</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s1">&#39;DAPI&#39;</span><span class="p">])</span>
+        <span class="n">tubulin_image</span> <span class="o">=</span> <span class="n">open_image</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s1">&#39;Tubulin&#39;</span><span class="p">])</span>
+        <span class="n">actin_image</span> <span class="o">=</span> <span class="n">open_image</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s1">&#39;Actin&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Convert images to arrays for merging</span>
+        <span class="n">dapi_array</span> <span class="o">=</span> <span class="n">normalize_image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dapi_image</span><span class="p">))</span>
+        <span class="n">tubulin_array</span> <span class="o">=</span> <span class="n">normalize_image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tubulin_image</span><span class="p">))</span>
+        <span class="n">actin_array</span> <span class="o">=</span> <span class="n">normalize_image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">actin_image</span><span class="p">))</span>
+
+        <span class="c1"># Stack arrays along a new dimension to create a multichannel image</span>
+        <span class="c1"># Order of channels in the stack can be adjusted based on visualization preferences</span>
+        <span class="n">multichannel_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">tubulin_array</span><span class="p">,</span> <span class="n">actin_array</span><span class="p">,</span> <span class="n">dapi_array</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">multichannel_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">multichannel_array</span><span class="p">)</span>
+
+    <span class="c1"># Save the sequence of multichannel images as a TIFF stack (timelapse)</span>
+    <span class="n">timelapse_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">compound</span><span class="si">}</span><span class="s2">_timelapse.tif&quot;</span>
+    <span class="n">tiff</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">timelapse_filename</span><span class="p">),</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">multichannel_images</span><span class="p">],</span> <span class="n">photometric</span><span class="o">=</span><span class="s1">&#39;rgb&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved timelapse for </span><span class="si">{</span><span class="n">compound</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span><span class="w"> </span><span class="n">timelapse_filename</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  8%|██████████▍                                                                                                                             | 1/13 [00:00&lt;00:06,  1.72it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for AZ-A to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/AZ-A_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 15%|████████████████████▉                                                                                                                   | 2/13 [00:01&lt;00:06,  1.80it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for AZ-H to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/AZ-H_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 31%|█████████████████████████████████████████▊                                                                                              | 4/13 [00:02&lt;00:04,  1.93it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for AZ-I to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/AZ-I_timelapse.tif.
+Saved timelapse for DMSO to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/DMSO_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|████████████████████████████████████████████████████▎                                                                                   | 5/13 [00:02&lt;00:03,  2.03it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for aphidicolin to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/aphidicolin_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 46%|██████████████████████████████████████████████████████████████▊                                                                         | 6/13 [00:03&lt;00:03,  2.00it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for colchicine to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/colchicine_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 54%|█████████████████████████████████████████████████████████████████████████▏                                                              | 7/13 [00:03&lt;00:03,  1.91it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for cytochalasin B to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/cytochalasin B_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 62%|███████████████████████████████████████████████████████████████████████████████████▋                                                    | 8/13 [00:04&lt;00:02,  1.74it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for doxorubicin to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/doxorubicin_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 69%|██████████████████████████████████████████████████████████████████████████████████████████████▏                                         | 9/13 [00:04&lt;00:02,  1.81it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for epothilone B to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/epothilone B_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|███████████████████████████████████████████████████████████████████████████████████████████████████████▊                               | 10/13 [00:05&lt;00:01,  1.84it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for latrunculin B to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/latrunculin B_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 85%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████▏                    | 11/13 [00:06&lt;00:01,  1.70it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for monastrol to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/monastrol_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 92%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌          | 12/13 [00:06&lt;00:00,  1.64it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for nocodazole to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/nocodazole_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 13/13 [00:07&lt;00:00,  1.75it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved timelapse for taxol to /Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset/taxol_timelapse.tif.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+
+<span class="c1"># Step 1: Generate a sample dataset</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Apply t-SNE with different perplexity values</span>
+<span class="n">perplexities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+<span class="n">tsne_results</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">perplexity</span> <span class="ow">in</span> <span class="n">perplexities</span><span class="p">:</span>
+    <span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">tsne_results</span><span class="p">[</span><span class="n">perplexity</span><span class="p">]</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Plot the results</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">perplexity</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">perplexities</span><span class="p">):</span>
+    <span class="n">scatter</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tsne_results</span><span class="p">[</span><span class="n">perplexity</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tsne_results</span><span class="p">[</span><span class="n">perplexity</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">batlow</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Perplexity = </span><span class="si">{</span><span class="n">perplexity</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">26</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;/Users/laura/Downloads/perplexity.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9fe815184883f09fd300a88b8cc2f62af5addfdc18485fe1e168a0e196b2447c.png" src="../_images/9fe815184883f09fd300a88b8cc2f62af5addfdc18485fe1e168a0e196b2447c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Load the MNIST dataset</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">fetch_openml</span><span class="p">(</span><span class="s1">&#39;mnist_784&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Select a subset of the dataset</span>
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">70000</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X_subset</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y_subset</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Apply t-SNE to the subset</span>
+<span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_tsne</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_subset</span><span class="p">)</span>
+
+<span class="c1"># Plot the t-SNE results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_tsne</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_tsne</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_subset</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">scatter</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;t-SNE visualization of MNIST dataset&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t-SNE 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;t-SNE 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6dd70966b51c490a2710e18d7705efe933682be4cb9818edffb95e3b1af41378.png" src="../_images/6dd70966b51c490a2710e18d7705efe933682be4cb9818edffb95e3b1af41378.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_tsne</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_tsne</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_subset</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">batlow</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">scatter</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;t-SNE visualization of MNIST dataset&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t-SNE 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;t-SNE 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add a legend to the right</span>
+<span class="n">unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_subset</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">c</span><span class="o">=</span><span class="n">scatter</span><span class="o">.</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="mi">9</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Digits&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;/Users/laura/Downloads/mnist.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/gn/h45356j57bs_gzpwvw6kkbn40000gn/T/ipykernel_91923/275149631.py:12: UserWarning: *c* argument looks like a single numeric RGB or RGBA sequence, which should be avoided as value-mapping will have precedence in case its length matches with *x* &amp; *y*.  Please use the *color* keyword-argument or provide a 2D array with a single row if you intend to specify the same RGB or RGBA value for all points.
+  plt.scatter([], [], c=scatter.cmap(i / 9), label=str(i))
+</pre></div>
+</div>
+<img alt="../_images/32b1ab04fdb79f78e5e7bccedce86f13ad5e9c7bacf32ed6d58c309bb6c88f64.png" src="../_images/32b1ab04fdb79f78e5e7bccedce86f13ad5e9c7bacf32ed6d58c309bb6c88f64.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="c1"># Apply PCA to the subset</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_subset</span><span class="p">)</span>
+
+<span class="c1"># Plot the PCA results with a legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Create a scatter plot with different colors for each digit</span>
+<span class="c1"># for i in np.unique(y_subset):</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_subset</span><span class="p">,</span>  <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Set1&#39;</span><span class="p">)</span>
+    <span class="c1">#plt.scatter(X_pca[y_subset == i, 0], X_pca[y_subset == i, 1], label=str(i), s=10, c=y_subset)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PCA visualization of MNIST dataset&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;PCA 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PCA 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_subset</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">c</span><span class="o">=</span><span class="n">scatter</span><span class="o">.</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="mi">9</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Digits&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="c1">#plt.savefig(&quot;/Users/laura/Downloads/mnist_pca.png&quot;, bbox_inches=&#39;tight&#39;, dpi=300)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/gn/h45356j57bs_gzpwvw6kkbn40000gn/T/ipykernel_91923/353009687.py:22: UserWarning: *c* argument looks like a single numeric RGB or RGBA sequence, which should be avoided as value-mapping will have precedence in case its length matches with *x* &amp; *y*.  Please use the *color* keyword-argument or provide a 2D array with a single row if you intend to specify the same RGB or RGBA value for all points.
+  plt.scatter([], [], c=scatter.cmap(i / 9), label=str(i))
+</pre></div>
+</div>
+<img alt="../_images/f3838edf523156906e44c130b317ced997bf34c24f394dbef7bd59945e847730.png" src="../_images/f3838edf523156906e44c130b317ced997bf34c24f394dbef7bd59945e847730.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./day3.1_explorative_data_science"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-05-14.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p>
+Copyright: Licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a> unless mentioned otherwise. 
+Contributions and feedback are welcome.
+</p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

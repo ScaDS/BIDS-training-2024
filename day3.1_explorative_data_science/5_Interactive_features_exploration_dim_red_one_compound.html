@@ -1,0 +1,886 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Dimensionality Reduction &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day3.1_explorative_data_science/5_Interactive_features_exploration_dim_red_one_compound';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bio-Image Data Science Training Schools 2024
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day0_preparation/readme.html">Setting up your computer</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Monday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.1_python_basics/readme.html">Python basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/01_jupyter_notebooks.html">Python code and Jupyter notebooks</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/02_basic_terms_and_types.html">Basics terms and types for Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/03_notebook_pitfalls.html">Pitfalls when working with Jupyter notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/04_math_in_python.html">Basic math in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05_sequence_types.html">Sequences in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05a_indexing_sequences.html">Indexing and slicing of sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05b_masking_arrays.html">Masking NumPy arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/06_dictionaries_and_tables.html">Dictionaries</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/07_conditions.html">Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/08_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/09_custom_functions.html">Custom Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.2_file_handling/readme.html">File handling and working with images</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/01_list_files_in_a_folder.html">How process files in a folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/02_interactive_image_visualization.html">Image visualization with stackview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/03_opening_images_using_aicsimageio.html">Reading files with AICSImageIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/04_nextcloud.html">Optional: Accessing image files in the nextcloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/05_bia_bob.html">Optional: Coding assistance</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.3_image_processing_basics/readme.html">Image processing basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/00_images_as_arrays.html">Images are arrays of numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/01_opening_visualizing_images.html">Opening and visualizing images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/02_Brightness_and_Contrast.html">Brightness and Contrast</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/03_Cropping_images.html">Cropping images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/04_Image_Filters.html">Image Processing Filters</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/05_Binarization.html">Image Binarization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/06_Morphological_operations.html">Morphological Image Processing</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/bonus_simulated_dataset_remove_noise_and_background.html">Simulation of image formation + image restoration</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tuesday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.1_image_segmentation/readme.html">Image segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/10_napari-assistant.html">Interactive bioimage analysis workflow design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/11_notebook_export.html">Generating Jupyter Notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/12_voronoi_otsu_labeling.html">Voronoi-Otsu-labeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/13_watershed.html">The [seeded] watershed algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/22_napari_intro.html">Scripting Napari using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/30_Segmentation_3D.html">3D Image Segmentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.2_feature_extraction/readme.html">Feature extraction</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/01_count_blobs.html">Counting bright objects in images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/02_statistics_with_scikit_image.html">Statistics using Scikit-image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/03_statistics_with_simpleitk.html">Statistics using SimpleITK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/04_roundness_circularity.html">Shape features</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.3_machine_learning/readme.html">Machine Learning</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/interaction/pixel_classification/sources/pixel_classification.html">Interactive pixel classification and object segmentation in Napari</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/interaction/object_classification/sources/readme.html">Interactive object classification in Napari</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/notebooks/03_apoc_object_segmenter.html">Object segmentation and classifiation on OpenCL-compatible GPUs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.4_tabular_data_wrangling/readme.html">Tabular data wrangling</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/01_introduction_dataframes.html">Introduction to working with DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/02_selecting_dataframes.html">Selecting data from DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/03_appending_dataframes.html">Appending and extending DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/04_handle_missing_data.html">Handling missing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/05_group_by.html">Group by: split-apply-combine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/06_tidy_data.html">Tidy-Data</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Wednesday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Explorative data science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day3.2_data_visualization/readme.html">Data Visualization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3a_basic_plotting/readme.html">Plotting Basics</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/01_Introduction_to_Seaborn.html">Introduction to Seaborn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/02_Plotting_distributions.html">Plotting Distributions with Seaborn</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3b_advanced_plotting/readme.html">Advanced Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/00_getdata.html">Part 0: Get data set for plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/01_seabornobj_solution.html">Part 1: Time series and other simple plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/02_dataviz_MLunsupervised_solution.html">Part 2 Data exploration by unsupervised learning</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/03_dataviz_MLsupervised_solution.html">Part 3: Machine Learning insights by Data Viz</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imprint.html">Imprint</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday3.1_explorative_data_science/5_Interactive_features_exploration_dim_red_one_compound.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/day3.1_explorative_data_science/5_Interactive_features_exploration_dim_red_one_compound.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Dimensionality Reduction</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tifffile</span> <span class="k">as</span> <span class="nn">tif</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">napari</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># change settings to show all columns in a dataframe</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># ignore napari warnings</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+    <span class="c1"># create napari viewer instance</span>
+    <span class="n">viewer</span> <span class="o">=</span> <span class="n">napari</span><span class="o">.</span><span class="n">Viewer</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset&quot;</span>
+
+<span class="n">nuclei_labels_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;labels_nuclei&quot;</span><span class="p">)</span>
+<span class="n">actin_labels_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;labels_actin&quot;</span><span class="p">)</span>
+<span class="n">tubulin_labels_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;labels_tubulin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">fname</span> <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.tif&quot;</span><span class="p">)]</span>
+<span class="n">filenames</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;aphidicolin_timelapse.tif&#39;,
+ &#39;nocodazole_timelapse.tif&#39;,
+ &#39;AZ-I_timelapse.tif&#39;,
+ &#39;taxol_timelapse.tif&#39;,
+ &#39;latrunculin B_timelapse.tif&#39;,
+ &#39;epothilone B_timelapse.tif&#39;,
+ &#39;monastrol_timelapse.tif&#39;,
+ &#39;AZ-H_timelapse.tif&#39;,
+ &#39;DMSO_timelapse.tif&#39;,
+ &#39;colchicine_timelapse.tif&#39;,
+ &#39;doxorubicin_timelapse.tif&#39;,
+ &#39;cytochalasin B_timelapse.tif&#39;,
+ &#39;AZ-A_timelapse.tif&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;cytochalasin B_timelapse&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read an image, which will be processed as an example</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load nuclei and actin segmentation</span>
+<span class="n">labels_nuclei</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nuclei_labels_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">_labels_dapi.tif&#39;</span><span class="p">))</span>
+<span class="n">labels_actin</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">actin_labels_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">_labels_actin.tif&#39;</span><span class="p">))</span>
+<span class="n">labels_tubulin</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tubulin_labels_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">_labels_tubulin.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># np.newaxis adds a new axis to convert to 2D timelapse (otherwise napari interprets an image with shape 8,y,x as a 3D image)</span>
+<span class="c1"># new image dimension for each channel will be (8, 1, 1024, 1280)</span>
+<span class="c1"># this is optional, and can also be done in the viewer Plugins -&gt; Convert to 2D timelapse</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+<span class="c1"># do the same for all label images</span>
+<span class="n">labels_actin</span> <span class="o">=</span> <span class="n">labels_actin</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+<span class="n">labels_nuclei</span> <span class="o">=</span> <span class="n">labels_nuclei</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+<span class="n">labels_tubulin</span> <span class="o">=</span> <span class="n">labels_tubulin</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># viewer.add_image(img) # and then in the viewer right click on the layer - split RGB or:</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
+    <span class="n">img</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tubulin&quot;</span><span class="p">,</span> <span class="s2">&quot;actin&quot;</span><span class="p">,</span> <span class="s2">&quot;nuclei&quot;</span><span class="p">],</span>
+    <span class="n">colormap</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;magenta&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">],</span>
+    <span class="n">channel_axis</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Image layer &#39;tubulin&#39; at 0x17fbbc430&gt;,
+ &lt;Image layer &#39;actin&#39; at 0x103de9400&gt;,
+ &lt;Image layer &#39;nuclei&#39; at 0x296437f10&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add segmentation layers to the viewer</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_labels</span><span class="p">(</span><span class="n">labels_actin</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin_segmented&quot;</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_labels</span><span class="p">(</span><span class="n">labels_nuclei</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nuclei_segmented&quot;</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_labels</span><span class="p">(</span><span class="n">labels_tubulin</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tubulin_segmented&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Labels layer &#39;tubulin_segmented&#39; at 0x2ad59bbe0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load measurements csv</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">_measurements.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">viewer</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;tubulin_segmented&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="dimensionality-reduction">
+<h1>Dimensionality Reduction<a class="headerlink" href="#dimensionality-reduction" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ca626ee0b0b63b8261cb29c5ec91da900a576798ee2a7ca7305fce03dbb96064.png" src="../_images/ca626ee0b0b63b8261cb29c5ec91da900a576798ee2a7ca7305fce03dbb96064.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e373abb3748c2c42bc63958d3cec7b2de562eb067756a691da0d77af8438c904.png" src="../_images/e373abb3748c2c42bc63958d3cec7b2de562eb067756a691da0d77af8438c904.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2c1ce30e5c1f6382b78ba88109ec040c675ff26df770c61d60cd7570f37bd04e.png" src="../_images/2c1ce30e5c1f6382b78ba88109ec040c675ff26df770c61d60cd7570f37bd04e.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/laura/micromamba/envs/devbio-napari-env/lib/python3.9/site-packages/napari/utils/_proxies.py:144: FutureWarning: Labels.color is deprecated since 0.4.19 and will be removed in 0.5.0, please set Labels.colormap directly with an instance of napari.utils.colormaps.DirectLabelColormap instead.
+  setattr(self.__wrapped__, name, value)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/48424711bd5d3d00cbab63ef5b812bd9a928574bfd03fd3c8b9695272cb8f56d.png" src="../_images/48424711bd5d3d00cbab63ef5b812bd9a928574bfd03fd3c8b9695272cb8f56d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get layer&#39;s properties containing UMAP results</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">viewer</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;tubulin_segmented&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">spearmanr</span>
+
+<span class="n">correlations</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    
+    <span class="c1"># don&#39;t compute correlation for these columns</span>
+    <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="s1">&#39;UMAP_0&#39;</span><span class="p">,</span> <span class="s1">&#39;UMAP_1&#39;</span><span class="p">,</span> <span class="s1">&#39;t-SNE_0&#39;</span><span class="p">,</span> <span class="s1">&#39;t-SNE_1&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;_CLUSTER_ID&#39;</span> <span class="ow">in</span> <span class="n">column</span><span class="p">:</span>
+        <span class="k">continue</span>
+        
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;UMAP_1&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">correlations</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr</span>
+
+<span class="c1"># sort features based on the absolute value of correlation</span>
+<span class="n">sorted_features</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">correlations</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">correlation</span> <span class="ow">in</span> <span class="n">sorted_features</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">correlation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean_intensity_dapi: 0.5486188221448203
+max_intensity_dapi: 0.5447799323141165
+max_intensity_tubulin: 0.45156065722662525
+mean_intensity_tubulin: 0.38965731646656065
+eccentricity_actin: -0.38380397970617214
+min_intensity_dapi: 0.321925933854268
+eccentricity_tubulin: -0.31294447252513347
+max_intensity_actin: 0.3044558243008318
+min_intensity_tubulin: -0.2937342590715278
+extent_actin: 0.28990719181235186
+major_axis_length_actin: -0.24846681350221528
+solidity_actin: 0.22133957965472273
+minor_axis_length_tubulin: 0.22129073381247086
+feret_diameter_max_actin: -0.20897341966214886
+mean_intensity_actin: 0.1931511199413882
+solidity_dapi: -0.18409916137391458
+extent_tubulin: 0.17194977820693955
+major_axis_length_tubulin: -0.13837588083639274
+perimeter_actin: -0.1290950630698303
+perimeter_crofton_actin: -0.12793093029711933
+min_intensity_actin: -0.12193337426479882
+feret_diameter_max_tubulin: -0.11935182987552069
+extent_dapi: -0.10879372726200892
+solidity_tubulin: 0.0877313119919435
+minor_axis_length_actin: 0.07736071420443646
+area_tubulin: 0.07435657749954104
+equivalent_diameter_tubulin: 0.07435657749954104
+perimeter_crofton_dapi: 0.06425326528859777
+perimeter_dapi: 0.06421580947596707
+minor_axis_length_dapi: 0.06121299278995232
+area_actin: -0.05303946791180253
+equivalent_diameter_actin: -0.05303946791180253
+area_dapi: 0.04240958604677274
+equivalent_diameter_dapi: 0.04240958604677274
+perimeter_tubulin: -0.02629324547889531
+perimeter_crofton_tubulin: -0.025151143106982108
+orientation_actin: 0.019603893991542137
+orientation_tubulin: 0.01536878901215706
+feret_diameter_max_dapi: 0.015246687194057454
+major_axis_length_dapi: 0.009543679673695378
+eccentricity_dapi: 0.0029911384587595694
+orientation_dapi: 0.0008491332771271721
+Selected labels layer: tubulin_segmented
+Selected measurements: [&#39;max_intensity_dapi&#39;, &#39;mean_intensity_dapi&#39;, &#39;min_intensity_tubulin&#39;, &#39;max_intensity_tubulin&#39;]
+Selected clustering method: KMeans
+KMEANS predictions finished.
+Napari status bar display of label properties disabled because https://github.com/napari/napari/issues/5417 and https://github.com/napari/napari/issues/4342
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Numba: Attempted to fork from a non-main thread, the TBB library may be in an invalid state in the child process.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/308b9cf74fbe662fe5964dad117c925cd28a47e456abaad24276d00321a95f9b.png" src="../_images/308b9cf74fbe662fe5964dad117c925cd28a47e456abaad24276d00321a95f9b.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/laura/micromamba/envs/devbio-napari-env/lib/python3.9/site-packages/napari/components/viewer_model.py:10: FutureWarning: Labels.color is deprecated since 0.4.19 and will be removed in 0.5.0, please set Labels.colormap directly with an instance of napari.utils.colormaps.DirectLabelColormap instead.
+  TYPE_CHECKING,
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/43bc3a8a725e0e620400e242642d3856e6083dec6128e468142312ab274e45e3.png" src="../_images/43bc3a8a725e0e620400e242642d3856e6083dec6128e468142312ab274e45e3.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./day3.1_explorative_data_science"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-05-14.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p>
+Copyright: Licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a> unless mentioned otherwise. 
+Contributions and feedback are welcome.
+</p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,893 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Segment Actin Channel - batch process a folder of images &#8212; Bio-image Data Science Training School @ ScaDS.AI, May 2024</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'day3.1_explorative_data_science/2_data_prep_segment_actin_batch_process';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bio-Image Data Science Training Schools 2024
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day0_preparation/readme.html">Setting up your computer</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Monday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.1_python_basics/readme.html">Python basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/01_jupyter_notebooks.html">Python code and Jupyter notebooks</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/02_basic_terms_and_types.html">Basics terms and types for Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/03_notebook_pitfalls.html">Pitfalls when working with Jupyter notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/04_math_in_python.html">Basic math in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05_sequence_types.html">Sequences in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05a_indexing_sequences.html">Indexing and slicing of sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/05b_masking_arrays.html">Masking NumPy arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/06_dictionaries_and_tables.html">Dictionaries</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/07_conditions.html">Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/08_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.1_python_basics/09_custom_functions.html">Custom Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.2_file_handling/readme.html">File handling and working with images</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/01_list_files_in_a_folder.html">How process files in a folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/02_interactive_image_visualization.html">Image visualization with stackview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/03_opening_images_using_aicsimageio.html">Reading files with AICSImageIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/04_nextcloud.html">Optional: Accessing image files in the nextcloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.2_file_handling/05_bia_bob.html">Optional: Coding assistance</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day1.3_image_processing_basics/readme.html">Image processing basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/00_images_as_arrays.html">Images are arrays of numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/01_opening_visualizing_images.html">Opening and visualizing images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/02_Brightness_and_Contrast.html">Brightness and Contrast</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/03_Cropping_images.html">Cropping images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/04_Image_Filters.html">Image Processing Filters</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/05_Binarization.html">Image Binarization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/06_Morphological_operations.html">Morphological Image Processing</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../day1.3_image_processing_basics/bonus_simulated_dataset_remove_noise_and_background.html">Simulation of image formation + image restoration</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tuesday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.1_image_segmentation/readme.html">Image segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/10_napari-assistant.html">Interactive bioimage analysis workflow design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/11_notebook_export.html">Generating Jupyter Notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/12_voronoi_otsu_labeling.html">Voronoi-Otsu-labeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/13_watershed.html">The [seeded] watershed algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/22_napari_intro.html">Scripting Napari using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day2.1_image_segmentation/30_Segmentation_3D.html">3D Image Segmentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.2_feature_extraction/readme.html">Feature extraction</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/01_count_blobs.html">Counting bright objects in images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/02_statistics_with_scikit_image.html">Statistics using Scikit-image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/03_statistics_with_simpleitk.html">Statistics using SimpleITK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.2_feature_extraction/04_roundness_circularity.html">Shape features</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.3_machine_learning/readme.html">Machine Learning</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/interaction/pixel_classification/sources/pixel_classification.html">Interactive pixel classification and object segmentation in Napari</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/interaction/object_classification/sources/readme.html">Interactive object classification in Napari</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.3_machine_learning/notebooks/03_apoc_object_segmenter.html">Object segmentation and classifiation on OpenCL-compatible GPUs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day2.4_tabular_data_wrangling/readme.html">Tabular data wrangling</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/01_introduction_dataframes.html">Introduction to working with DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/02_selecting_dataframes.html">Selecting data from DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/03_appending_dataframes.html">Appending and extending DataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/04_handle_missing_data.html">Handling missing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/05_group_by.html">Group by: split-apply-combine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2.4_tabular_data_wrangling/06_tidy_data.html">Tidy-Data</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Wednesday</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Explorative data science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day3.2_data_visualization/readme.html">Data Visualization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3a_basic_plotting/readme.html">Plotting Basics</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/01_Introduction_to_Seaborn.html">Introduction to Seaborn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/02_Plotting_distributions.html">Plotting Distributions with Seaborn</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3b_advanced_plotting/readme.html">Advanced Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/00_getdata.html">Part 0: Get data set for plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/01_seabornobj_solution.html">Part 1: Time series and other simple plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/02_dataviz_MLunsupervised_solution.html">Part 2 Data exploration by unsupervised learning</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/03_dataviz_MLsupervised_solution.html">Part 3: Machine Learning insights by Data Viz</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imprint.html">Imprint</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/scads/BIDS-training-2024/issues/new?title=Issue%20on%20page%20%2Fday3.1_explorative_data_science/2_data_prep_segment_actin_batch_process.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/day3.1_explorative_data_science/2_data_prep_segment_actin_batch_process.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Segment Actin Channel - batch process a folder of images</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">Helper functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-one-image-as-an-example">Process one image as an example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-a-batch-of-images-from-a-folder">Process a batch of images from a folder</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="segment-actin-channel-batch-process-a-folder-of-images">
+<h1>Segment Actin Channel - batch process a folder of images<a class="headerlink" href="#segment-actin-channel-batch-process-a-folder-of-images" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span>
+<span class="kn">import</span> <span class="nn">pyclesperanto_prototype</span> <span class="k">as</span> <span class="nn">cle</span>  <span class="c1"># version 0.24.3</span>
+<span class="kn">import</span> <span class="nn">napari_segment_blobs_and_things_with_membranes</span> <span class="k">as</span> <span class="nn">nsbatwm</span>  <span class="c1"># version 0.3.8</span>
+<span class="kn">from</span> <span class="nn">skimage.segmentation</span> <span class="kn">import</span> <span class="n">watershed</span>
+<span class="kn">import</span> <span class="nn">napari_simpleitk_image_processing</span> <span class="k">as</span> <span class="nn">nsitk</span>  <span class="c1"># version 0.4.5</span>
+<span class="kn">from</span> <span class="nn">skimage.filters</span> <span class="kn">import</span> <span class="n">median</span><span class="p">,</span> <span class="n">sobel</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">disk</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tifffile</span> <span class="k">as</span> <span class="nn">tif</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">napari</span>
+<span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="helper-functions">
+<h2>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">seeded_watershed</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">seeds</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">outline_sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">outline_sigma</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">outline_blurred</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">outline_sigma</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">outline_blurred</span> <span class="o">=</span> <span class="n">image</span>
+
+    <span class="n">wt</span> <span class="o">=</span>  <span class="n">watershed</span><span class="p">(</span><span class="n">outline_blurred</span><span class="p">,</span> <span class="n">markers</span><span class="o">=</span><span class="n">seeds</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cle</span><span class="o">.</span><span class="n">smooth_labels</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create napari viewer instance</span>
+<span class="k">if</span> <span class="s1">&#39;viewer&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">():</span>
+    <span class="n">viewer</span> <span class="o">=</span> <span class="n">napari</span><span class="o">.</span><span class="n">Viewer</span><span class="p">()</span>
+
+<span class="c1"># a path where nuclei segmentation images were saved</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/Users/laura/projects/Bio-image_analysis_school_ScadsAI/prepared_dataset&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># take a look what is in that directory</span>
+<span class="n">prepared_images</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">prepared_images</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;aphidicolin_timelapse.tif&#39;,
+ &#39;.DS_Store&#39;,
+ &#39;nocodazole_timelapse.tif&#39;,
+ &#39;AZ-I_timelapse.tif&#39;,
+ &#39;taxol_timelapse.tif&#39;,
+ &#39;labels_nuclei&#39;,
+ &#39;latrunculin B_timelapse.tif&#39;,
+ &#39;epothilone B_timelapse.tif&#39;,
+ &#39;monastrol_timelapse.tif&#39;,
+ &#39;AZ-H_timelapse.tif&#39;,
+ &#39;DMSO_timelapse.tif&#39;,
+ &#39;colchicine_timelapse.tif&#39;,
+ &#39;doxorubicin_timelapse.tif&#39;,
+ &#39;cytochalasin B_timelapse.tif&#39;,
+ &#39;labels_tubulin&#39;,
+ &#39;labels_actin&#39;,
+ &#39;AZ-A_timelapse.tif&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="process-one-image-as-an-example">
+<h2>Process one image as an example<a class="headerlink" href="#process-one-image-as-an-example" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;aphidicolin_timelapse&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># viewer.add_image(img) # and then in the viewer right click on the layer - split RGB or:</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
+    <span class="n">img</span><span class="p">,</span> 
+    <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tubulin&quot;</span><span class="p">,</span> <span class="s2">&quot;actin&quot;</span><span class="p">,</span> <span class="s2">&quot;nuclei&quot;</span><span class="p">],</span>
+    <span class="n">colormap</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;magenta&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">],</span>
+    <span class="n">channel_axis</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Image layer &#39;tubulin&#39; at 0x166ad5730&gt;,
+ &lt;Image layer &#39;actin&#39; at 0x166ad5340&gt;,
+ &lt;Image layer &#39;nuclei&#39; at 0x166b67f70&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load nuclei segmentation</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;labels_nuclei&quot;</span><span class="p">,</span> <span class="s1">&#39;aphidicolin_timelapse_labels_dapi.tif&#39;</span><span class="p">))</span>
+
+<span class="c1"># add nuclei segmentation to the viewer</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_labels</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nuclei_segmented&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Labels layer &#39;nuclei_segmented&#39; at 0x166ad5c40&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we get actin channel as a numpy array from the viewer</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;actin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># initialize a new list where we will put our segmented actin images</span>
+<span class="n">binarized_imgs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">labels_actin</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># iterate through &quot;time&quot; dimension</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+    
+    <span class="c1"># get the binary image</span>
+    <span class="n">binary_image</span> <span class="o">=</span> <span class="n">nsitk</span><span class="o">.</span><span class="n">threshold_huang</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+    <span class="n">binarized_imgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binary_image</span><span class="p">)</span>
+    
+    <span class="c1"># noise removal without removing so much of the edges as gaussian blur</span>
+    <span class="n">noise_removed_img</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">median_sphere</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    
+    <span class="c1"># detect edges</span>
+    <span class="n">sobel_edges</span> <span class="o">=</span> <span class="n">sobel</span><span class="p">(</span><span class="n">noise_removed_img</span><span class="p">)</span>
+    <span class="n">normalized_sobel</span> <span class="o">=</span> <span class="p">(</span><span class="n">sobel_edges</span> <span class="o">-</span> <span class="n">sobel_edges</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">sobel_edges</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">sobel_edges</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    
+    <span class="c1"># perform segmentation with watershed using nuclei as seeds and binary image as a mask</span>
+    <span class="n">labels_ws</span> <span class="o">=</span> <span class="n">watershed</span><span class="p">(</span><span class="n">normalized_sobel</span><span class="p">,</span> <span class="n">labels</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">binary_image</span><span class="p">)</span>
+    <span class="n">labels_actin</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">labels_ws</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:02&lt;00:00,  3.75it/s]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">timelapse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">binarized_imgs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_labels</span><span class="p">(</span><span class="n">timelapse</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;binary_mask&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Labels layer &#39;binary_mask&#39; at 0x16a1c62e0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># note: some layers visibility and/or contrast limits were adjusted interactively in the viewer</span>
+<span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/40de2f264e05cc7a6d7ad25bbcd82e98c85ff128f9e6f36bdc597c779a3f3d09.png" src="../_images/40de2f264e05cc7a6d7ad25bbcd82e98c85ff128f9e6f36bdc597c779a3f3d09.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels_timelapse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">labels_actin</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_labels</span><span class="p">(</span><span class="n">labels_timelapse</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin_segmented&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Labels layer &#39;actin_segmented&#39; at 0x16b675d00&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screenshot</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screenshot</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/35d00b681ea6d5ccbcdf016d22ff66edd8b91fd4ef6a950517c1612a7587d2d4.png" src="../_images/35d00b681ea6d5ccbcdf016d22ff66edd8b91fd4ef6a950517c1612a7587d2d4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;labels_actin&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+    
+    <span class="n">tif</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">_labels_actin.tif&#39;</span><span class="p">),</span> <span class="n">labels_timelapse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="process-a-batch-of-images-from-a-folder">
+<h2>Process a batch of images from a folder<a class="headerlink" href="#process-a-batch-of-images-from-a-folder" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;labels_actin&quot;</span><span class="p">)</span>
+<span class="n">nuclei_labels_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;labels_nuclei&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create save directory if it does not exist yet</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;tif&quot;</span><span class="p">):</span>
+        <span class="k">continue</span>
+        
+    <span class="c1"># print(f&quot;Processing image {filename}&quot;)</span>
+    <span class="n">rgb_image</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+    
+    <span class="c1"># take the green (actin) channel only</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">rgb_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1"># load nuclei labels</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nuclei_labels_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.tif&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">_labels_dapi.tif&#39;</span><span class="p">))</span>
+    
+    <span class="c1"># initialize an empty list where we will put obtained label images</span>
+    <span class="n">labels_actin</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">binarized_imgs</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># iterate though the &quot;time&quot; dimension of the image</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        
+        <span class="c1"># get the binary image</span>
+        <span class="n">binary_image</span> <span class="o">=</span> <span class="n">nsitk</span><span class="o">.</span><span class="n">threshold_huang</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+        <span class="n">binarized_imgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binary_image</span><span class="p">)</span>
+        
+        <span class="c1"># noise removal without removing so much of the edges as gaussian blur</span>
+        <span class="n">noise_removed_img</span> <span class="o">=</span> <span class="n">cle</span><span class="o">.</span><span class="n">median_sphere</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1"># detect edges</span>
+        <span class="n">sobel_edges</span> <span class="o">=</span> <span class="n">sobel</span><span class="p">(</span><span class="n">noise_removed_img</span><span class="p">)</span>
+        <span class="n">normalized_sobel</span> <span class="o">=</span> <span class="p">(</span><span class="n">sobel_edges</span> <span class="o">-</span> <span class="n">sobel_edges</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">sobel_edges</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">sobel_edges</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+        <span class="c1"># perform segmentation with watershed using nuclei as seeds and binary image as a mask</span>
+        <span class="n">labels_ws</span> <span class="o">=</span> <span class="n">watershed</span><span class="p">(</span><span class="n">normalized_sobel</span><span class="p">,</span> <span class="n">labels</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">binary_image</span><span class="p">)</span>
+        <span class="n">labels_actin</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">labels_ws</span><span class="p">)</span>
+        
+    <span class="c1"># timelapse = np.stack(binarized_imgs, axis=0)</span>
+    <span class="n">labels_timelapse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">labels_actin</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># save the labels image</span>
+    <span class="n">tif</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.tif&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_labels_actin.tif&quot;</span><span class="p">),</span> <span class="n">labels_timelapse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 17/17 [00:20&lt;00:00,  1.18s/it]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./day3.1_explorative_data_science"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helper-functions">Helper functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-one-image-as-an-example">Process one image as an example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-a-batch-of-images-from-a-folder">Process a batch of images from a folder</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Anja Neumann, Marie-Sophie von Braun, Matthias Täschner, Robert Haase
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2024-05-14.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p>
+Copyright: Licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a> unless mentioned otherwise. 
+Contributions and feedback are welcome.
+</p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
