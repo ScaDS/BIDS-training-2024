@@ -67,8 +67,8 @@ parts:
 
     - file: day2.3_machine_learning/readme.md
       sections: 
-      - file: day2.3_machine_learning/interaction/pixel_classification/readme
-      - file: day2.3_machine_learning/interaction/object_classification/readme
+      - file: day2.3_machine_learning/interaction/pixel_classification/sources/readme
+      - file: day2.3_machine_learning/interaction/object_classification/sources/readme
       - file: day2.3_machine_learning/notebooks/03_apoc_object_segmenter
     - file: day2.4_tabular_data_wrangling/readme.md
       sections: 
