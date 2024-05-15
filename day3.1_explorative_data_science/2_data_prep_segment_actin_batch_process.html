@@ -64,6 +64,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'day3.1_explorative_data_science/2_data_prep_segment_actin_batch_process';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Segment Tubulin Channel - batch process a folder of images" href="3_data_prep_segment_tubulin_batch_process.html" />
+    <link rel="prev" title="Segment DAPI channel - batch process a folder of images" href="1_data_prep_segment_dapi_batch_process.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -238,15 +240,24 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Wednesday</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="readme.html">Explorative data science</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="readme.html">Explorative data science</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0_raw_data_preparation.html">Create a multichannel timelapse (DNA [DAPI], F-actin, and Β-tubulin) for each of these compounds, where each timepoint is different concentration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1_data_prep_segment_dapi_batch_process.html">Segment DAPI channel - batch process a folder of images</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Segment Actin Channel - batch process a folder of images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_data_prep_segment_tubulin_batch_process.html">Segment Tubulin Channel - batch process a folder of images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_data_prep_quantitative_measurements_extraction.html">Extracting Quantitative Measurements from All Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_Interactive_features_exploration_dim_red_one_compound.html">Dimensionality Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6_Interactive_dim_red_and_clustering_comparing_compounds.html">k-Means Clustering</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../day3.2_data_visualization/readme.html">Data Visualization</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3a_basic_plotting/readme.html">Plotting Basics</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3a_basic_plotting/readme.html">Plotting Basics</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/01_Introduction_to_Seaborn.html">Introduction to Seaborn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3a_basic_plotting/02_Plotting_distributions.html">Plotting Distributions with Seaborn</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3b_advanced_plotting/readme.html">Advanced Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../day3.3b_advanced_plotting/readme.html">Advanced Plotting</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/00_getdata.html">Part 0: Get data set for plotting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/01_seabornobj_solution.html">Part 1: Time series and other simple plots</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day3.3b_advanced_plotting/02_dataviz_MLunsupervised_solution.html">Part 2 Data exploration by unsupervised learning</a></li>
@@ -813,6 +824,24 @@ document.write(`
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="1_data_prep_segment_dapi_batch_process.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Segment DAPI channel - batch process a folder of images</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3_data_prep_segment_tubulin_batch_process.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Segment Tubulin Channel - batch process a folder of images</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
