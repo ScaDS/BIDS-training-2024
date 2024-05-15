@@ -1,10 +1,6 @@
 # Bio-Image Data Science Training Schools 2024
 
-This is the website of the BIDS Training School @ ScaDS.AI 2024. We will provide all training materials and information about the training school here.
-
-> [!CAUTION]
-> This web page is under heavy construction.
-> Come back later for the full content.
+This is the website of the BIDS Training School @ ScaDS.AI 2024. We provide all training materials and information about the training school on this page.
 
 ## General info
 * Date: May 13th-15th 2024
@@ -28,16 +24,17 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 
 ## Trainers
 
-* Anja Neumann, ScaDS.AI, Uni Leipzig
+* [Anja Neumann](mailto:neumann@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
 * [Christian Martin](mailto:christian.martin@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
+
 * [Dušan Praščević](mailto:prascevic@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
-* Jan Ewald, ScaDS.AI, Uni Leipzig
+* [Jan Ewald](mailto:jan.ewald@uni-leipzig.de), ScaDS.AI, Uni Leipzig
 * Laura Žigutytė, Clinical AI / Kather lab, EKFZ, TU Dresden
-* Marie-Sophie von Braun, ScaDS.AI, Uni Leipzig
-* Matthias Täschner, ScaDS.AI, Uni Leipzig
+* [Marie-Sophie von Braun](mailto:vonbraun@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
+* [Matthias Täschner](mailto:matthias.taeschner@uni-leipzig.de), ScaDS.AI, Uni Leipzig
 * [Robert Haase](mailto:robert.haase@uni-leipzig.de), ScaDS.AI, Uni Leipzig
 
-## Preliminary Program
+## Program
 
 * Monday, May 13th
 <pre>
@@ -76,6 +73,10 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 15:15-17:15	Wrap up & work on your own data		
 17:15-18:00	Departure		
 </pre>
+
+## Slides
+
+Slides for each session can be downloaded from the page linked in the table of contents. [Introduction](day0_preparation/BIDS_Introduction_2024.pdf) and [farewell](day0_preparation/BIDS_farewell_2024.pdf) slides are online as well.
 
 ## Registration
 
