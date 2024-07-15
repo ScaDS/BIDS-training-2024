@@ -82,6 +82,15 @@ parts:
   - caption: Wednesday
     chapters:
     - file: day3.1_explorative_data_science/readme.md
+      sections:
+      - file:  day3.1_explorative_data_science/0_raw_data_preparation.ipynb
+      - file:  day3.1_explorative_data_science/1_data_prep_segment_dapi_batch_process.ipynb
+      - file:  day3.1_explorative_data_science/2_data_prep_segment_actin_batch_process.ipynb
+      - file:  day3.1_explorative_data_science/3_data_prep_segment_tubulin_batch_process.ipynb
+      - file:  day3.1_explorative_data_science/4_data_prep_quantitative_measurements_extraction.ipynb
+      - file:  day3.1_explorative_data_science/5_Interactive_features_exploration_dim_red_one_compound.ipynb
+      - file:  day3.1_explorative_data_science/6_Interactive_dim_red_and_clustering_comparing_compounds.ipynb
+      
     - file: day3.2_data_visualization/readme.md
     - file: day3.3a_basic_plotting/readme.md
       sections: 
