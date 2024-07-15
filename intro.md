@@ -26,10 +26,9 @@ This course focuses on bio-image analysis and data science with a focus on fluor
 
 * [Anja Neumann](mailto:neumann@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
 * [Christian Martin](mailto:christian.martin@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
-
 * [Dušan Praščević](mailto:prascevic@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
 * [Jan Ewald](mailto:jan.ewald@uni-leipzig.de), ScaDS.AI, Uni Leipzig
-* Laura Žigutytė, Clinical AI / Kather lab, EKFZ, TU Dresden
+* [Laura Žigutytė](mailto:laura.zigutyte@tu-dresden.de), Clinical AI / Kather lab, EKFZ, TU Dresden
 * [Marie-Sophie von Braun](mailto:vonbraun@informatik.uni-leipzig.de), ScaDS.AI, Uni Leipzig
 * [Matthias Täschner](mailto:matthias.taeschner@uni-leipzig.de), ScaDS.AI, Uni Leipzig
 * [Robert Haase](mailto:robert.haase@uni-leipzig.de), ScaDS.AI, Uni Leipzig
