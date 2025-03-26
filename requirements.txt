@@ -2,3 +2,6 @@ jupyter-book
 matplotlib
 numpy
 ghp-import
+seaborn >= 0.13.2
+meteostat
+plotly
